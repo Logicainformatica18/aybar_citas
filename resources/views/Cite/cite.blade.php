@@ -52,7 +52,7 @@
 
 
 
-                            @include('cite.citetable')
+                            @include('Cite.citetable')
 
                         </div>
                         <style>
