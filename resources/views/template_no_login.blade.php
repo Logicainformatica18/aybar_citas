@@ -103,7 +103,7 @@
                                     <li class="sidebar-item">
                                         <a class="sidebar-link" href="admin" aria-expanded="false">
                                             <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                            <span class="hide-menu"></span>
+                                            <span class="hide-menu"></span> {{Auth::user()->nombre}}
                                         </a>
                                     </li>
 
@@ -111,24 +111,11 @@
                                         <span class="sidebar-divider"></span>
                                     </li>
 
-                                    @canany(['administrar', 'clientes'])
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link " href="{{ url('admin/clientes') }}">
-                                                <iconify-icon icon="solar:shield-user-line-duotone"></iconify-icon>
-                                                <span class="hide-menu">Clientes</span>
-                                            </a>
-                                        </li>
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link " href="{{ url('admin/reclamaciones') }}">
-                                                <iconify-icon icon="solar:shield-user-line-duotone"></iconify-icon>
-                                                <span class="hide-menu">Reclamaciones</span>
-                                            </a>
-                                        </li>
-                                    @endcanany
+
                                     {{-- <li class="nav-small-cap">
                                         <span class="hide-menu">Módulos</span>
                                     </li> --}}
-                                    @canany(['administrar', 'usuarios'])
+                                    {{-- @canany(['administrar', 'usuarios'])
                                         <li class="sidebar-item">
                                             <a class="sidebar-link has-arrow " href="javascript:void(0)"
                                                 aria-expanded="false">
@@ -151,10 +138,10 @@
 
                                             </ul>
                                         </li>
-                                    @endcanany
+                                    @endcanany --}}
 
 
-                                    <li class="sidebar-item">
+                                    {{-- <li class="sidebar-item">
                                         <a class="sidebar-link has-arrow " href="javascript:void(0)"
                                             aria-expanded="false">
                                             <iconify-icon icon="solar:shield-user-line-duotone"></iconify-icon>
@@ -212,45 +199,10 @@
                                                 </li>
                                             @endcanany
                                         </ul>
-                                    </li>
+                                    </li> --}}
 
-                                    @canany(['administrar', 'blogs'])
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link has-arrow " href="javascript:void(0)"
-                                                aria-expanded="false">
-                                                <iconify-icon icon="solar:shield-user-line-duotone"></iconify-icon>
-                                                <span class="hide-menu">Blogs</span>
-                                            </a>
-                                            <ul aria-expanded="false" class="collapse first-level">
-                                                <li class="sidebar-item">
-                                                    <a class="sidebar-link" href="{{ url('admin/blog') }}">
-                                                        <span class="icon-small"></span> Blogs
-                                                    </a>
-                                                </li>
-                                                <li class="sidebar-item">
-                                                    <a class="sidebar-link" href="{{ url('admin/categorias') }}">
-                                                        <span class="icon-small"></span> Categoría
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    @endcanany
-                                    @canany(['administrar', 'proyectos'])
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link has-arrow " href="javascript:void(0)"
-                                                aria-expanded="false">
-                                                <iconify-icon icon="solar:shield-user-line-duotone"></iconify-icon>
-                                                <span class="hide-menu">Proyectos</span>
-                                            </a>
-                                            <ul aria-expanded="false" class="collapse first-level">
-                                                <li class="sidebar-item">
-                                                    <a class="sidebar-link" href="{{ url('admin/proyectos') }}">
-                                                        <span class="icon-small"></span> Proyectos
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    @endcanany
+
+{{--
                                     @canany(['administrar', 'imagenes'])
                                         <li class="sidebar-item">
                                             <a class="sidebar-link has-arrow " href="javascript:void(0)"
@@ -269,7 +221,7 @@
 
                                             </ul>
                                         </li>
-                                    @endcanany
+                                    @endcanany --}}
                                     <li class="sidebar-item">
                                         <a class="sidebar-link has-arrow " href="javascript:void(0)"
                                             aria-expanded="false">
@@ -2049,220 +2001,168 @@
     <script defer>
         function datatable_load() {
 
+//
+//    File export                              //
+//
+$("#file_export").DataTable({
+    dom: "Bfrtip",
+    buttons: ["copy", "csv", "excel", "pdf", "print"],
+    paging: false // Deshabilita la paginación
+});
 
-            //
-            //    File export                              //
-            //
-            $("#file_export").DataTable({
-                dom: "Bfrtip",
-                buttons: ["copy", "csv", "excel", "pdf", "print"],
-            });
-            $(
-                ".buttons-copy, .buttons-csv, .buttons-print, .buttons-pdf, .buttons-excel"
-            ).addClass("btn btn-primary");
+$(".buttons-copy, .buttons-csv, .buttons-print, .buttons-pdf, .buttons-excel")
+    .addClass("btn btn-primary");
 
-            //
-            //  Show / hide columns dynamically                 //
-            //
+//
+//  Show / hide columns dynamically                 //
+//
+var table = $("#show_hide_col").DataTable({
+    scrollY: "200px",
+    paging: false // Deshabilita la paginación
+});
 
-            var table = $("#show_hide_col").DataTable({
-                scrollY: "200px",
-                paging: false,
-            });
+$("a.toggle-vis").on("click", function(e) {
+    e.preventDefault();
+    var column = $("#show_hide_col").dataTable().api().column($(this).attr("data-column"));
+    column.visible(!column.visible());
+});
 
-            $("a.toggle-vis").on("click", function(e) {
-                e.preventDefault();
-
-                // Get the column API object
-                var column = $("#show_hide_col")
-                    .dataTable()
-                    .api()
-                    .column($(this).attr("data-column"));
-                // Toggle the visibility
-                column.visible(!column.visible());
-            });
-
-            //
-            //    Column rendering                         //
-            //
-            $("#col_render").DataTable({
-                columnDefs: [{
-                        // The `data` parameter refers to the data for the cell (defined by the
-                        // `data` option, which defaults to the column being worked with, in
-                        // this case `data: 0`.
-                        render: function(data, type, row) {
-                            return data + " (" + row[3] + ")";
-                        },
-                        targets: 0,
-                    },
-                    {
-                        visible: false,
-                        targets: [3]
-                    },
-                ],
-            });
-
-            //
-            //     Row grouping                            //
-            //
-            var table = $("#row_group").DataTable({
-                pageLength: 10,
-                columnDefs: [{
-                    visible: false,
-                    targets: 2
-                }],
-                order: [
-                    [2, "asc"]
-                ],
-                displayLength: 25,
-                drawCallback: function(settings) {
-                    var api = this.api();
-                    var rows = api.rows({
-                        page: "current"
-                    }).nodes();
-                    var last = null;
-
-                    api
-                        .column(2, {
-                            page: "current"
-                        })
-                        .data()
-                        .each(function(group, i) {
-                            if (last !== group) {
-                                $(rows)
-                                    .eq(i)
-                                    .before(
-                                        '<tr class="group"><td colspan="5">' + group + "</td></tr>"
-                                    );
-
-                                last = group;
-                            }
-                        });
-                },
-            });
-
-            //
-            // Order by the grouping
-            //
-            $("#row_group tbody").on("click", "tr.group", function() {
-                var currentOrder = table.order()[0];
-                if (currentOrder[0] === 2 && currentOrder[1] === "asc") {
-                    table.order([2, "desc"]).draw();
-                } else {
-                    table.order([2, "asc"]).draw();
-                }
-            });
-
-            //
-            //    Multiple table control element           //
-            //
-            $("#multi_control").DataTable({
-                dom: '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
-            });
-
-            //
-            //    DOM/jquery events                        //
-            //
-            var table = $("#dom_jq_event").DataTable();
-
-            $("#dom_jq_event tbody").on("click", "tr", function() {
-                var data = table.row(this).data();
-                alert("You clicked on " + data[0] + "'s row");
-            });
-
-            //
-            //    Language File                            //
-            //
-            $("#lang_file").DataTable({
-                language: {
-                    url: "../../assets/js/datatable/German.json",
-                },
-            });
-
-            //
-            //    Complex headers with column visibility   //
-            //
-
-            $("#complex_head_col").DataTable({
-                columnDefs: [{
-                    visible: false,
-                    targets: -1,
-                }, ],
-            });
-
-            //
-            //    Setting defaults                         //
-            //
-            var defaults = {
-                searching: false,
-                ordering: false,
-            };
-
-            $("#setting_defaults").dataTable($.extend(true, {}, defaults, {}));
-
-            //
-            //    Footer callback                          //
-            //
-            $("#footer_callback").DataTable({
-                footerCallback: function(row, data, start, end, display) {
-                    var api = this.api(),
-                        data;
-
-                    // Remove the formatting to get integer data for summation
-                    var intVal = function(i) {
-                        return typeof i === "string" ?
-                            i.replace(/[\$,]/g, "") * 1 :
-                            typeof i === "number" ?
-                            i :
-                            0;
-                    };
-
-                    // Total over all pages
-                    total = api
-                        .column(4)
-                        .data()
-                        .reduce(function(a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
-
-                    // Total over this page
-                    pageTotal = api
-                        .column(4, {
-                            page: "current"
-                        })
-                        .data()
-                        .reduce(function(a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
-
-                    // Update footer
-                    $(api.column(4).footer()).html(
-                        "$" + pageTotal + " ( $" + total + " total)"
-                    );
-                },
-            });
-
-            //
-            //    Custom toolbar elements                  //
-            //
-
-            $("#custom_tool_ele").DataTable({
-                dom: '<"toolbar">frtip',
-            });
-
-            $("div.toolbar").html("<b>Custom tool bar! Text/images etc.</b>");
-
-            //
-            //    Row created callback                     //
-            //
-            $("#row_create_call").DataTable({
-                createdRow: function(row, data, index) {
-                    if (data[5].replace(/[\$,]/g, "") * 1 > 150000) {
-                        $("td", row).eq(5).addClass("highlight");
-                    }
-                },
-            });
+//
+//    Column rendering                         //
+//
+$("#col_render").DataTable({
+    columnDefs: [
+        {
+            render: function(data, type, row) {
+                return data + " (" + row[3] + ")";
+            },
+            targets: 0
+        },
+        {
+            visible: false,
+            targets: [3]
         }
+    ],
+    paging: false // Deshabilita la paginación
+});
+
+//
+//     Row grouping                            //
+//
+var table = $("#row_group").DataTable({
+    columnDefs: [{ visible: false, targets: 2 }],
+    order: [[2, "asc"]],
+    drawCallback: function(settings) {
+        var api = this.api();
+        var rows = api.rows({ page: "current" }).nodes();
+        var last = null;
+
+        api.column(2, { page: "current" }).data().each(function(group, i) {
+            if (last !== group) {
+                $(rows)
+                    .eq(i)
+                    .before('<tr class="group"><td colspan="5">' + group + "</td></tr>");
+                last = group;
+            }
+        });
+    },
+    paging: false // Deshabilita la paginación
+});
+
+//
+// Order by the grouping
+//
+$("#row_group tbody").on("click", "tr.group", function() {
+    var currentOrder = table.order()[0];
+    if (currentOrder[0] === 2 && currentOrder[1] === "asc") {
+        table.order([2, "desc"]).draw();
+    } else {
+        table.order([2, "asc"]).draw();
+    }
+});
+
+//
+//    Multiple table control element           //
+//
+$("#multi_control").DataTable({
+    dom: '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+    paging: false // Deshabilita la paginación
+});
+
+//
+//    DOM/jquery events                        //
+//
+var table = $("#dom_jq_event").DataTable({
+    paging: false // Deshabilita la paginación
+});
+
+$("#dom_jq_event tbody").on("click", "tr", function() {
+    var data = table.row(this).data();
+    alert("You clicked on " + data[0] + "'s row");
+});
+
+//
+//    Language File                            //
+//
+$("#lang_file").DataTable({
+    language: { url: "../../assets/js/datatable/German.json" },
+    paging: false // Deshabilita la paginación
+});
+
+//
+//    Complex headers with column visibility   //
+//
+$("#complex_head_col").DataTable({
+    columnDefs: [{ visible: false, targets: -1 }],
+    paging: false // Deshabilita la paginación
+});
+
+//
+//    Setting defaults                         //
+//
+var defaults = { searching: false, ordering: false, paging: false };
+$("#setting_defaults").dataTable($.extend(true, {}, defaults, {}));
+
+//
+//    Footer callback                          //
+//
+$("#footer_callback").DataTable({
+    footerCallback: function(row, data, start, end, display) {
+        var api = this.api(),
+            data;
+        var intVal = function(i) {
+            return typeof i === "string" ? i.replace(/[\$,]/g, "") * 1 : typeof i === "number" ? i : 0;
+        };
+        total = api.column(4).data().reduce(function(a, b) { return intVal(a) + intVal(b); }, 0);
+        pageTotal = api.column(4, { page: "current" }).data().reduce(function(a, b) { return intVal(a) + intVal(b); }, 0);
+        $(api.column(4).footer()).html("$" + pageTotal + " ( $" + total + " total)");
+    },
+    paging: false // Deshabilita la paginación
+});
+
+//
+//    Custom toolbar elements                  //
+//
+$("#custom_tool_ele").DataTable({
+    dom: '<"toolbar">frtip',
+    paging: false // Deshabilita la paginación
+});
+
+$("div.toolbar").html("<b>Custom tool bar! Text/images etc.</b>");
+
+//
+//    Row created callback                     //
+//
+$("#row_create_call").DataTable({
+    createdRow: function(row, data, index) {
+        if (data[5].replace(/[\$,]/g, "") * 1 > 150000) {
+            $("td", row).eq(5).addClass("highlight");
+        }
+    },
+    paging: false // Deshabilita la paginación
+});
+}
+
         datatable_load();
     </script>
 

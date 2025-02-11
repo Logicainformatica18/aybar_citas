@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::get('/citas/{id_usuario}', [App\Http\Controllers\CiteController::class, 'validate_user']);
 
 Route::get('/citas', [App\Http\Controllers\CiteController::class, 'index']);
 

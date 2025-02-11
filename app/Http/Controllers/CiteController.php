@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cite;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreCiteRequest;
 use App\Http\Requests\UpdateCiteRequest;
 
@@ -13,16 +16,46 @@ class CiteController extends Controller
      */
     public function index()
     {
-        $cite = Cite::all();
-        return view("Cite.cite",compact("cite"));
+
+
+//         $cite = Cite::with("motivo")->count();
+
+// return $cite;
+
+$cite = Cite::join('motivos_cita', 'citas.motivo', '=', 'motivos_cita.nombre_motivo')
+->select('citas.*')->paginate(7);
+//return $cite;
+ return view('Cite.cite', compact('cite'));
+
+
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function validate_user(Request $request)
     {
-        //
+        // Validar que el ID sea un número válido
+        // $request->validate([
+        //     'id_usuario' => 'required|integer|exists:users,id',
+        // ]);
+
+        // Buscar el usuario por ID
+        $user = User::where("id_usuario","=",$request->id_usuario)->first();
+
+        if ($user!="") {
+            // Iniciar sesión manualmente con Auth
+            Auth::login($user);
+
+
+            // Redirigir a la página deseada
+            return redirect("citas");
+        }
+        else{
+            return "error";
+        }
+
+
     }
 
     /**

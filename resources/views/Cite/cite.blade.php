@@ -6,7 +6,7 @@
                 <div class="row align-items-center">
                     <div class="col-12">
                         <div class="d-sm-flex align-items-center justify-space-between">
-                            <h1 class="text-primary">cite</h1>
+                            <h1 class="text-primary">Citas</h1>
                             <nav aria-label="breadcrumb" class="ms-auto">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item d-flex align-items-center">
@@ -16,7 +16,7 @@
                                     </li>
                                     <li class="breadcrumb-item" aria-current="page">
                                         <span class="badge fw-medium fs-2 bg-primary-subtle text-primary">
-                                            cite
+                                            Citas
                                         </span>
                                     </li>
                                 </ol>
@@ -34,15 +34,18 @@
 
                         <p class="card-subtitle mb-3">
                             <!-- success header modal -->
-                            @canany(["administrar","agregar"])
+                            {{-- @canany(["administrar","agregar"])
                             <button type="button" class="btn mb-1 me-1 btn-success"
                                 data-bs-toggle="modal" data-bs-target="#success-header-modal" fdprocessedid="cw61t3"
                                  onclick="New();$('#cite')[0].reset();">
                                 Agregar
                             </button>
-                            @endcanany
+                            @endcanany --}}
                         </p>
                         <div class="mb-2">
+
+
+
                             <h4 class="card-title mb-0">Exportar</h4>
                         </div>
                         <div class="table-responsive"id="mycontent">
@@ -51,6 +54,23 @@
 
                             @include('cite.citetable')
 
+                        </div>
+                        <style>
+                            .relative svg {
+                        width: 44px;  /* Ajusta el tamaño del icono */
+                        height: 44px;
+                        }
+                        .hidden div p{
+                            display: none;
+
+                        }
+                        .hidden div{
+                            margin:20px
+                        }
+
+                          </style>
+                        <div class="mt-5 d-flex justify-content-start" style="height:20px;width:100%">
+                            {{ $cite->links() }}
                         </div>
                     </div>
                 </div>
@@ -104,12 +124,12 @@
                     <div class="modal-footer">
                         <input type="button" value="Nuevo" class="btn btn-primary"
                             onclick="New();$('#cite')[0].reset();" name="new">
-                        @canany(['administrar', 'agregar'])<input type="button" value="Guardar" class="btn bg-success-subtle text-success "
+                        {{-- @canany(['administrar', 'agregar'])<input type="button" value="Guardar" class="btn bg-success-subtle text-success "
                             onclick="citeStore()" id="create">@endcanany
                             @canany(['administrar', 'actualizar'])
                         <input type="button" value="Modificar" class="btn bg-danger-subtle text-danger" onclick="citeUpdate();"
                             id="update">
-                            @endcanany
+                            @endcanany --}}
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                       </form>
 

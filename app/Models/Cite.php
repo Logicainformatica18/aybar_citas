@@ -42,5 +42,11 @@ class Cite extends Model
         'confirmar',
         'habilitado',
     ];
+    public function customer(){
+        return $this->belongsTo("App\Models\Customer", 'id_cliente', 'id_cliente');
+    }
+    public function motivo(){
+        return $this->belongsTo("App\Models\Reason_appointment", 'motivo', 'nombre_motivo');
+    }
 
 }

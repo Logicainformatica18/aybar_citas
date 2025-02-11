@@ -22,9 +22,30 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $table ="usuarios";
+
+    protected $primaryKey = 'id_usuario'; // Clave primaria
+
     protected $fillable = [
-        'dni','firstname','lastname','names', 'password','datebirth','cellphone','photo','sex', 'email','roles_'
+        'usuario',
+        'nombre',
+        'apellido',
+        'correo',
+        'clave',
+        'telefono',
+        'id_rol',
+        'id_area',
+        'id_ocupacion',
+        'habilitado',
+        'id_area',
     ];
+
+
+
+    // Relación con la tabla `areas`
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'id_area', 'id_area');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

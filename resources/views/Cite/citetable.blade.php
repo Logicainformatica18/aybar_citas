@@ -1,3 +1,7 @@
+
+
+
+
 <div class="table-responsive-xl">
 <table id="file_export" class=" table table-hover table-bordered table-striped table-responsive">
     <thead>
@@ -7,38 +11,26 @@
 
             <th><img width="20" src="https://cdn-icons-png.flaticon.com/512/6671/6671938.png" alt=""
                     srcset=""></th>
-                    <th>ID</th>
+
                     <th>Código</th>
                     <th>Cliente</th>
-                    <th>Tipo</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Hora Final</th>
-                    <th>Motivo</th>
-                    {{-- <th>Descripción</th> --}}
-                    <th>Rol</th>
-                    <th>Usuario</th>
-                    <th>Estado</th>
-                    <th>Fecha Generada</th>
-                    <th>Hora Generada</th>
-                    <th>Archivo</th>
-                    <th>Comentario Jefe</th>
-                    <th>Valor</th>
-                    <th>Generado</th>
-                    <th>Empresa</th>
+                    <th>DNI</th>
                     <th>Proyecto</th>
                     <th>Manzana</th>
                     <th>Lote</th>
+
+                    <th>Fecha de cita</th>
+                    <th>Hora de cita</th>
+                    <th >Motivo</th>
+                    <th>Estado</th>
+
+
+                    <th>Restante</th>
+
+                    <th>Fecha Generada</th>
                     <th>Fecha Reprogramada</th>
-                    <th>Hora Reprogramada</th>
-                    <th>Estado Derivación</th>
-                    <th>Comentario Derivación</th>
-                    <th>Enviado Jefe</th>
-                    <th>Enviado Área</th>
-                    <th>Motivo Copia</th>
-                    <th>Proceso Derivación</th>
-                    <th>Confirmar</th>
-                    <th>Habilitado</th>
+
+
 
 
 
@@ -55,7 +47,7 @@
                             aria-expanded="false">
                             <i class="ti ti-dots-vertical fs-6"></i>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
+                        {{-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
 
                             @canany(['administrar', 'editar'])
                                 <li>
@@ -74,7 +66,7 @@
                                 </a>
                             </li>
                             @endcanany
-                        </ul>
+                        </ul> --}}
                     </div>
 
                 </td>
@@ -83,38 +75,78 @@
 
 
 
-                <td>{{ $cites->id_cita }}</td>
+
                 <td>{{ $cites->codigo }}</td>
-                <td>{{ $cites->id_cliente }}</td>
-                <td>{{ $cites->tipo }}</td>
-                <td>{{ $cites->fecha }}</td>
-                <td>{{ $cites->hora }}</td>
-                <td>{{ $cites->hora_final }}</td>
-                <td>{{ $cites->motivo }}</td>
-                {{-- <td>{{ $cites->descripcion }}</td> --}}
-                <td>{{ $cites->id_rol }}</td>
-                <td>{{ $cites->id_usuario }}</td>
-                <td>{{ $cites->estado }}</td>
-                <td>{{ $cites->fechag }}</td>
-                <td>{{ $cites->horag }}</td>
-                <td>{{ $cites->archivo }}</td>
-                <td>{{ $cites->comentario_jefe }}</td>
-                <td>{{ $cites->valor }}</td>
-                <td>{{ $cites->generado }}</td>
-                <td>{{ $cites->empresa }}</td>
+                <td>{{ $cites->customer->Razon_Social }}</td>
+                <td>{{ $cites->customer->DNI }}</td>
                 <td>{{ $cites->proyecto }}</td>
                 <td>{{ $cites->manzana }}</td>
                 <td>{{ $cites->lote }}</td>
+
+                <td>{{ $cites->fecha }}</td>
+                <td>{{ $cites->hora }}</td>
+                <td >{{ $cites->motivo }}</td>
+                <td>
+                    <span class="badge
+                        @switch($cites->estado)
+                            @case('Pendiente') bg-success @break
+                            @case('Proceso') bg-primary @break
+                            @case('Atendido') bg-info @break
+                            @case('Observado') bg-danger @break
+                            @case('Finalizado') text-black bg-light @break
+                            @case('Cerrado')  bg-dark @break
+                            @case('Derivado') bg-secondary @break
+                            @default bg-primary
+                        @endswitch">
+                        {{ $cites->estado }}
+                    </span>
+                </td>
+
+
+                @php
+                $fecha_cita_str = $cites->fecha; // Asegúrate de que $cites->fecha tenga el valor correcto
+                $estadoFecha = '';
+
+                // Verificar si el estado es 'Atendido', 'Cerrado' o 'Finalizado'
+                if (!in_array($cites->estado, ['Atendido', 'Cerrado', 'Finalizado'])) {
+                    // Verificar si la fecha es "Según el Trámite" o "Por Definir"
+                    if ($fecha_cita_str == "Según el Trámite" || $fecha_cita_str == "Por Definir") {
+                        $estadoFecha = $fecha_cita_str;
+                    } else {
+                        try {
+                            // Convertir fecha a objeto Carbon (Laravel usa Carbon por defecto)
+                            $fecha_cita = \Carbon\Carbon::parse($fecha_cita_str)->timezone('America/Lima');
+                            $fecha_actual = \Carbon\Carbon::now('America/Lima');
+
+                            // Calcular la diferencia en días
+                            $dias_diferencia = $fecha_cita->diffInDays($fecha_actual, false); // `false` permite valores negativos si ya venció
+
+                            if ($dias_diferencia == 0) {
+                                $estadoFecha = "Hoy";
+                            } elseif ($dias_diferencia > 0) {
+                                $estadoFecha = "$dias_diferencia días";
+                            } else {
+                                $estadoFecha = "Vencido";
+                            }
+                        } catch (\Exception $e) {
+                            $estadoFecha = "Según el Trámite";
+                        }
+                    }
+                }
+            @endphp
+
+            <td>
+                {{ $estadoFecha }}
+            </td>
+
+
+
+                {{-- <td>{{ $cites->descripcion }}</td> --}}
+
+                <td>{{ $cites->fechag }}</td>
                 <td>{{ $cites->fecha_repro }}</td>
-                <td>{{ $cites->hora_repro }}</td>
-                <td>{{ $cites->estado_derivacion }}</td>
-                <td>{{ $cites->comentario_derivacion }}</td>
-                <td>{{ $cites->enviado_jefe }}</td>
-                <td>{{ $cites->enviado_area }}</td>
-                <td>{{ $cites->motivo_copia }}</td>
-                <td>{{ $cites->proceso_derivacion }}</td>
-                <td>{{ $cites->confirmar }}</td>
-                <td>{{ $cites->habilitado }}</td>
+
+
 
 
 
@@ -127,6 +159,9 @@
 </table>
 
 </div>
+
+
+
 <style>
     .table-responsive-xl {
         overflow-x: auto;
