@@ -65,6 +65,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function role()
+    {
+
+        return $this->hasMany('App\Models\Role', 'id_rol','id_rol');
+    }
     public function roles_()
     {
         //pertenece a muchas roles - agregamos el id de la tabla asociativa - pivot

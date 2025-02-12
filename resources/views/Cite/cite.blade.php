@@ -44,8 +44,16 @@
                         </p>
                         <div class="mb-2">
 
+                            <a href="{{url('citas/Todos')}}" class="btn btn-warning">Todos</a>
+                                <a target="_blank" href="{{url('citas/Pendiente')}}" class="btn btn-success">Pendiente</a>
+                                <a target="_blank" href="{{url('citas/Proceso')}}" class="btn text-white "style="   background-color: #6f42c1">Proceso</a>
+                                <a target="_blank" href="{{url('citas/Atendido')}}" class="btn bg-info text-white">Atendido</a>
+                                <a target="_blank" href="{{url('citas/Derivado')}}" class="btn btn-secondary">Derivado</a>
+                                <a target="_blank" href="{{url('citas/Observado')}}" class="btn btn-danger">Observado</a>
+                                <a target="_blank" href="{{url('citas/Finalizado')}}" class="btn text-black" style="background-color: #e7e7e7">Finalizado</a>
+                                <a target="_blank" href="{{url('citas/Cerrado')}}" class="btn btn-dark">Cerrado</a>
 
-
+<p></p>
                             <h4 class="card-title mb-0">Exportar</h4>
                         </div>
                         <div class="table-responsive"id="mycontent">
