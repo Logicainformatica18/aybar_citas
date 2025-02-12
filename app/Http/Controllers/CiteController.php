@@ -52,12 +52,12 @@ class CiteController extends Controller
 
             // Si el rol es 1 o 5 y no tiene área, mostramos todas las citas
 
-            $query_ = Cite::LeftJoin('motivos_cita', function ($join) {
+            $query = Cite::LeftJoin('motivos_cita', function ($join) {
                 $join->on(DB::raw("CONCAT('%', citas.motivo, '%')"), 'LIKE', DB::raw("CONCAT('%', motivos_cita.nombre_motivo, '%')"));
             }) ->select('citas.*')
             ->orderBy("codigo", "asc");
-
-            $cite = $query_->paginate(7);
+            $query->where('citas.estado',"like", $estado);
+            $cite = $query->paginate(7);
         } elseif ($id_rol == 5 && !empty($id_area)) {
             // Obtener las áreas habilitadas del usuario
             $areas = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
