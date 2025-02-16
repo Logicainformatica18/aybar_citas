@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/siscitas/{id_usuario}', [App\Http\Controllers\CiteController::class, 'validate_user']);
 
-Route::post('/citas/actualizar_estado', [App\Http\Controllers\CiteController::class, 'update_state']);
 Route::get('/citas/{estado}', [App\Http\Controllers\CiteController::class, 'index'])->name('citas.index');
 
 

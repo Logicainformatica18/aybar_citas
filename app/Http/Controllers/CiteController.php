@@ -112,8 +112,11 @@ class CiteController extends Controller
     {
 
 
-      DB::statement("
-    UPDATE citas c
+
+
+        try {
+            DB::statement("
+           UPDATE citas c
     JOIN (
         SELECT 
             co.id_cita,
@@ -129,7 +132,10 @@ class CiteController extends Controller
     SET c.estado = subquery.nuevo_estado;
 ");
 
-return "hola";
+            return response()->json(["status" => "success", "message" => "Estados actualizados correctamente"]);
+        } catch (\Exception $e) {
+            return response()->json(["status" => "error", "message" => $e->getMessage()], 500);
+        }
     }
     /**
      * Store a newly created resource in storage.
