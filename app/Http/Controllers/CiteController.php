@@ -38,14 +38,14 @@ class CiteController extends Controller
         $query = Cite::Join('motivos_cita', function ($join) {
             $join->on(DB::raw("CONCAT('%', citas.motivo, '%')"), 'LIKE', DB::raw("CONCAT('%', motivos_cita.nombre_motivo, '%')"));
         })
-        ->select('citas.*')
-        ->orderBy("codigo", "asc");
+            ->select('citas.*')
+            ->orderBy("codigo", "asc");
 
         // Aplicar filtro por estado si se proporciona en la URL
-            if ($estado=="Todos") {
-                $estado="%";
-            }
-            $query->where('citas.estado',"like", $estado);
+        if ($estado == "Todos") {
+            $estado = "%";
+        }
+        $query->where('citas.estado', "like", $estado);
 
 
         if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
@@ -54,9 +54,9 @@ class CiteController extends Controller
 
             $query = Cite::LeftJoin('motivos_cita', function ($join) {
                 $join->on(DB::raw("CONCAT('%', citas.motivo, '%')"), 'LIKE', DB::raw("CONCAT('%', motivos_cita.nombre_motivo, '%')"));
-            }) ->select('citas.*')
-            ->orderBy("codigo", "asc");
-            $query->where('citas.estado',"like", $estado);
+            })->select('citas.*')
+                ->orderBy("codigo", "asc");
+            $query->where('citas.estado', "like", $estado);
             $cite = $query->paginate(7);
         } elseif ($id_rol == 5 && !empty($id_area)) {
             // Obtener las áreas habilitadas del usuario
@@ -103,12 +103,34 @@ class CiteController extends Controller
 
             // Redirigir a la página deseada
             return redirect()->route('citas.index', ['estado' => 'Todos']);
-
         } else {
             return 'error';
         }
     }
 
+    public function update_state()
+    {
+
+
+      DB::statement("
+    UPDATE citas c
+    JOIN (
+        SELECT 
+            co.id_cita,
+            co.estado AS nuevo_estado
+        FROM comentarios co
+        WHERE co.id_comentario = (
+            SELECT MAX(co2.id_comentario) 
+            FROM comentarios co2 
+            WHERE co2.id_cita = co.id_cita
+        )
+    ) AS subquery
+    ON c.id_cita = subquery.id_cita
+    SET c.estado = subquery.nuevo_estado;
+");
+
+return "hola";
+    }
     /**
      * Store a newly created resource in storage.
      */

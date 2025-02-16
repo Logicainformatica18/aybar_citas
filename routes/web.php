@@ -22,6 +22,8 @@ Route::get('/siscitas/{id_usuario}', [App\Http\Controllers\CiteController::class
 
 Route::get('/citas/{estado}', [App\Http\Controllers\CiteController::class, 'index'])->name('citas.index');
 
+Route::post('/citas/actualizar_estado', [App\Http\Controllers\CiteController::class, 'update_state']);
+
 
 
 
@@ -66,21 +68,21 @@ Auth::routes();
 
    Route::get('blog/topicPublic', [App\Http\Controllers\TopicPublicController::class, 'index']);
 
-   Route::get('/', function () {
-    return view("production.2");
-});
-Route::get('/nosotros', function () {
-    return view("production.3");
-});
-Route::get('/proyectos', function () {
-    return view("production.4");
-});
-Route::get('/blog', function () {
-    return view("production.5");
-});
-Route::get('/contacto', function () {
-    return view("production.6");
-});
+//    Route::get('/', function () {
+//     return view("production.2");
+// });
+// Route::get('/nosotros', function () {
+//     return view("production.3");
+// });
+// Route::get('/proyectos', function () {
+//     return view("production.4");
+// });
+// Route::get('/blog', function () {
+//     return view("production.5");
+// });
+// Route::get('/contacto', function () {
+//     return view("production.6");
+// });
 
 
 
