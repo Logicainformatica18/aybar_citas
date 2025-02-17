@@ -3,10 +3,44 @@
     <div class="body-wrapper">
         <div class="">
             <div class="card card-body py-3">
+                <form action=""id="cite_filter">
                 <div class="row align-items-center">
                     <div class="col-12">
                         <div class="d-sm-flex align-items-center justify-space-between">
                             <h1 class="text-primary">Citas</h1>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="{{url('citas/Todos')}}" class="btn btn-warning ">Todos <b class="fs-4" >{{$total_cite}}</b> </a>
+                            <a target="_blank" href="{{url('citas/Pendiente')}}" class="btn btn-success">
+                                Pendiente
+                                <b class="fs-4" >{{$total_pendiente}}</b>
+                            </a>
+                            <a target="_blank" href="{{url('citas/Proceso')}}" class="btn text-white "style="   background-color: #6f42c1">
+                                Proceso
+                                <b class="fs-4" >{{$total_proceso}}</b>
+                            </a>
+                            <a target="_blank" href="{{url('citas/Atendido')}}" class="btn bg-info text-white">
+                                Atendido
+                                <b class="fs-4" >{{$total_atendido}}</b>
+                            </a>
+                            <a target="_blank" href="{{url('citas/Derivado')}}" class="btn btn-secondary">
+                                Derivado
+                                <b class="fs-4" >{{$total_derivado}}</b>
+                            </a>
+                            <a target="_blank" href="{{url('citas/Observado')}}" class="btn btn-danger">
+                                Observado
+                                <b class="fs-4" >{{$total_observado}}</b>
+                            </a>
+                            <a target="_blank" href="{{url('citas/Finalizado')}}" class="btn text-black" style="background-color: #e7e7e7">
+                                Finalizado
+                                <b class="fs-4" >{{$total_finalizado}}</b>
+                            </a>
+                            <a target="_blank" href="{{url('citas/Cerrado')}}" class="btn btn-dark">
+                                Cerrado
+                                <b class="fs-4" >{{$total_cerrado}}</b>
+                            </a>
+                            <p></p>
+
+
                             <nav aria-label="breadcrumb" class="ms-auto">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item d-flex align-items-center">
@@ -24,6 +58,108 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                Datos de la Cita
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <!-- Primera Fila -->
+                                <div class="row text-center">
+                                    <div class="col-4">
+                                        <label for="motivo" class="form-label fw-bold">Motivo</label>
+                                        <select name="motivo" id="motivo" class="form-control">
+                                            <option value="" disabled selected>Seleccione un Motivo</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="area" class="form-label fw-bold">Área</label>
+                                        <select name="area" id="area" class="form-control">
+                                            <option value="" disabled selected>Seleccione un Área</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="restante" class="form-label fw-bold">Días Restantes</label>
+                                        <select name="restante" id="restante" class="form-control">
+                                            <option value="" disabled selected>Seleccione Días Restantes</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Fechas -->
+                                <div class="row text-center py-3">
+                                    <h6 class="fw-bold">Fechas</h6>
+                                </div>
+
+                                <div class="row text-center align-items-center">
+                                    <div class="col-4">
+                                        <label class="fw-bold">Fecha de Cita</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="fw-bold">Inicio</label>
+                                        <input type="date" name="date_start" class="form-control">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="fw-bold">Fin</label>
+                                        <input type="date" name="date_end" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row text-center align-items-center py-2">
+                                    <div class="col-4">
+                                        <label class="fw-bold">Fecha de Reprogramación</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="fw-bold">Inicio</label>
+                                        <input type="date" name="date_start_reprog" class="form-control">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="fw-bold">Fin</label>
+                                        <input type="date" name="date_end_reprog" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row text-center align-items-center py-2">
+                                    <div class="col-4">
+                                        <label class="fw-bold">Fecha Generada</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="fw-bold">Inicio</label>
+                                        <input type="date" name="date_start_gen" class="form-control">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="fw-bold">Fin</label>
+                                        <input type="date" name="date_end_gen" class="form-control">
+                                    </div>
+                                </div>
+
+                                <!-- Horas -->
+                                <div class="row text-center py-3">
+                                    <h6 class="fw-bold">Horas</h6>
+                                </div>
+
+                                <div class="row text-center align-items-center">
+                                    <div class="col-4">
+                                        <label class="fw-bold">Hora de Cita</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="fw-bold">Inicio</label>
+                                        <input type="time" name="time_start" class="form-control">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="fw-bold">Fin</label>
+                                        <input type="time" name="time_end" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form >
             </div>
 
             <div class="datatables">
@@ -32,7 +168,8 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <p class="card-subtitle mb-3">
+                        <p class="card-subtitle ">
+
                             <!-- success header modal -->
                             {{-- @canany(["administrar","agregar"])
                             <button type="button" class="btn mb-1 me-1 btn-success"
@@ -44,16 +181,8 @@
                         </p>
                         <div class="mb-2">
 
-                            <a href="{{url('citas/Todos')}}" class="btn btn-warning">Todos</a>
-                                <a target="_blank" href="{{url('citas/Pendiente')}}" class="btn btn-success">Pendiente</a>
-                                <a target="_blank" href="{{url('citas/Proceso')}}" class="btn text-white "style="   background-color: #6f42c1">Proceso</a>
-                                <a target="_blank" href="{{url('citas/Atendido')}}" class="btn bg-info text-white">Atendido</a>
-                                <a target="_blank" href="{{url('citas/Derivado')}}" class="btn btn-secondary">Derivado</a>
-                                <a target="_blank" href="{{url('citas/Observado')}}" class="btn btn-danger">Observado</a>
-                                <a target="_blank" href="{{url('citas/Finalizado')}}" class="btn text-black" style="background-color: #e7e7e7">Finalizado</a>
-                                <a target="_blank" href="{{url('citas/Cerrado')}}" class="btn btn-dark">Cerrado</a>
 
-<p></p>
+
                             <h4 class="card-title mb-0">Exportar</h4>
                         </div>
                         <div class="table-responsive"id="mycontent">

@@ -17,14 +17,14 @@ class CiteController extends Controller
      */
     public function index(Request $request)
     {
-        //         $cite = Cite::with("motivo")->count();
-
-        // return $cite;
-
-        // $cite = Cite::join('motivos_cita', 'citas.motivo', '=', 'motivos_cita.nombre_motivo')
-        // ->select('citas.*')->paginate(7);
-        // //return $cite;
-        //  return view('Cite.cite', compact('cite'));
+        $total_cite = Cite::where('estado', 'like', '%')->count();
+        $total_pendiente = Cite::where('estado', 'like', 'Pendiente')->count();
+        $total_proceso = Cite::where('estado', 'like', 'Proceso')->count();
+        $total_atendido = Cite::where('estado', 'like', 'Atendido')->count();
+        $total_derivado = Cite::where('estado', 'like', 'Derivado')->count();
+        $total_observado = Cite::where('estado', 'like', 'Observado')->count();
+        $total_finalizado = Cite::where('estado', 'like', 'Finalizado')->count();
+        $total_cerrado = Cite::where('estado', 'like', 'Cerrado')->count();
 
         $user = Auth::user();
         $id_usuario = $user->id;
@@ -39,49 +39,49 @@ class CiteController extends Controller
             $join->on(DB::raw("CONCAT('%', citas.motivo, '%')"), 'LIKE', DB::raw("CONCAT('%', motivos_cita.nombre_motivo, '%')"));
         })
             ->select('citas.*')
-            ->orderBy("codigo", "asc");
+            ->orderBy('codigo', 'asc');
 
-        // Aplicar filtro por estado si se proporciona en la URL
-        if ($estado == "Todos") {
-            $estado = "%";
+        // Aplicar filtro sin filtro por area solo por estado,
+        if ($estado == 'Todos') {
+            $estado = '%';
         }
-        $query->where('citas.estado', "like", $estado);
+        $query->where('citas.estado', 'like', $estado);
+        $cite = $query->paginate(7);
 
+        // if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
+        //     // Si el rol es 1 o 5 y no tiene área, mostramos todas las citas
 
-        if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
+        //     $query = Cite::LeftJoin('motivos_cita', function ($join) {
+        //         $join->on(DB::raw("CONCAT('%', citas.motivo, '%')"), 'LIKE', DB::raw("CONCAT('%', motivos_cita.nombre_motivo, '%')"));
+        //     })
+        //         ->select('citas.*')
+        //         ->orderBy('codigo', 'asc');
+        //     $query->where('citas.estado', 'like', $estado);
+        //     $cite = $query->paginate(7);
+        // } elseif ($id_rol == 5 && !empty($id_area)) {
+        //     // Obtener las áreas habilitadas del usuario
+        //     $areas = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
 
-            // Si el rol es 1 o 5 y no tiene área, mostramos todas las citas
+        //     if (!empty($areas)) {
+        //         $cite = $query->whereIn('motivos_cita.id_area', $areas)->paginate(7);
+        //     } else {
+        //         $cite = $query->where('motivos_cita.id_area', $id_area)->paginate(7);
+        //     }
+        // } elseif ($id_rol == 4 || in_array($id_area, [1, 2, 3])) {
+        //     // Obtener las áreas habilitadas del usuario
+        //     $areas = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
 
-            $query = Cite::LeftJoin('motivos_cita', function ($join) {
-                $join->on(DB::raw("CONCAT('%', citas.motivo, '%')"), 'LIKE', DB::raw("CONCAT('%', motivos_cita.nombre_motivo, '%')"));
-            })->select('citas.*')
-                ->orderBy("codigo", "asc");
-            $query->where('citas.estado', "like", $estado);
-            $cite = $query->paginate(7);
-        } elseif ($id_rol == 5 && !empty($id_area)) {
-            // Obtener las áreas habilitadas del usuario
-            $areas = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
+        //     if (!empty($areas)) {
+        //         $cite = $query->whereIn('motivos_cita.id_area', $areas)->paginate(7);
+        //     } else {
+        //         $cite = $query->where('motivos_cita.id_area', $id_area)->paginate(7);
+        //     }
+        // } else {
+        //     // Si el usuario no está en ningún grupo especial, se filtra por su área
+        //     $cite = $query->where('motivos_cita.id_area', $id_area)->paginate(7);
+        // }
 
-            if (!empty($areas)) {
-                $cite = $query->whereIn('motivos_cita.id_area', $areas)->paginate(7);
-            } else {
-                $cite = $query->where('motivos_cita.id_area', $id_area)->paginate(7);
-            }
-        } elseif ($id_rol == 4 || in_array($id_area, [1, 2, 3])) {
-            // Obtener las áreas habilitadas del usuario
-            $areas = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
-
-            if (!empty($areas)) {
-                $cite = $query->whereIn('motivos_cita.id_area', $areas)->paginate(7);
-            } else {
-                $cite = $query->where('motivos_cita.id_area', $id_area)->paginate(7);
-            }
-        } else {
-            // Si el usuario no está en ningún grupo especial, se filtra por su área
-            $cite = $query->where('motivos_cita.id_area', $id_area)->paginate(7);
-        }
-
-        return view('Cite.cite', compact('cite'));
+        return view('Cite.cite', compact('cite','total_cite','total_pendiente','total_proceso','total_atendido','total_derivado','total_observado','total_finalizado','total_cerrado'));
     }
 
     /**
@@ -89,11 +89,6 @@ class CiteController extends Controller
      */
     public function validate_user(Request $request)
     {
-        // Validar que el ID sea un número válido
-        // $request->validate([
-        //     'id_usuario' => 'required|integer|exists:users,id',
-        // ]);
-
         // Buscar el usuario por ID
         $user = User::where('id_usuario', '=', $request->id_usuario)->first();
 
@@ -110,21 +105,17 @@ class CiteController extends Controller
 
     public function update_state()
     {
-
-
-
-
         try {
             DB::statement("
            UPDATE citas c
     JOIN (
-        SELECT 
+        SELECT
             co.id_cita,
             co.estado AS nuevo_estado
         FROM comentarios co
         WHERE co.id_comentario = (
-            SELECT MAX(co2.id_comentario) 
-            FROM comentarios co2 
+            SELECT MAX(co2.id_comentario)
+            FROM comentarios co2
             WHERE co2.id_cita = co.id_cita
         )
     ) AS subquery
@@ -132,9 +123,9 @@ class CiteController extends Controller
     SET c.estado = subquery.nuevo_estado;
 ");
 
-            return response()->json(["status" => "success", "message" => "Estados actualizados correctamente"]);
+            return response()->json(['status' => 'success', 'message' => 'Estados actualizados correctamente']);
         } catch (\Exception $e) {
-            return response()->json(["status" => "error", "message" => $e->getMessage()], 500);
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
     /**
