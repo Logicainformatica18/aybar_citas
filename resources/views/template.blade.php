@@ -33,6 +33,7 @@
     <script src="{{ asset('js/function.js') }}"></script>
     <script src="{{ asset('js/axios.min.js') }}"></script>
     <script src="{{ asset('js/Book.js') }}"></script>
+
 </head>
 
 <body>

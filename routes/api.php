@@ -29,5 +29,7 @@ Route::middleware('auth:sanctum')->group(function ()
 
 Route::post('/citas/actualizar_estado', [App\Http\Controllers\CiteController::class, 'update_state']);
 
+Route::get('/citas/count', [App\Http\Controllers\CiteController::class, 'count']);
+
 
 

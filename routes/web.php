@@ -23,7 +23,7 @@ Route::get('/siscitas/{id_usuario}', [App\Http\Controllers\CiteController::class
 Route::get('/citas/{estado}', [App\Http\Controllers\CiteController::class, 'index'])->name('citas.index');
 Route::get('/citas/{estado}/', [App\Http\Controllers\CiteController::class, 'index'])->name('citas.index');
 
-
+Route::post('/citeEdit', [App\Http\Controllers\CiteController::class, 'edit']);
 
 
 

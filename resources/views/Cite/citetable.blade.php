@@ -8,6 +8,7 @@
                 <th><img width="20" src="https://cdn-icons-png.flaticon.com/512/6671/6671938.png" alt=""
                         srcset=""></th>
 
+                {{-- <th>Acción</th> --}}
                 <th>Código</th>
                 <th>Cliente</th>
                 <th>DNI</th>
@@ -71,7 +72,12 @@
 
 
 
-
+                    {{-- <td>
+                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#success-header-modal"
+                            fdprocessedid="cw61t3"
+                            onclick="citeEdit('{{ $cites->id_cita }}');return false"style="width: 100px">+ Ver
+                            más</button>
+                    </td> --}}
                     <td>{{ $cites->codigo }}</td>
                     <td>{{ $cites->customer->Razon_Social }}</td>
                     <td>{{ $cites->customer->DNI }}</td>
@@ -102,44 +108,47 @@
 
                     @php
 
+                        $estadoFecha = '';
 
-                    $estadoFecha = '';
+                        // Verificar si el estado NO es 'Atendido', 'Cerrado' o 'Finalizado'
+                        if (!in_array($cites->estado, ['Atendido', 'Cerrado', 'Finalizado'])) {
+                            // Obtener la fecha actual en la zona horaria correcta
+                            $fecha_actual = \Carbon\Carbon::now('America/Lima');
 
-                    // Verificar si el estado NO es 'Atendido', 'Cerrado' o 'Finalizado'
-                    if (!in_array($cites->estado, ['Atendido', 'Cerrado', 'Finalizado'])) {
+                            // Convertir `fecha_cita` y `fecha_repro` en objetos \Carbon\Carbon (solo si son fechas válidas)
+                            $fecha_cita =
+                                strtotime($cites->fecha) !== false
+                                    ? \Carbon\Carbon::parse($cites->fecha, 'America/Lima')
+                                    : null;
+                            $fecha_repro =
+                                strtotime($cites->fecha_repro) !== false
+                                    ? \Carbon\Carbon::parse($cites->fecha_repro, 'America/Lima')
+                                    : null;
 
-                        // Obtener la fecha actual en la zona horaria correcta
-                        $fecha_actual = \Carbon\Carbon::now('America/Lima');
+                            try {
+                                $dias_diferencia = 0;
 
-                        // Convertir `fecha_cita` y `fecha_repro` en objetos \Carbon\Carbon (solo si son fechas válidas)
-                        $fecha_cita = strtotime($cites->fecha) !== false ? \Carbon\Carbon::parse($cites->fecha, 'America/Lima') : null;
-                        $fecha_repro = strtotime($cites->fecha_repro) !== false ? \Carbon\Carbon::parse($cites->fecha_repro, 'America/Lima') : null;
+                                // Calcular la diferencia en días (si hay una fecha válida de reprogramación, usar esa)
+                                if ($fecha_repro) {
+                                    $dias_diferencia = $fecha_actual->diffInDays($fecha_repro, false);
+                                } elseif ($fecha_cita) {
+                                    $dias_diferencia = $fecha_actual->diffInDays($fecha_cita, false);
+                                } else {
+                                    $estadoFecha = 'Por Definir'; // Si ambas fechas son inválidas
+                                }
 
-                        try {
-                            $dias_diferencia = 0;
-
-                            // Calcular la diferencia en días (si hay una fecha válida de reprogramación, usar esa)
-                            if ($fecha_repro) {
-                                $dias_diferencia = $fecha_actual->diffInDays($fecha_repro, false);
-                            } elseif ($fecha_cita) {
-                                $dias_diferencia = $fecha_actual->diffInDays($fecha_cita, false);
-                            } else {
-                                $estadoFecha = "Por Definir"; // Si ambas fechas son inválidas
+                                // Determinar el estado de la fecha
+                                if ($dias_diferencia == 0 && $fecha_cita != '') {
+                                    $estadoFecha = 'Hoy';
+                                } elseif ($dias_diferencia > 0) {
+                                    $estadoFecha = "$dias_diferencia días";
+                                } else {
+                                    $estadoFecha = 'Vencido';
+                                }
+                            } catch (\Exception $e) {
+                                $estadoFecha = 'Error en fecha';
                             }
-
-                            // Determinar el estado de la fecha
-                            if ($dias_diferencia == 0 && $fecha_cita !="") {
-                                $estadoFecha = 'Hoy';
-                            } elseif ($dias_diferencia > 0) {
-                                $estadoFecha = "$dias_diferencia días";
-                            } else {
-                                $estadoFecha = 'Vencido';
-                            }
-
-                        } catch (\Exception $e) {
-                            $estadoFecha = "Error en fecha";
                         }
-                    }
                     @endphp
 
                     <td>

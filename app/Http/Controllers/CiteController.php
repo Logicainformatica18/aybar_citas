@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreCiteRequest;
 use App\Http\Requests\UpdateCiteRequest;
-
+use stdClass;
 class CiteController extends Controller
 {
     /**
@@ -135,6 +135,29 @@ class CiteController extends Controller
     {
         //
     }
+    public function count()
+    {
+        $cite = new stdClass();
+        $estadoCounts = Cite::select('estado', \DB::raw('count(*) as count'))
+                            ->groupBy('estado')
+                            ->get()
+                            ->keyBy('estado')
+                            ->map(function ($item) {
+                                return $item->count;
+                            });
+
+        $cite->total = $estadoCounts->sum(); // Total count of all states
+
+        // Assigning individual state counts
+        $cite->total_pendiente = $estadoCounts->get('Pendiente', 0);
+        $cite->total_proceso = $estadoCounts->get('Proceso', 0);
+        $cite->total_atendido = $estadoCounts->get('Atendido', 0);
+        $cite->total_derivado = $estadoCounts->get('Derivado', 0);
+        $cite->total_observado = $estadoCounts->get('Observado', 0);
+        $cite->total_finalizado = $estadoCounts->get('Finalizado', 0);
+        $cite->total_cerrado = $estadoCounts->get('Cerrado', 0);
+        return $cite;
+    }
 
     /**
      * Display the specified resource.
@@ -147,9 +170,11 @@ class CiteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cite $cite)
+    public function edit(Request $request)
     {
-        //
+        $cite = Cite::where("id_cita","=",$request->id)->first();
+        return $cite;
+
     }
 
     /**
