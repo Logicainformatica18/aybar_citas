@@ -73,51 +73,41 @@
                                 </button>
 
                             </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <!-- Primera Fila -->
                                     <div class="row text-center">
+                                        <!-- Motivo -->
                                         <div class="col-4">
                                             <label for="motivo" class="form-label fw-bold">Motivo</label>
                                             <select name="motivo" id="motivo" class="form-control">
-                                                <option value=""  selected>Seleccione un Motivo</option>
-                                                @foreach ($motivos as $motivo)
-                                                <option value="{{$motivo->motivo}}" >{{$motivo->motivo}}</option>
+                                                <option value="" selected>Seleccione un Motivo</option>
+                                                @foreach ($motivos as $m)
+                                                    <option value="{{ $m->motivo }}" {{ session('motivo') == $m->motivo ? 'selected' : '' }}>
+                                                        {{ $m->motivo }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
+
+                                        <!-- Tipo -->
                                         <div class="col-4">
                                             <label for="tipo" class="form-label fw-bold">Tipos</label>
                                             <select name="tipo" id="tipo" class="form-control">
-                                                <option value=""  selected>Seleccione un Tipo</option>
-                                                @foreach ($tipo as $tipos)
-                                                <option value="{{$tipos->tipo}}" >{{$tipos->tipo}}</option>
+                                                <option value="" selected>Seleccione un Tipo</option>
+                                                @foreach ($tipos as $t)
+                                                    <option value="{{ $t->tipo }}" {{ session('tipo') == $t->tipo ? 'selected' : '' }}>
+                                                        {{ $t->tipo }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
+
+                                        <!-- Botón Filtrar -->
                                         <div class="col-4">
                                             <label for="" class="form-label fw-bold">&nbsp;</label>
-                                        <button type="button" class="w-100 btn btn-success"onclick="citeFilter();return false">Filtrar</button>
+                                            <button type="submit" class="w-100 btn btn-success">Filtrar</button>
                                         </div>
-                                        {{-- <div class="col-4">
-                                            <label for="area" class="form-label fw-bold">Área</label>
-                                            <select name="area" id="area" class="form-control">
-                                                <option value="" disabled selected>Seleccione un Área</option>
-                                                @foreach ($areas as $area)
-                                                <option value="{{$area->descripcion}}" >{{$area->descripcion}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div> --}}
-                                        {{-- <div class="col-4">
-                                            <label for="restante" class="form-label fw-bold">Días Restantes</label>
-                                            <select name="restante" id="restante" class="form-control">
-                                                <option value="" disabled selected>Seleccione Días Restantes</option>
-                                                <option value="vencido" >Vencido</option>
-                                                @for ($i=1;$i<=30;$i++)
-                                                <option value="{{$i}}" >{{$i}}</option>
-                                                @endfor
-                                            </select>
-                                        </div> --}}
                                     </div>
 
                                     <!-- Fechas -->
@@ -125,68 +115,53 @@
                                         <h6 class="fw-bold">Fechas</h6>
                                     </div>
 
+                                    <!-- Fecha de Cita -->
                                     <div class="row text-center align-items-center">
                                         <div class="col-4">
                                             <label class="fw-bold">Fecha de Cita</label>
                                         </div>
                                         <div class="col-4">
                                             <label class="fw-bold">Inicio</label>
-                                            <input type="date" name="date_start" class="form-control">
+                                            <input type="date" name="date_start" class="form-control" value="{{ session('date_start') }}">
                                         </div>
                                         <div class="col-4">
                                             <label class="fw-bold">Fin</label>
-                                            <input type="date" name="date_end" class="form-control">
+                                            <input type="date" name="date_end" class="form-control" value="{{ session('date_end') }}">
                                         </div>
                                     </div>
 
+                                    <!-- Fecha de Reprogramación -->
                                     <div class="row text-center align-items-center py-2">
                                         <div class="col-4">
                                             <label class="fw-bold">Fecha de Reprogramación</label>
                                         </div>
                                         <div class="col-4">
                                             <label class="fw-bold">Inicio</label>
-                                            <input type="date" name="date_start_reprog" class="form-control">
+                                            <input type="date" name="date_start_reprog" class="form-control" value="{{ session('date_start_reprog') }}">
                                         </div>
                                         <div class="col-4">
                                             <label class="fw-bold">Fin</label>
-                                            <input type="date" name="date_end_reprog" class="form-control">
+                                            <input type="date" name="date_end_reprog" class="form-control" value="{{ session('date_end_reprog') }}">
                                         </div>
                                     </div>
 
+                                    <!-- Fecha Generada -->
                                     <div class="row text-center align-items-center py-2">
                                         <div class="col-4">
                                             <label class="fw-bold">Fecha Generada</label>
                                         </div>
                                         <div class="col-4">
                                             <label class="fw-bold">Inicio</label>
-                                            <input type="date" name="date_start_gen" class="form-control">
+                                            <input type="date" name="date_start_gen" class="form-control" value="{{ session('date_start_gen') }}">
                                         </div>
                                         <div class="col-4">
                                             <label class="fw-bold">Fin</label>
-                                            <input type="date" name="date_end_gen" class="form-control">
+                                            <input type="date" name="date_end_gen" class="form-control" value="{{ session('date_end_gen') }}">
                                         </div>
                                     </div>
-
-                                    <!-- Horas -->
-                                    {{-- <div class="row text-center py-3">
-                                        <h6 class="fw-bold">Horas</h6>
-                                    </div> --}}
-
-                                    {{-- <div class="row text-center align-items-center">
-                                        <div class="col-4">
-                                            <label class="fw-bold">Hora de Cita</label>
-                                        </div>
-                                        <div class="col-4">
-                                            <label class="fw-bold">Inicio</label>
-                                            <input type="time" name="time_start" class="form-control">
-                                        </div>
-                                        <div class="col-4">
-                                            <label class="fw-bold">Fin</label>
-                                            <input type="time" name="time_end" class="form-control">
-                                        </div>
-                                    </div> --}}
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </form>

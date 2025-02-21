@@ -17,84 +17,74 @@ class CiteController extends Controller
      */
     public function index(Request $request)
     {
+        // Obtener valores de la sesión si existen, sino usar valores por defecto
+        $estado = session('estado', 'Todos');
+        $motivo = session('motivo', '');
+        $tipo = session('tipo', '');
+        $date_start = session('date_start', '');
+        $date_end = session('date_end', '');
+        $date_start_reprog = session('date_start_reprog', '');
+        $date_end_reprog = session('date_end_reprog', '');
+        $date_start_gen = session('date_start_gen', '');
+        $date_end_gen = session('date_end_gen', '');
 
+        // Si el estado es "Todos", usar "%"
+        $estadoFiltro = $estado === 'Todos' ? '%' : $estado;
 
+        // Obtener motivos y tipos únicos
         $motivos = DB::table('citas')->select('motivo')->distinct()->orderBy("motivo", "asc")->get();
-        $tipo = DB::table('citas')->select('tipo')->distinct()->orderBy("tipo", "asc")->get();
+        $tipos = DB::table('citas')->select('tipo')->distinct()->orderBy("tipo", "asc")->get();
 
+        // Obtener conteos de estado
+        $total_cite = Cite::count();
+        $total_pendiente = Cite::where('estado', 'Pendiente')->count();
+        $total_proceso = Cite::where('estado', 'Proceso')->count();
+        $total_atendido = Cite::where('estado', 'Atendido')->count();
+        $total_derivado = Cite::where('estado', 'Derivado')->count();
+        $total_observado = Cite::where('estado', 'Observado')->count();
+        $total_finalizado = Cite::where('estado', 'Finalizado')->count();
+        $total_cerrado = Cite::where('estado', 'Cerrado')->count();
 
-
-
-
-        $total_cite = Cite::where('estado', 'like', '%')->count();
-        $total_pendiente = Cite::where('estado', 'like', 'Pendiente')->count();
-        $total_proceso = Cite::where('estado', 'like', 'Proceso')->count();
-        $total_atendido = Cite::where('estado', 'like', 'Atendido')->count();
-        $total_derivado = Cite::where('estado', 'like', 'Derivado')->count();
-        $total_observado = Cite::where('estado', 'like', 'Observado')->count();
-        $total_finalizado = Cite::where('estado', 'like', 'Finalizado')->count();
-        $total_cerrado = Cite::where('estado', 'like', 'Cerrado')->count();
-
+        // Obtener información del usuario autenticado
         $user = Auth::user();
         $id_usuario = $user->id;
         $id_rol = $user->id_rol;
         $id_area = $user->id_area;
 
-        // Obtener el estado desde la URL (?estado=pendiente)
-        $estado = $request->estado;
-
         // Consulta base con LEFT JOIN y LIKE en motivos_cita
-        $query = Cite::Join('motivos_cita', function ($join) {
-            $join->on(DB::raw("CONCAT('%', citas.motivo, '%')"), 'LIKE', DB::raw("CONCAT('%', motivos_cita.nombre_motivo, '%')"));
+        $query = Cite::join('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
         })
             ->select('citas.*')
+            ->where('citas.estado', 'like', $estadoFiltro)
             ->orderBy('codigo', 'asc');
 
-        // Aplicar filtro sin filtro por area solo por estado,
-        if ($estado == 'Todos') {
-            $estado = '%';
+        // Aplicar filtros si existen en sesión
+        if (!empty($motivo)) {
+            $query->where("motivo", "like", "%$motivo%");
         }
-        $query->where('citas.estado', 'like', $estado);
+        if (!empty($tipo)) {
+            $query->where("tipo", "like", "%$tipo%");
+        }
+        if (!empty($date_start) && !empty($date_end)) {
+            $query->whereBetween('fecha', [$date_start, $date_end]);
+        }
+        if (!empty($date_start_reprog) && !empty($date_end_reprog)) {
+            $query->whereBetween('fecha_repro', [$date_start_reprog, $date_end_reprog]);
+        }
+        if (!empty($date_start_gen) && !empty($date_end_gen)) {
+            $query->whereBetween('fecha_generada', [$date_start_gen, $date_end_gen]);
+        }
+
+        // Obtener citas con paginación
         $cite = $query->paginate(7);
 
-        // if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
-        //     // Si el rol es 1 o 5 y no tiene área, mostramos todas las citas
-
-        //     $query = Cite::LeftJoin('motivos_cita', function ($join) {
-        //         $join->on(DB::raw("CONCAT('%', citas.motivo, '%')"), 'LIKE', DB::raw("CONCAT('%', motivos_cita.nombre_motivo, '%')"));
-        //     })
-        //         ->select('citas.*')
-        //         ->orderBy('codigo', 'asc');
-        //     $query->where('citas.estado', 'like', $estado);
-        //     $cite = $query->paginate(7);
-        // } elseif ($id_rol == 5 && !empty($id_area)) {
-        //     // Obtener las áreas habilitadas del usuario
-        //     $areas = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
-
-        //     if (!empty($areas)) {
-        //         $cite = $query->whereIn('motivos_cita.id_area', $areas)->paginate(7);
-        //     } else {
-        //         $cite = $query->where('motivos_cita.id_area', $id_area)->paginate(7);
-        //     }
-        // } elseif ($id_rol == 4 || in_array($id_area, [1, 2, 3])) {
-        //     // Obtener las áreas habilitadas del usuario
-        //     $areas = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
-
-        //     if (!empty($areas)) {
-        //         $cite = $query->whereIn('motivos_cita.id_area', $areas)->paginate(7);
-        //     } else {
-        //         $cite = $query->where('motivos_cita.id_area', $id_area)->paginate(7);
-        //     }
-        // } else {
-        //     // Si el usuario no está en ningún grupo especial, se filtra por su área
-        //     $cite = $query->where('motivos_cita.id_area', $id_area)->paginate(7);
-        // }
-
+        // Retornar la vista con los datos
         return view(
             'Cite.cite',
             compact(
                 'motivos',
-                'tipo',
+                'tipos',
                 'cite',
                 'total_cite',
                 'total_pendiente',
@@ -107,6 +97,7 @@ class CiteController extends Controller
             )
         );
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -188,48 +179,23 @@ class CiteController extends Controller
      */
     public function filter(Request $request)
     {
+        // Guardar los filtros en la sesión
+        session([
+            'estado' => $request->estado ?? 'Todos',
+            'motivo' => $request->motivo ?? '',
+            'tipo' => $request->tipo ?? '',
+            'date_start' => $request->date_start ?? '',
+            'date_end' => $request->date_end ?? '',
+            'date_start_reprog' => $request->date_start_reprog ?? '',
+            'date_end_reprog' => $request->date_end_reprog ?? '',
+            'date_start_gen' => $request->date_start_gen ?? '',
+            'date_end_gen' => $request->date_end_gen ?? '',
+        ]);
 
-
-         // Obtener el estado desde la URL (?estado=pendiente)
-        $estado = $request->estado ?? 'Todos'; // Si no se recibe, por defecto es "Todos"
-
-        // Si el estado es "Todos", se usa "%" para traer todo
-        $estadoFiltro = $estado === 'Todos' ? '%' : $estado;
-
-        // Consulta base con LEFT JOIN y LIKE en motivos_cita
-        $query = Cite::leftJoin('motivos_cita', function ($join) {
-            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-        })
-            ->select('citas.*')
-            ->where('citas.estado', 'like', $estadoFiltro)
-            ->orderBy('codigo', 'asc');
-
-
-        $query = $query->where("motivo", "like", $request->motivo ?: "%");
-        $query = $query->where("tipo", "like", $request->tipo ?: "%");
-        if ($request->filled('date_start') && $request->filled('date_end')) {
-            $query->whereBetween('fecha', [$request->date_start, $request->date_end]);
-        }
-
-
-        if ($request->filled('date_start_reprog') && $request->filled('date_end_reprog')) {
-            $query->whereBetween('fecha_repro', [$request->date_start_reprog, $request->date_end_reprog]);
-        }
-        if ($request->filled('date_start_gen') && $request->filled('date_end_gen')) {
-            $query->whereBetween('fecha_generada', [$request->date_start_gen, $request->date_end_gen]);
-        }
-        // Obtener las citas con paginación
-        $cite = $query->paginate(7);
-
-
-
-
-        // Retornar la vista con los datos procesados
-        return view('Cite.citetable', compact('cite'));
-
-
-
+        // Redirigir al index para aplicar los filtros
+        return redirect()->route('citas.index');
     }
+
 
     /**
      * Show the form for editing the specified resource.
