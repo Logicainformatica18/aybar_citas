@@ -190,13 +190,7 @@ class CiteController extends Controller
     {
 
 
-        // Obtener información del usuario autenticado
-        $user = Auth::user();
-        $id_usuario = $user->id;
-        $id_rol = $user->id_rol;
-        $id_area = $user->id_area;
-
-        // Obtener el estado desde la URL (?estado=pendiente)
+         // Obtener el estado desde la URL (?estado=pendiente)
         $estado = $request->estado ?? 'Todos'; // Si no se recibe, por defecto es "Todos"
 
         // Si el estado es "Todos", se usa "%" para traer todo
@@ -226,6 +220,8 @@ class CiteController extends Controller
         }
         // Obtener las citas con paginación
         $cite = $query->paginate(7);
+
+
 
 
         // Retornar la vista con los datos procesados

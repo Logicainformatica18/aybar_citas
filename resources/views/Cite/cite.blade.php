@@ -71,7 +71,7 @@
                                     data-bs-target="#collapseOne">
                                     Filtros Avanzados
                                 </button>
-                              &nbsp;&nbsp;  <button type="button" class="btn btn-success"onclick="citeFilter();return false">Filtrar</button>
+
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
@@ -94,6 +94,10 @@
                                                 <option value="{{$tipos->tipo}}" >{{$tipos->tipo}}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="" class="form-label fw-bold">&nbsp;</label>
+                                        <button type="button" class="w-100 btn btn-success"onclick="citeFilter();return false">Filtrar</button>
                                         </div>
                                         {{-- <div class="col-4">
                                             <label for="area" class="form-label fw-bold">Área</label>

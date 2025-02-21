@@ -136,7 +136,6 @@ function citeFilter() {
 
 // Obtiene el último segmento de la URL
     let estado = pathArray[pathArray.length - 1];
-    alert(estado);
 
     formData.append("estado", estado);
         axios({
