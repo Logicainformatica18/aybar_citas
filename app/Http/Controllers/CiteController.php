@@ -17,6 +17,15 @@ class CiteController extends Controller
      */
     public function index(Request $request)
     {
+
+
+        $motivos = DB::table('citas')->select('motivo')->distinct()->orderBy("motivo", "asc")->get();
+        $tipo = DB::table('citas')->select('tipo')->distinct()->orderBy("tipo", "asc")->get();
+
+
+
+
+
         $total_cite = Cite::where('estado', 'like', '%')->count();
         $total_pendiente = Cite::where('estado', 'like', 'Pendiente')->count();
         $total_proceso = Cite::where('estado', 'like', 'Proceso')->count();
@@ -81,7 +90,22 @@ class CiteController extends Controller
         //     $cite = $query->where('motivos_cita.id_area', $id_area)->paginate(7);
         // }
 
-        return view('Cite.cite', compact('cite','total_cite','total_pendiente','total_proceso','total_atendido','total_derivado','total_observado','total_finalizado','total_cerrado'));
+        return view(
+            'Cite.cite',
+            compact(
+                'motivos',
+                'tipo',
+                'cite',
+                'total_cite',
+                'total_pendiente',
+                'total_proceso',
+                'total_atendido',
+                'total_derivado',
+                'total_observado',
+                'total_finalizado',
+                'total_cerrado'
+            )
+        );
     }
 
     /**
@@ -139,12 +163,12 @@ class CiteController extends Controller
     {
         $cite = new stdClass();
         $estadoCounts = Cite::select('estado', \DB::raw('count(*) as count'))
-                            ->groupBy('estado')
-                            ->get()
-                            ->keyBy('estado')
-                            ->map(function ($item) {
-                                return $item->count;
-                            });
+            ->groupBy('estado')
+            ->get()
+            ->keyBy('estado')
+            ->map(function ($item) {
+                return $item->count;
+            });
 
         $cite->total = $estadoCounts->sum(); // Total count of all states
 
@@ -162,9 +186,53 @@ class CiteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cite $cite)
+    public function filter(Request $request)
     {
-        //
+
+
+        // Obtener información del usuario autenticado
+        $user = Auth::user();
+        $id_usuario = $user->id;
+        $id_rol = $user->id_rol;
+        $id_area = $user->id_area;
+
+        // Obtener el estado desde la URL (?estado=pendiente)
+        $estado = $request->estado ?? 'Todos'; // Si no se recibe, por defecto es "Todos"
+
+        // Si el estado es "Todos", se usa "%" para traer todo
+        $estadoFiltro = $estado === 'Todos' ? '%' : $estado;
+
+        // Consulta base con LEFT JOIN y LIKE en motivos_cita
+        $query = Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })
+            ->select('citas.*')
+            ->where('citas.estado', 'like', $estadoFiltro)
+            ->orderBy('codigo', 'asc');
+
+
+        $query = $query->where("motivo", "like", $request->motivo ?: "%");
+        $query = $query->where("tipo", "like", $request->tipo ?: "%");
+        if ($request->filled('date_start') && $request->filled('date_end')) {
+            $query->whereBetween('fecha', [$request->date_start, $request->date_end]);
+        }
+
+
+        if ($request->filled('date_start_reprog') && $request->filled('date_end_reprog')) {
+            $query->whereBetween('fecha_repro', [$request->date_start_reprog, $request->date_end_reprog]);
+        }
+        if ($request->filled('date_start_gen') && $request->filled('date_end_gen')) {
+            $query->whereBetween('fecha_generada', [$request->date_start_gen, $request->date_end_gen]);
+        }
+        // Obtener las citas con paginación
+        $cite = $query->paginate(7);
+
+
+        // Retornar la vista con los datos procesados
+        return view('Cite.citetable', compact('cite'));
+
+
+
     }
 
     /**
@@ -172,7 +240,7 @@ class CiteController extends Controller
      */
     public function edit(Request $request)
     {
-        $cite = Cite::where("id_cita","=",$request->id)->first();
+        $cite = Cite::where("id_cita", "=", $request->id)->first();
         return $cite;
 
     }

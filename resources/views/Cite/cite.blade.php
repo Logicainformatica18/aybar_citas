@@ -4,6 +4,7 @@
         <div class="">
             <div class="card card-body py-3">
                 <form action=""id="cite_filter">
+                    @csrf
                     <div class="row align-items-center">
                         <div class="col-12">
                             <div class="d-sm-flex align-items-center justify-space-between">
@@ -63,106 +64,127 @@
                         </div>
                     </div>
 
-                    {{-- <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                Datos de la Cita
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <!-- Primera Fila -->
-                                <div class="row text-center">
-                                    <div class="col-4">
-                                        <label for="motivo" class="form-label fw-bold">Motivo</label>
-                                        <select name="motivo" id="motivo" class="form-control">
-                                            <option value="" disabled selected>Seleccione un Motivo</option>
-                                        </select>
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne">
+                                    Filtros Avanzados
+                                </button>
+                              &nbsp;&nbsp;  <button type="button" class="btn btn-success"onclick="citeFilter();return false">Filtrar</button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <!-- Primera Fila -->
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <label for="motivo" class="form-label fw-bold">Motivo</label>
+                                            <select name="motivo" id="motivo" class="form-control">
+                                                <option value=""  selected>Seleccione un Motivo</option>
+                                                @foreach ($motivos as $motivo)
+                                                <option value="{{$motivo->motivo}}" >{{$motivo->motivo}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="tipo" class="form-label fw-bold">Tipos</label>
+                                            <select name="tipo" id="tipo" class="form-control">
+                                                <option value=""  selected>Seleccione un Tipo</option>
+                                                @foreach ($tipo as $tipos)
+                                                <option value="{{$tipos->tipo}}" >{{$tipos->tipo}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        {{-- <div class="col-4">
+                                            <label for="area" class="form-label fw-bold">Área</label>
+                                            <select name="area" id="area" class="form-control">
+                                                <option value="" disabled selected>Seleccione un Área</option>
+                                                @foreach ($areas as $area)
+                                                <option value="{{$area->descripcion}}" >{{$area->descripcion}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div> --}}
+                                        {{-- <div class="col-4">
+                                            <label for="restante" class="form-label fw-bold">Días Restantes</label>
+                                            <select name="restante" id="restante" class="form-control">
+                                                <option value="" disabled selected>Seleccione Días Restantes</option>
+                                                <option value="vencido" >Vencido</option>
+                                                @for ($i=1;$i<=30;$i++)
+                                                <option value="{{$i}}" >{{$i}}</option>
+                                                @endfor
+                                            </select>
+                                        </div> --}}
                                     </div>
-                                    <div class="col-4">
-                                        <label for="area" class="form-label fw-bold">Área</label>
-                                        <select name="area" id="area" class="form-control">
-                                            <option value="" disabled selected>Seleccione un Área</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="restante" class="form-label fw-bold">Días Restantes</label>
-                                        <select name="restante" id="restante" class="form-control">
-                                            <option value="" disabled selected>Seleccione Días Restantes</option>
-                                        </select>
-                                    </div>
-                                </div>
 
-                                <!-- Fechas -->
-                                <div class="row text-center py-3">
-                                    <h6 class="fw-bold">Fechas</h6>
-                                </div>
+                                    <!-- Fechas -->
+                                    <div class="row text-center py-3">
+                                        <h6 class="fw-bold">Fechas</h6>
+                                    </div>
 
-                                <div class="row text-center align-items-center">
-                                    <div class="col-4">
-                                        <label class="fw-bold">Fecha de Cita</label>
+                                    <div class="row text-center align-items-center">
+                                        <div class="col-4">
+                                            <label class="fw-bold">Fecha de Cita</label>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="fw-bold">Inicio</label>
+                                            <input type="date" name="date_start" class="form-control">
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="fw-bold">Fin</label>
+                                            <input type="date" name="date_end" class="form-control">
+                                        </div>
                                     </div>
-                                    <div class="col-4">
-                                        <label class="fw-bold">Inicio</label>
-                                        <input type="date" name="date_start" class="form-control">
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="fw-bold">Fin</label>
-                                        <input type="date" name="date_end" class="form-control">
-                                    </div>
-                                </div>
 
-                                <div class="row text-center align-items-center py-2">
-                                    <div class="col-4">
-                                        <label class="fw-bold">Fecha de Reprogramación</label>
+                                    <div class="row text-center align-items-center py-2">
+                                        <div class="col-4">
+                                            <label class="fw-bold">Fecha de Reprogramación</label>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="fw-bold">Inicio</label>
+                                            <input type="date" name="date_start_reprog" class="form-control">
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="fw-bold">Fin</label>
+                                            <input type="date" name="date_end_reprog" class="form-control">
+                                        </div>
                                     </div>
-                                    <div class="col-4">
-                                        <label class="fw-bold">Inicio</label>
-                                        <input type="date" name="date_start_reprog" class="form-control">
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="fw-bold">Fin</label>
-                                        <input type="date" name="date_end_reprog" class="form-control">
-                                    </div>
-                                </div>
 
-                                <div class="row text-center align-items-center py-2">
-                                    <div class="col-4">
-                                        <label class="fw-bold">Fecha Generada</label>
+                                    <div class="row text-center align-items-center py-2">
+                                        <div class="col-4">
+                                            <label class="fw-bold">Fecha Generada</label>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="fw-bold">Inicio</label>
+                                            <input type="date" name="date_start_gen" class="form-control">
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="fw-bold">Fin</label>
+                                            <input type="date" name="date_end_gen" class="form-control">
+                                        </div>
                                     </div>
-                                    <div class="col-4">
-                                        <label class="fw-bold">Inicio</label>
-                                        <input type="date" name="date_start_gen" class="form-control">
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="fw-bold">Fin</label>
-                                        <input type="date" name="date_end_gen" class="form-control">
-                                    </div>
-                                </div>
 
-                                <!-- Horas -->
-                                <div class="row text-center py-3">
-                                    <h6 class="fw-bold">Horas</h6>
-                                </div>
+                                    <!-- Horas -->
+                                    {{-- <div class="row text-center py-3">
+                                        <h6 class="fw-bold">Horas</h6>
+                                    </div> --}}
 
-                                <div class="row text-center align-items-center">
-                                    <div class="col-4">
-                                        <label class="fw-bold">Hora de Cita</label>
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="fw-bold">Inicio</label>
-                                        <input type="time" name="time_start" class="form-control">
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="fw-bold">Fin</label>
-                                        <input type="time" name="time_end" class="form-control">
-                                    </div>
+                                    {{-- <div class="row text-center align-items-center">
+                                        <div class="col-4">
+                                            <label class="fw-bold">Hora de Cita</label>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="fw-bold">Inicio</label>
+                                            <input type="time" name="time_start" class="form-control">
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="fw-bold">Fin</label>
+                                            <input type="time" name="time_end" class="form-control">
+                                        </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div> --}}
                 </form>
             </div>
 
@@ -259,14 +281,15 @@
                             <input type="hidden" name="id" id="id">
                             {{ csrf_field() }}
 
-                            Descripción : <input type="text" name="description" id="description" class="form-control">
+                            Descripción : <input type="text" name="description" id="description"
+                                class="form-control">
 
                             Detalle : <input type="text" name="detail" id="detail" class="form-control">
 
                     </div>
                     <div class="modal-footer">
-                        <input type="button" value="Nuevo" class="btn btn-primary" onclick="New();$('#cite')[0].reset();"
-                            name="new">
+                        <input type="button" value="Nuevo" class="btn btn-primary"
+                            onclick="New();$('#cite')[0].reset();" name="new">
                         {{-- @canany(['administrar', 'agregar'])<input type="button" value="Guardar" class="btn bg-success-subtle text-success "
                             onclick="citeStore()" id="create">@endcanany
                             @canany(['administrar', 'actualizar'])

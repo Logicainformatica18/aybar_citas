@@ -129,22 +129,35 @@ function citeDestroy(id) {
   }
 }
 
-function citeShow() {
-  var formData = new FormData(document.getElementById("show"));
-  axios({
-    method: "post",
-    url: "../citeShow",
-    data: formData
-  })
-    .then(function(response) {
-      //handle success
-      var contentdiv = document.getElementById("mycontent");
-      contentdiv.innerHTML = response.data;
-      //carga pdf- csv - excel
-      datatable_load();
-    })
-    .catch(function(response) {
-      //handle error
-      console.log(response);
-    });
-}
+function citeFilter() {
+    var formData = new FormData(document.getElementById("cite_filter"));
+
+    let pathArray = window.location.pathname.split('/');
+
+// Obtiene el último segmento de la URL
+    let estado = pathArray[pathArray.length - 1];
+    alert(estado);
+
+    formData.append("estado", estado);
+        axios({
+          method: "post",
+          url: "../citeFilter",
+          data: formData,
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+          .then(function(response) {
+            //handle success
+            var contentdiv = document.getElementById("mycontent");
+
+            contentdiv.innerHTML = response.data;
+            //carga pdf- csv - excel
+            datatable_load();
+
+          })
+          .catch(function(response) {
+            //handle error
+            console.log(response);
+          });
+      }
