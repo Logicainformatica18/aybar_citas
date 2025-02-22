@@ -15,21 +15,24 @@ class CiteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index($estado,Request $request)
     {
-        // Obtener valores de la sesión si existen, sino usar valores por defecto
-        $estado = session('estado', 'Todos');
-        $motivo = session('motivo', '');
-        $tipo = session('tipo', '');
-        $date_start = session('date_start', '');
-        $date_end = session('date_end', '');
-        $date_start_reprog = session('date_start_reprog', '');
-        $date_end_reprog = session('date_end_reprog', '');
-        $date_start_gen = session('date_start_gen', '');
-        $date_end_gen = session('date_end_gen', '');
+     // Obtener los valores desde la query string
+     $motivo = $request->query('motivo', '');
+     $tipo = $request->query('tipo', '');
+     $date_start = $request->query('date_start', '');
+     $date_end = $request->query('date_end', '');
+     $date_start_reprog = $request->query('date_start_reprog', '');
+     $date_end_reprog = $request->query('date_end_reprog', '');
+     $date_start_gen = $request->query('date_start_gen', '');
+     $date_end_gen = $request->query('date_end_gen', '');
 
         // Si el estado es "Todos", usar "%"
-        $estadoFiltro = $estado === 'Todos' ? '%' : $estado;
+        if($estado=="Todos"){
+
+            $estado = '%'  ;
+        }
+
 
         // Obtener motivos y tipos únicos
         $motivos = DB::table('citas')->select('motivo')->distinct()->orderBy("motivo", "asc")->get();
@@ -56,8 +59,10 @@ class CiteController extends Controller
             $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
         })
             ->select('citas.*')
-            ->where('citas.estado', 'like', $estadoFiltro)
+            ->where('citas.estado', 'like', $estado)
             ->orderBy('codigo', 'asc');
+
+
 
         // Aplicar filtros si existen en sesión
         if (!empty($motivo)) {
@@ -77,7 +82,7 @@ class CiteController extends Controller
         }
 
         // Obtener citas con paginación
-        $cite = $query->paginate(7);
+        $cite = $query->paginate(7)->appends($request->query());;
 
         // Retornar la vista con los datos
         return view(

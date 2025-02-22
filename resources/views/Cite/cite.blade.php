@@ -4,7 +4,7 @@
         <div class="">
             <div class="card card-body py-3">
                 <form action=""id="cite_filter">
-                    @csrf
+
                     <div class="row align-items-center">
                         <div class="col-12">
                             <div class="d-sm-flex align-items-center justify-space-between">

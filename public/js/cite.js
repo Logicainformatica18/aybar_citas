@@ -131,32 +131,18 @@ function citeDestroy(id) {
 
 function citeFilter() {
     var formData = new FormData(document.getElementById("cite_filter"));
-
+    // Eliminar el _token del FormData para que no aparezca en la URL
+    formData.delete("_token");
+    // Obtener el estado desde la URL
     let pathArray = window.location.pathname.split('/');
-
-// Obtiene el último segmento de la URL
     let estado = pathArray[pathArray.length - 1];
 
-    formData.append("estado", estado);
-        axios({
-          method: "post",
-          url: "../citeFilter",
-          data: formData,
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        })
-          .then(function(response) {
-            //handle success
-            var contentdiv = document.getElementById("mycontent");
+    // Convertir FormData en una query string
+    var params = new URLSearchParams(formData).toString();
 
-            contentdiv.innerHTML = response.data;
-            //carga pdf- csv - excel
-            datatable_load();
+    // Construir la URL con estado y parámetros
+    let url = `/citas/${estado}?${params}`;
 
-          })
-          .catch(function(response) {
-            //handle error
-            console.log(response);
-          });
-      }
+    // Redirigir a la nueva URL
+    window.location.href = url;
+}
