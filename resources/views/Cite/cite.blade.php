@@ -81,10 +81,9 @@
                                         <div class="col-4">
                                             <label for="motivo" class="form-label fw-bold">Motivo</label>
                                             <select name="motivo" id="motivo" class="form-control">
-                                                <option value="" selected>Seleccione un Motivo</option>
+                                                <option value="" {{ request('motivo') == '' ? 'selected' : '' }}>Todos</option>
                                                 @foreach ($motivos as $m)
-                                                    <option value="{{ $m->motivo }}"
-                                                        {{ session('motivo') == $m->motivo ? 'selected' : '' }}>
+                                                    <option value="{{ $m->motivo }}" {{ request('motivo') == $m->motivo ? 'selected' : '' }}>
                                                         {{ $m->motivo }}
                                                     </option>
                                                 @endforeach
@@ -95,10 +94,9 @@
                                         <div class="col-4">
                                             <label for="tipo" class="form-label fw-bold">Tipos</label>
                                             <select name="tipo" id="tipo" class="form-control">
-                                                <option value="" selected>Seleccione un Tipo</option>
+                                                <option value="" {{ request('tipo') == '' ? 'selected' : '' }}>Todos</option>
                                                 @foreach ($tipos as $t)
-                                                    <option value="{{ $t->tipo }}"
-                                                        {{ session('tipo') == $t->tipo ? 'selected' : '' }}>
+                                                    <option value="{{ $t->tipo }}" {{ request('tipo') == $t->tipo ? 'selected' : '' }}>
                                                         {{ $t->tipo }}
                                                     </option>
                                                 @endforeach
@@ -112,8 +110,6 @@
                                         </div>
                                     </div>
 
-
-
                                     <!-- Fecha de Cita -->
                                     <div class="mt-3 row text-start align-items-center">
                                         <div class="col-1 text-start">
@@ -121,99 +117,93 @@
                                         </div>
                                         <div class="col-1">
                                             <label class="fw-bold">Inicio</label>
-                                            <input type="date" name="date_start" class="form-control"
-                                                value="{{ session('date_start') }}">
+                                            <input type="date" name="date_start" class="form-control" value="{{ request('date_start') }}">
                                         </div>
                                         <div class="col-1">
                                             <label class="fw-bold">Fin</label>
-                                            <input type="date" name="date_end" class="form-control"
-                                                value="{{ session('date_end') }}">
+                                            <input type="date" name="date_end" class="form-control" value="{{ request('date_end') }}">
                                         </div>
                                     </div>
+
                                     <div id="bloque" style="display:none">
                                         <div class="mt-3 row text-start align-items-center">
-
-
                                             <div class="col-1 text-start">
                                                 <label class="fw-bold">Fecha Reprogramación</label>
                                             </div>
                                             <div class="col-1">
                                                 <label class="fw-bold">Inicio</label>
-                                                <input type="date" name="date_start_reprog" class="form-control"
-                                                    value="{{ session('date_start_reprog') }}">
+                                                <input type="date" name="date_start_reprog" class="form-control" value="{{ request('date_start_reprog') }}">
                                             </div>
-                                            <div class="col-1 ">
+                                            <div class="col-1">
                                                 <label class="fw-bold">Fin</label>
-                                                <input type="date" name="date_end_reprog" class="form-control"
-                                                    value="{{ session('date_end_reprog') }}">
+                                                <input type="date" name="date_end_reprog" class="form-control" value="{{ request('date_end_reprog') }}">
                                             </div>
-
                                         </div>
                                     </div>
 
                                     <div class="mt-3 row text-start align-items-center">
-
-
                                         <div class="col-1 text-start">
                                             <label class="fw-bold">Fecha Reprogramación</label>
                                         </div>
                                         <div class="col-2">
-                                           <select name="date_reprog" id=""class="form-control" onchange="bloque(this.value);">
-                                            <option value="">Todo</option>
-                                            <option value="Con Reprogramación">Con Reprogramación</option>
-                                            <option value="Sin Reprogramación">Sin Reprogramación</option>
-                                            <option value="Según el Trámite">Según el Trámite</option>
-                                            <option value="Con Fecha">Filtrar por Fecha</option>
-                                           </select>
+                                            <select name="date_reprog" id="date_reprog" class="form-control" onchange="bloque(this.value);">
+                                                <option value="" {{ request('date_reprog') == '' ? 'selected' : '' }}>Todo</option>
+                                                <option value="Con Reprogramación" {{ request('date_reprog') == 'Con Reprogramación' ? 'selected' : '' }}>Con Reprogramación</option>
+                                                <option value="Sin Reprogramación" {{ request('date_reprog') == 'Sin Reprogramación' ? 'selected' : '' }}>Sin Reprogramación</option>
+                                                <option value="Según el Trámite" {{ request('date_reprog') == 'Según el Trámite' ? 'selected' : '' }}>Según el Trámite</option>
+                                                <option value="Con Fecha" {{ request('date_reprog') == 'Con Fecha' ? 'selected' : '' }}>Filtrar por Fecha</option>
+                                            </select>
                                         </div>
-                                        <script>
-                                            function bloque(value) {
-                                                if (value == 'Con Fecha') {
-                                                document.getElementById('bloque').style.display = 'block';
-                                            } else {
-                                                document.getElementById('bloque').style.display = 'none';
-                                            }
-                                            }
-
-
-
-                                        </script>
                                     </div>
+
                                     <div class="mt-3 row text-start align-items-center">
                                         <div class="col-1 text-start">
                                             <label class="fw-bold">Fecha Generada</label>
                                         </div>
                                         <div class="col-1">
                                             <label class="fw-bold">Inicio</label>
-                                            <input type="date" name="date_start_gen" class="form-control"
-                                                value="{{ session('date_start_gen') }}">
+                                            <input type="date" name="date_start_gen" class="form-control" value="{{ request('date_start_gen') }}">
                                         </div>
                                         <div class="col-1">
                                             <label class="fw-bold">Fin</label>
-                                            <input type="date" name="date_end_gen" class="form-control"
-                                                value="{{ session('date_end_gen') }}">
+                                            <input type="date" name="date_end_gen" class="form-control" value="{{ request('date_end_gen') }}">
                                         </div>
                                     </div>
+
                                     <div class="mt-3 row text-start align-items-center">
                                         <div class="col-1 text-start">
                                             <label class="fw-bold">Áreas</label>
                                         </div>
                                         <div class="col-2">
-                                          <select name="area" id="area" class="form-control">
-                                            <option value="" selected>Todo</option>
-                                            <option value="null">Sin área</option>
-                                            @foreach ($areas as $a)
-                                                <option value="{{ $a->id_area }}"
-                                                    {{ session('area') == $a->id_area? 'selected' : '' }}>
-                                                    {{ $a->descripcion }}
-                                                </option>
-                                            @endforeach
-
-                                          </select>
+                                            <select name="area" id="area" class="form-control">
+                                                <option value="" {{ request('area') == '' ? 'selected' : '' }}>Todo</option>
+                                                <option value="null" {{ request('area') == 'null' ? 'selected' : '' }}>Sin área</option>
+                                                @foreach ($areas as $a)
+                                                    <option value="{{ $a->id_area }}" {{ request('area') == $a->id_area ? 'selected' : '' }}>
+                                                        {{ $a->descripcion }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <script>
+                                function bloque(value) {
+                                    if (value == 'Con Fecha') {
+                                        document.getElementById('bloque').style.display = 'block';
+                                    } else {
+                                        document.getElementById('bloque').style.display = 'none';
+                                    }
+                                }
+
+                                // Ejecutar la función al cargar la página con el valor actual del select
+                                window.onload = function() {
+                                    bloque("{{ request('date_reprog') }}");
+                                };
+                            </script>
+
 
                         </div>
                     </div>
