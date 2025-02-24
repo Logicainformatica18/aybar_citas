@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreCiteRequest;
 use App\Http\Requests\UpdateCiteRequest;
 use stdClass;
+use Carbon\Carbon;
 class CiteController extends Controller
 {
     /**
@@ -17,6 +18,8 @@ class CiteController extends Controller
      */
     public function index($estado,Request $request)
     {
+
+
      // Obtener los valores desde la query string
      $motivo = $request->query('motivo', '');
      $tipo = $request->query('tipo', '');
@@ -27,7 +30,7 @@ class CiteController extends Controller
      $date_end_reprog = $request->query('date_end_reprog', '');
      $date_start_gen = $request->query('date_start_gen', '');
      $date_end_gen = $request->query('date_end_gen', '');
-     $date_cite = $request->query('date_cite', '%');
+     $date_cite = $request->query('date_cite', '');
      $area = $request->query('area', '');
 
 
@@ -70,7 +73,7 @@ class CiteController extends Controller
             ->orderBy('codigo', 'asc');
 
 
-
+            $fecha_actual = Carbon::now( 'America/Lima')->toDateString();
         // Aplicar filtros si existen en sesión
         if ($area=="null") {
             $query->whereNull("areas.id_area");
@@ -90,13 +93,38 @@ class CiteController extends Controller
         }
 
         ////////////////// FECHA DE CITA ///////////////////////////////////////////////////////
-        if($date_cite=="Filtrar por Fecha"){
-            if (!empty($date_start) && !empty($date_end)) {
-                $query->whereBetween('fecha', [$date_start, $date_end]);
-            }
+
+        if($date_cite=="Vencido por Fecha"){
+
+           // $fecha_actual = Carbon::now('America/Lima');
+
+            $query->where("fecha", ">", $fecha_actual)
+            ->where("fecha", "<>", "Según el Trámite")
+            ->where("fecha", "<>", "Por Definir");
         }
-        else{
-            $query->where('fecha', "like",$date_cite);
+
+        elseif($date_cite=="Vence_hoy"){
+
+            $fecha_inicio = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
+            $fecha_fin = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
+            $query->whereBetween("fecha", [$fecha_inicio,$fecha_fin])
+            ->where("fecha", "<>", "Según el Trámite")
+            ->where("fecha", "<>", "Por Definir");
+        }
+        elseif($date_cite=="Ni Definir ni segun tramite"){
+
+
+
+            $query->where("fecha", "<>", "Según el Trámite")
+            ->where("fecha", "<>", "Por Definir");
+
+        }
+        elseif($date_cite=="Filtrar por Fecha"){
+            if (!empty($date_start) && !empty($date_end)) {
+                $query->whereBetween('fecha', [$date_start, $date_end])
+                ->where("fecha", "<>", "Según el Trámite")
+                ->where("fecha", "<>", "Por Definir");
+            }
         }
 
 
@@ -111,6 +139,15 @@ class CiteController extends Controller
         }
         elseif($date_reprog=="Con Reprogramación"){
             $query->where('fecha_repro', "<>","Sin Reprogramación");
+        }
+        elseif($date_reprog=="Vence_hoy"){
+            $fecha_inicio = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
+            $fecha_fin = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
+            $query->whereBetween("fecha_repro", [$fecha_inicio,$fecha_fin])
+            ->where("fecha_repro", "<>", "Según el Trámite")
+            ->where("fecha_repro", "<>", "Por Definir");
+
+
         }
         elseif($date_reprog=="Sin Reprogramación"){
             $query->where('fecha_repro', "like","Sin Reprogramación");
