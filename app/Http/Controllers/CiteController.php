@@ -27,6 +27,7 @@ class CiteController extends Controller
      $date_end_reprog = $request->query('date_end_reprog', '');
      $date_start_gen = $request->query('date_start_gen', '');
      $date_end_gen = $request->query('date_end_gen', '');
+     $date_cite = $request->query('date_cite', '%');
      $area = $request->query('area', '');
 
 
@@ -87,10 +88,19 @@ class CiteController extends Controller
         if (!empty($tipo)) {
             $query->where("tipo", "like", "%$tipo%");
         }
-        if (!empty($date_start) && !empty($date_end)) {
-            $query->whereBetween('fecha', [$date_start, $date_end]);
+
+        ////////////////// FECHA DE CITA ///////////////////////////////////////////////////////
+        if($date_cite=="Filtrar por Fecha"){
+            if (!empty($date_start) && !empty($date_end)) {
+                $query->whereBetween('fecha', [$date_start, $date_end]);
+            }
+        }
+        else{
+            $query->where('fecha', "like",$date_cite);
         }
 
+
+        ///////////////////////////////////////  FECHA REPROGRAMACION ////////////////////////////////////////////////////
         if ($date_reprog=="Filtrar por Fecha") {
             if (!empty($date_start_reprog) && !empty($date_end_reprog)) {
                 $query->whereBetween('fecha_repro', [$date_start_reprog, $date_end_reprog]);
@@ -101,6 +111,9 @@ class CiteController extends Controller
         }
         elseif($date_reprog=="Con Reprogramación"){
             $query->where('fecha_repro', "<>","Sin Reprogramación");
+        }
+        elseif($date_reprog=="Sin Reprogramación"){
+            $query->where('fecha_repro', "like","Sin Reprogramación");
         }
         elseif($date_reprog=="Todo"){
             $query->where('fecha_repro', "like",'%');

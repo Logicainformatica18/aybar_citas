@@ -34,7 +34,7 @@
     <script src="{{ asset('js/axios.min.js') }}"></script>
     <script src="{{ asset('js/Book.js') }}"></script>
     <script src="{{ asset('js/cite.js') }}"></script>
-    
+
 </head>
 
 <body>
@@ -224,7 +224,7 @@
                                             </ul>
                                         </li>
                                     @endcanany --}}
-                                    <li class="sidebar-item">
+                                    {{-- <li class="sidebar-item">
                                         <a class="sidebar-link has-arrow " href="javascript:void(0)"
                                             aria-expanded="false">
                                             <iconify-icon icon="solar:shield-user-line-duotone"></iconify-icon>
@@ -240,7 +240,7 @@
 
 
                                         </ul>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </nav>
 

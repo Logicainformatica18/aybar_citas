@@ -105,76 +105,7 @@
 
                                         <!-- Botón Filtrar -->
                                         <div class="col-4">
-                                            <label for="" class="form-label fw-bold">&nbsp;</label>
-                                            <button type="submit" class="w-100 btn btn-success">Filtrar</button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Fecha de Cita -->
-                                    <div class="mt-3 row text-start align-items-center">
-                                        <div class="col-1 text-start">
-                                            <label class="fw-bold">Fecha de Cita</label>
-                                        </div>
-                                        <div class="col-1">
-                                            <label class="fw-bold">Inicio</label>
-                                            <input type="date" name="date_start" class="form-control" value="{{ request('date_start') }}">
-                                        </div>
-                                        <div class="col-1">
-                                            <label class="fw-bold">Fin</label>
-                                            <input type="date" name="date_end" class="form-control" value="{{ request('date_end') }}">
-                                        </div>
-                                    </div>
-
-                                    <div id="bloque" style="display:none">
-                                        <div class="mt-3 row text-start align-items-center">
-                                            <div class="col-1 text-start">
-                                                <label class="fw-bold">Fecha Reprogramación</label>
-                                            </div>
-                                            <div class="col-1">
-                                                <label class="fw-bold">Inicio</label>
-                                                <input type="date" name="date_start_reprog" class="form-control" value="{{ request('date_start_reprog') }}">
-                                            </div>
-                                            <div class="col-1">
-                                                <label class="fw-bold">Fin</label>
-                                                <input type="date" name="date_end_reprog" class="form-control" value="{{ request('date_end_reprog') }}">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-3 row text-start align-items-center">
-                                        <div class="col-1 text-start">
-                                            <label class="fw-bold">Fecha Reprogramación</label>
-                                        </div>
-                                        <div class="col-2">
-                                            <select name="date_reprog" id="date_reprog" class="form-control" onchange="bloque(this.value);">
-                                                <option value="" {{ request('date_reprog') == '' ? 'selected' : '' }}>Todo</option>
-                                                <option value="Con Reprogramación" {{ request('date_reprog') == 'Con Reprogramación' ? 'selected' : '' }}>Con Reprogramación</option>
-                                                <option value="Sin Reprogramación" {{ request('date_reprog') == 'Sin Reprogramación' ? 'selected' : '' }}>Sin Reprogramación</option>
-                                                <option value="Según el Trámite" {{ request('date_reprog') == 'Según el Trámite' ? 'selected' : '' }}>Según el Trámite</option>
-                                                <option value="Con Fecha" {{ request('date_reprog') == 'Con Fecha' ? 'selected' : '' }}>Filtrar por Fecha</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-3 row text-start align-items-center">
-                                        <div class="col-1 text-start">
-                                            <label class="fw-bold">Fecha Generada</label>
-                                        </div>
-                                        <div class="col-1">
-                                            <label class="fw-bold">Inicio</label>
-                                            <input type="date" name="date_start_gen" class="form-control" value="{{ request('date_start_gen') }}">
-                                        </div>
-                                        <div class="col-1">
-                                            <label class="fw-bold">Fin</label>
-                                            <input type="date" name="date_end_gen" class="form-control" value="{{ request('date_end_gen') }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-3 row text-start align-items-center">
-                                        <div class="col-1 text-start">
-                                            <label class="fw-bold">Áreas</label>
-                                        </div>
-                                        <div class="col-2">
+                                            <label for="area" class="form-label fw-bold">Áreas</label>
                                             <select name="area" id="area" class="form-control">
                                                 <option value="" {{ request('area') == '' ? 'selected' : '' }}>Todo</option>
                                                 <option value="null" {{ request('area') == 'null' ? 'selected' : '' }}>Sin área</option>
@@ -184,25 +115,101 @@
                                                     </option>
                                                 @endforeach
                                             </select>
+
                                         </div>
                                     </div>
+
+                                    <!-- Fecha de Cita -->
+                                    <div class="mt-3 row text-center align-items-center">
+                                        <div class="col-1 text-start">
+                                            <label class="fw-bold">Fecha de Cita</label>
+                                        </div>
+                                        <div class="col-1">
+
+                                            <select name="date_cite" id="date_reprog" class="form-control">
+                                                <option value="%" {{ request('date_cite') == '' ? 'selected' : '' }}>Todo</option>
+                                                <option value="Por Definir" {{ request('date_cite') == 'Por Definir' ? 'selected' : '' }}>Por Definir</option>
+                                                <option value="Según el Trámite" {{ request('date_cite') == 'Según el Trámite' ? 'selected' : '' }}>Según el Trámite</option>
+                                                <option value="Filtrar por Fecha" {{ request('date_cite') == 'Filtrar por Fecha' ? 'selected' : '' }}>Filtrar por Fecha</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-1">
+
+                                            <input type="date" name="date_start" class="form-control" value="{{ request('date_start') }}">
+                                        </div>
+                                        <div class="col-1">
+
+                                            <input type="date" name="date_end" class="form-control" value="{{ request('date_end') }}">
+                                        </div>
+
+                                        <div class="col-2 text-start">
+                                            <label class="fw-bold">Fecha Generada</label>
+                                        </div>
+                                        <div class="col-1">
+
+                                            <input type="date" name="date_start_gen" class="form-control" value="{{ request('date_start_gen') }}">
+                                        </div>
+                                        <div class="col-1">
+
+                                            <input type="date" name="date_end_gen" class="form-control" value="{{ request('date_end_gen') }}">
+                                        </div>
+
+                                        <div class="col-1 text-start">
+                                            <label class="fw-bold">Fecha Reprogramación</label>
+                                        </div>
+                                        <div class="col-1">
+                                            <select name="date_reprog" id="date_reprog" class="form-control">
+                                                <option value="" {{ request('date_reprog') == '' ? 'selected' : '' }}>Todo</option>
+                                                <option value="Con Reprogramación" {{ request('date_reprog') == 'Con Reprogramación' ? 'selected' : '' }}>Con Reprogramación</option>
+                                                <option value="Sin Reprogramación" {{ request('date_reprog') == 'Sin Reprogramación' ? 'selected' : '' }}>Sin Reprogramación</option>
+                                                <option value="Según el Trámite" {{ request('date_reprog') == 'Según el Trámite' ? 'selected' : '' }}>Según el Trámite</option>
+                                                <option value="Filtrar por Fecha" {{ request('date_reprog') == 'Filtrar por Fecha' ? 'selected' : '' }}>Filtrar por Fecha</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-1">
+
+                                            <input type="date" name="date_start_reprog" class="form-control" value="{{ request('date_start_reprog') }}">
+                                        </div>
+                                        <div class="col-1">
+
+                                            <input type="date" name="date_end_reprog" class="form-control" value="{{ request('date_end_reprog') }}">
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+
+                                    <div class="mt-3 row text-start align-items-center">
+
+
+
+                                    </div>
+
+                                    <div class="row col-12" id="bloque" >
+
+
+
+
+
+
+                                </div>
+
+
+                                    <div class="mt-3 row text-start align-items-center">
+
+                                        <div class="col-12">
+                                            <button type="submit" class="w-100 btn btn-success">Filtrar</button>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
-                            <script>
-                                function bloque(value) {
-                                    if (value == 'Con Fecha') {
-                                        document.getElementById('bloque').style.display = 'block';
-                                    } else {
-                                        document.getElementById('bloque').style.display = 'none';
-                                    }
-                                }
 
-                                // Ejecutar la función al cargar la página con el valor actual del select
-                                window.onload = function() {
-                                    bloque("{{ request('date_reprog') }}");
-                                };
-                            </script>
 
 
                         </div>
