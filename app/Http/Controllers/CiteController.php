@@ -22,10 +22,13 @@ class CiteController extends Controller
      $tipo = $request->query('tipo', '');
      $date_start = $request->query('date_start', '');
      $date_end = $request->query('date_end', '');
+     $date_reprog = $request->query('date_reprog', '');
      $date_start_reprog = $request->query('date_start_reprog', '');
      $date_end_reprog = $request->query('date_end_reprog', '');
      $date_start_gen = $request->query('date_start_gen', '');
      $date_end_gen = $request->query('date_end_gen', '');
+     $area = $request->query('area', '');
+
 
         // Si el estado es "Todos", usar "%"
         if($estado=="Todos"){
@@ -37,7 +40,7 @@ class CiteController extends Controller
         // Obtener motivos y tipos únicos
         $motivos = DB::table('citas')->select('motivo')->distinct()->orderBy("motivo", "asc")->get();
         $tipos = DB::table('citas')->select('tipo')->distinct()->orderBy("tipo", "asc")->get();
-
+        $areas = DB::table('areas')->select('id_area','descripcion')->orderBy("descripcion", "asc")->get();
         // Obtener conteos de estado
         $total_cite = Cite::count();
         $total_pendiente = Cite::where('estado', 'Pendiente')->count();
@@ -55,16 +58,29 @@ class CiteController extends Controller
         $id_area = $user->id_area;
 
         // Consulta base con LEFT JOIN y LIKE en motivos_cita
-        $query = Cite::join('motivos_cita', function ($join) {
+        $query = Cite::leftJoin('motivos_cita', function ($join) {
             $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
         })
-            ->select('citas.*')
+        ->leftJoin('areas', function ($join) {
+            $join->on('motivos_cita.id_area', '=', 'areas.id_area');
+        })
+            ->select('citas.*','areas.*')
             ->where('citas.estado', 'like', $estado)
             ->orderBy('codigo', 'asc');
 
 
 
         // Aplicar filtros si existen en sesión
+        if ($area=="null") {
+            $query->whereNull("areas.id_area");
+
+        }
+        else{
+            if (!empty($area)) {
+                $query->where("areas.id_area", "like", $area);
+            }
+        }
+
         if (!empty($motivo)) {
             $query->where("motivo", "like", "%$motivo%");
         }
@@ -74,12 +90,24 @@ class CiteController extends Controller
         if (!empty($date_start) && !empty($date_end)) {
             $query->whereBetween('fecha', [$date_start, $date_end]);
         }
-        if (!empty($date_start_reprog) && !empty($date_end_reprog)) {
-            $query->whereBetween('fecha_repro', [$date_start_reprog, $date_end_reprog]);
+
+        if ($date_reprog=="Filtrar por Fecha") {
+            if (!empty($date_start_reprog) && !empty($date_end_reprog)) {
+                $query->whereBetween('fecha_repro', [$date_start_reprog, $date_end_reprog]);
+            }
+            if (!empty($date_start_gen) && !empty($date_end_gen)) {
+                $query->whereBetween('fecha_generada', [$date_start_gen, $date_end_gen]);
+            }
         }
-        if (!empty($date_start_gen) && !empty($date_end_gen)) {
-            $query->whereBetween('fecha_generada', [$date_start_gen, $date_end_gen]);
+        elseif($date_reprog=="Con Reprogramación"){
+            $query->where('fecha_repro', "<>","Sin Reprogramación");
         }
+        elseif($date_reprog=="Todo"){
+            $query->where('fecha_repro', "like",'%');
+        }
+
+
+
 
         // Obtener citas con paginación
         $cite = $query->paginate(7)->appends($request->query());;
@@ -90,6 +118,7 @@ class CiteController extends Controller
             compact(
                 'motivos',
                 'tipos',
+                'areas',
                 'cite',
                 'total_cite',
                 'total_pendiente',

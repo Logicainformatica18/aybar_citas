@@ -3,7 +3,7 @@
     <div class="body-wrapper">
         <div class="">
             <div class="card card-body py-3">
-                <form action=""id="cite_filter">
+                <form action=""id="cite_filter"name="cite_filter">
 
                     <div class="row align-items-center">
                         <div class="col-12">
@@ -83,7 +83,8 @@
                                             <select name="motivo" id="motivo" class="form-control">
                                                 <option value="" selected>Seleccione un Motivo</option>
                                                 @foreach ($motivos as $m)
-                                                    <option value="{{ $m->motivo }}" {{ session('motivo') == $m->motivo ? 'selected' : '' }}>
+                                                    <option value="{{ $m->motivo }}"
+                                                        {{ session('motivo') == $m->motivo ? 'selected' : '' }}>
                                                         {{ $m->motivo }}
                                                     </option>
                                                 @endforeach
@@ -96,7 +97,8 @@
                                             <select name="tipo" id="tipo" class="form-control">
                                                 <option value="" selected>Seleccione un Tipo</option>
                                                 @foreach ($tipos as $t)
-                                                    <option value="{{ $t->tipo }}" {{ session('tipo') == $t->tipo ? 'selected' : '' }}>
+                                                    <option value="{{ $t->tipo }}"
+                                                        {{ session('tipo') == $t->tipo ? 'selected' : '' }}>
                                                         {{ $t->tipo }}
                                                     </option>
                                                 @endforeach
@@ -110,53 +112,104 @@
                                         </div>
                                     </div>
 
-                                    <!-- Fechas -->
-                                    <div class="row text-center py-3">
-                                        <h6 class="fw-bold">Fechas</h6>
-                                    </div>
+
 
                                     <!-- Fecha de Cita -->
-                                    <div class="row text-center align-items-center">
-                                        <div class="col-4">
+                                    <div class="mt-3 row text-start align-items-center">
+                                        <div class="col-1 text-start">
                                             <label class="fw-bold">Fecha de Cita</label>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-1">
                                             <label class="fw-bold">Inicio</label>
-                                            <input type="date" name="date_start" class="form-control" value="{{ session('date_start') }}">
+                                            <input type="date" name="date_start" class="form-control"
+                                                value="{{ session('date_start') }}">
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-1">
                                             <label class="fw-bold">Fin</label>
-                                            <input type="date" name="date_end" class="form-control" value="{{ session('date_end') }}">
+                                            <input type="date" name="date_end" class="form-control"
+                                                value="{{ session('date_end') }}">
+                                        </div>
+                                    </div>
+                                    <div id="bloque" style="display:none">
+                                        <div class="mt-3 row text-start align-items-center">
+
+
+                                            <div class="col-1 text-start">
+                                                <label class="fw-bold">Fecha Reprogramación</label>
+                                            </div>
+                                            <div class="col-1">
+                                                <label class="fw-bold">Inicio</label>
+                                                <input type="date" name="date_start_reprog" class="form-control"
+                                                    value="{{ session('date_start_reprog') }}">
+                                            </div>
+                                            <div class="col-1 ">
+                                                <label class="fw-bold">Fin</label>
+                                                <input type="date" name="date_end_reprog" class="form-control"
+                                                    value="{{ session('date_end_reprog') }}">
+                                            </div>
+
                                         </div>
                                     </div>
 
-                                    <!-- Fecha de Reprogramación -->
-                                    <div class="row text-center align-items-center py-2">
-                                        <div class="col-4">
-                                            <label class="fw-bold">Fecha de Reprogramación</label>
-                                        </div>
-                                        <div class="col-4">
-                                            <label class="fw-bold">Inicio</label>
-                                            <input type="date" name="date_start_reprog" class="form-control" value="{{ session('date_start_reprog') }}">
-                                        </div>
-                                        <div class="col-4">
-                                            <label class="fw-bold">Fin</label>
-                                            <input type="date" name="date_end_reprog" class="form-control" value="{{ session('date_end_reprog') }}">
-                                        </div>
-                                    </div>
+                                    <div class="mt-3 row text-start align-items-center">
 
-                                    <!-- Fecha Generada -->
-                                    <div class="row text-center align-items-center py-2">
-                                        <div class="col-4">
+
+                                        <div class="col-1 text-start">
+                                            <label class="fw-bold">Fecha Reprogramación</label>
+                                        </div>
+                                        <div class="col-2">
+                                           <select name="date_reprog" id=""class="form-control" onchange="bloque(this.value);">
+                                            <option value="">Todo</option>
+                                            <option value="Con Reprogramación">Con Reprogramación</option>
+                                            <option value="Sin Reprogramación">Sin Reprogramación</option>
+                                            <option value="Según el Trámite">Según el Trámite</option>
+                                            <option value="Con Fecha">Filtrar por Fecha</option>
+                                           </select>
+                                        </div>
+                                        <script>
+                                            function bloque(value) {
+                                                if (value == 'Con Fecha') {
+                                                document.getElementById('bloque').style.display = 'block';
+                                            } else {
+                                                document.getElementById('bloque').style.display = 'none';
+                                            }
+                                            }
+
+
+
+                                        </script>
+                                    </div>
+                                    <div class="mt-3 row text-start align-items-center">
+                                        <div class="col-1 text-start">
                                             <label class="fw-bold">Fecha Generada</label>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-1">
                                             <label class="fw-bold">Inicio</label>
-                                            <input type="date" name="date_start_gen" class="form-control" value="{{ session('date_start_gen') }}">
+                                            <input type="date" name="date_start_gen" class="form-control"
+                                                value="{{ session('date_start_gen') }}">
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-1">
                                             <label class="fw-bold">Fin</label>
-                                            <input type="date" name="date_end_gen" class="form-control" value="{{ session('date_end_gen') }}">
+                                            <input type="date" name="date_end_gen" class="form-control"
+                                                value="{{ session('date_end_gen') }}">
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 row text-start align-items-center">
+                                        <div class="col-1 text-start">
+                                            <label class="fw-bold">Áreas</label>
+                                        </div>
+                                        <div class="col-2">
+                                          <select name="area" id="area" class="form-control">
+                                            <option value="" selected>Todo</option>
+                                            <option value="null">Sin área</option>
+                                            @foreach ($areas as $a)
+                                                <option value="{{ $a->id_area }}"
+                                                    {{ session('area') == $a->id_area? 'selected' : '' }}>
+                                                    {{ $a->descripcion }}
+                                                </option>
+                                            @endforeach
+
+                                          </select>
                                         </div>
                                     </div>
                                 </div>
