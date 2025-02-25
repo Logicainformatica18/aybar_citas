@@ -127,6 +127,15 @@ class CiteController extends Controller
                 ->where("fecha", "<>", "Por Definir");
             }
         }
+        elseif($date_cite=="Por Definir"){
+
+                $query->where("fecha", "=", "Por Definir");
+
+        }elseif($date_cite=="Segun_tramite"){
+
+                $query->where("fecha", "like", "Según el Trámite");
+
+            }
 
 
         ///////////////////////////////////////  FECHA REPROGRAMACION ////////////////////////////////////////////////////
@@ -153,8 +162,11 @@ class CiteController extends Controller
         elseif($date_reprog=="Sin Reprogramación"){
             $query->where('fecha_repro', "like","Sin Reprogramación");
         }
-        elseif($date_reprog=="Todo"){
-            $query->where('fecha_repro', "like",'%');
+        elseif($date_reprog=="Sin Reprogramación"){
+            $query->where('fecha_repro', "like","Sin Reprogramación");
+        }
+        elseif($date_reprog=="Segun_tramite"){
+            $query->where('fecha_repro', "like",'Según el Trámite');
         }
 
 

@@ -132,7 +132,7 @@
                                                 <option value="Vence_hoy" {{ request('date_cite') == 'Vence_hoy' ? 'selected' : '' }}>Vence Hoy</option>
                                                 <option value="Ni Definir ni segun tramite" {{ request('date_cite') == 'Ni Definir ni segun tramite' ? 'selected' : '' }}>Ni Definir ni segun tramite</option>
                                                 <option value="Por Definir" {{ request('date_cite') == 'Por Definir' ? 'selected' : '' }}>Por Definir</option>
-                                                <option value="Según el Trámite" {{ request('date_cite') == 'Según el Trámite' ? 'selected' : '' }}>Según el Trámite</option>
+                                                <option value="Segun_tramite" {{ request('date_cite') == 'Segun_tramite' ? 'selected' : '' }}>Según el Trámite</option>
                                                 <option value="Filtrar por Fecha" {{ request('date_cite') == 'Filtrar por Fecha' ? 'selected' : '' }}>Filtrar por Fecha</option>
                                             </select>
                                         </div>
@@ -166,7 +166,7 @@
                                                 <option value="Vence_hoy" {{ request('date_repro') == 'Vence_hoy' ? 'selected' : '' }}>Vence Hoy</option>
                                                 <option value="Con Reprogramación" {{ request('date_reprog') == 'Con Reprogramación' ? 'selected' : '' }}>Con Reprogramación</option>
                                                 <option value="Sin Reprogramación" {{ request('date_reprog') == 'Sin Reprogramación' ? 'selected' : '' }}>Sin Reprogramación</option>
-                                                <option value="Según el Trámite" {{ request('date_reprog') == 'Según el Trámite' ? 'selected' : '' }}>Según el Trámite</option>
+                                                <option value="Segun_tramite" {{ request('date_reprog') == 'Segun_tramite' ? 'selected' : '' }}>Según el Trámite</option>
                                                 <option value="Filtrar por Fecha" {{ request('date_reprog') == 'Filtrar por Fecha' ? 'selected' : '' }}>Filtrar por Fecha</option>
                                             </select>
                                         </div>
