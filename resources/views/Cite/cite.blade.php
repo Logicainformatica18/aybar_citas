@@ -161,7 +161,7 @@
                                             document.addEventListener("DOMContentLoaded", function() {
                                                 activateInput(); // Ejecuta la función al cargar la página
                                                 document.getElementById("date_cite").addEventListener("change",
-                                                activateInput); // Escucha cambios en el select
+                                                    activateInput); // Escucha cambios en el select
                                             });
 
                                             function activateInput() {
@@ -215,7 +215,8 @@
                                             <label class="fw-bold">Fecha Reprogramación</label>
                                         </div>
                                         <div class="col-1">
-                                            <select name="date_reprog" id="date_reprog" class="form-control"onchange="activateInput_2();">
+                                            <select name="date_reprog" id="date_reprog"
+                                                class="form-control"onchange="activateInput_2();">
                                                 <option value=""
                                                     {{ request('date_reprog') == '' ? 'selected' : '' }}>Todo</option>
                                                 <option value="Vence_hoy"
@@ -243,7 +244,7 @@
                                             document.addEventListener("DOMContentLoaded", function() {
                                                 activateInput_2(); // Ejecuta la función al cargar la página
                                                 document.getElementById("date_reprog").addEventListener("change",
-                                                activateInput_2); // Escucha cambios en el select
+                                                    activateInput_2); // Escucha cambios en el select
                                             });
 
                                             function activateInput_2() {
@@ -277,13 +278,13 @@
 
                                         <div class="col-1">
 
-                                            <input type="date" name="date_start_reprog" id="date_start_reprog" class="form-control"
-                                                value="{{ request('date_start_reprog') }}" disabled>
+                                            <input type="date" name="date_start_reprog" id="date_start_reprog"
+                                                class="form-control" value="{{ request('date_start_reprog') }}" disabled>
                                         </div>
                                         <div class="col-1">
 
-                                            <input type="date" name="date_end_reprog"id="date_end_reprog" class="form-control"
-                                                value="{{ request('date_end_reprog') }}" disabled>
+                                            <input type="date" name="date_end_reprog"id="date_end_reprog"
+                                                class="form-control" value="{{ request('date_end_reprog') }}" disabled>
                                         </div>
 
                                     </div>
@@ -339,19 +340,31 @@
                         <p class="card-subtitle ">
 
                             <!-- success header modal -->
-                            {{-- @canany(['administrar', 'agregar'])
-                            <button type="button" class="btn mb-1 me-1 btn-success"
-                                data-bs-toggle="modal" data-bs-target="#success-header-modal" fdprocessedid="cw61t3"
-                                 onclick="New();$('#cite')[0].reset();">
-                                Agregar
-                            </button>
-                            @endcanany --}}
+
                         </p>
                         <div class="mb-2">
-
-
-
                             <h4 class="card-title mb-0">Exportar</h4>
+                            <button type="button" class="btn mb-0  btn-primary" style="width:300px"
+                                
+                                onclick="exportarExcelConFiltros()">
+                                Exportar Todo - Excel
+                            </button>
+
+                            <script>
+                                function exportarExcelConFiltros() {
+                                    let urlParams = new URLSearchParams(window.location.search);
+
+                                    // Obtener el estado desde la URL (último segmento después de "/")
+                                    let pathSegments = window.location.pathname.split('/');
+                                    let estado = pathSegments[pathSegments.length - 1]; // Último valor en la URL
+
+                                    // Construir la URL de exportación con los filtros actuales
+                                    let exportUrl = `/exportar-citas/${estado}?` + urlParams.toString();
+
+                                    // Redirigir a la URL para descargar el archivo
+                                    window.location.href = exportUrl;
+                                }
+                            </script>
                         </div>
                         <div class="table-responsive"id="mycontent">
 

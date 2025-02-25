@@ -166,7 +166,8 @@ class CiteController extends Controller
 
 
         // Obtener citas con paginación
-        $cite = $query->paginate(7)->appends($request->query());;
+        $cite = $query->paginate(7)->appends($request->query());
+
 
         // Retornar la vista con los datos
         return view(
@@ -187,6 +188,8 @@ class CiteController extends Controller
             )
         );
     }
+
+
 
 
     /**

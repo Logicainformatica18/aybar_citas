@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+
+
+use App\Exports\CiteExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,9 +32,11 @@ Route::get('/citas/{estado}', [App\Http\Controllers\CiteController::class, 'inde
 
 Route::post('/citeEdit', [App\Http\Controllers\CiteController::class, 'edit']);
 
+Route::get('/exportar-citas/{estado}', function ($estado, Request $request) {
+    return Excel::download(new CiteExport($request, $estado), 'citas.xlsx');
+});
 
 
-Route::post('/citeFilter', [App\Http\Controllers\CiteController::class, 'filter']);
 
 
 
