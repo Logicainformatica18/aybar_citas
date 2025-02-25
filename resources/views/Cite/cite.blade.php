@@ -3,7 +3,7 @@
     <div class="body-wrapper">
         <div class="">
             <div class="card card-body py-3">
-                <form action=""id="cite_filter"name="cite_filter">
+                <form action=""id="cite_filter" name="cite_filter">
 
                     <div class="row align-items-center">
                         <div class="col-12">
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <span>* Elegir <b>Filtrar por Fecha</b> para aplicar el cambio</span>
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
@@ -73,7 +73,8 @@
                                 </button>
 
                             </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show " data-bs-parent="#accordionExample">
+                            <div id="collapseOne" class="accordion-collapse collapse show "
+                                data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <!-- Primera Fila -->
                                     <div class="row text-center">
@@ -81,9 +82,11 @@
                                         <div class="col-4">
                                             <label for="motivo" class="form-label fw-bold">Motivo</label>
                                             <select name="motivo" id="motivo" class="form-control">
-                                                <option value="" {{ request('motivo') == '' ? 'selected' : '' }}>Todos</option>
+                                                <option value="" {{ request('motivo') == '' ? 'selected' : '' }}>
+                                                    Todos</option>
                                                 @foreach ($motivos as $m)
-                                                    <option value="{{ $m->motivo }}" {{ request('motivo') == $m->motivo ? 'selected' : '' }}>
+                                                    <option value="{{ $m->motivo }}"
+                                                        {{ request('motivo') == $m->motivo ? 'selected' : '' }}>
                                                         {{ $m->motivo }}
                                                     </option>
                                                 @endforeach
@@ -94,9 +97,11 @@
                                         <div class="col-4">
                                             <label for="tipo" class="form-label fw-bold">Tipos</label>
                                             <select name="tipo" id="tipo" class="form-control">
-                                                <option value="" {{ request('tipo') == '' ? 'selected' : '' }}>Todos</option>
+                                                <option value="" {{ request('tipo') == '' ? 'selected' : '' }}>Todos
+                                                </option>
                                                 @foreach ($tipos as $t)
-                                                    <option value="{{ $t->tipo }}" {{ request('tipo') == $t->tipo ? 'selected' : '' }}>
+                                                    <option value="{{ $t->tipo }}"
+                                                        {{ request('tipo') == $t->tipo ? 'selected' : '' }}>
                                                         {{ $t->tipo }}
                                                     </option>
                                                 @endforeach
@@ -107,10 +112,13 @@
                                         <div class="col-4">
                                             <label for="area" class="form-label fw-bold">Áreas</label>
                                             <select name="area" id="area" class="form-control">
-                                                <option value="" {{ request('area') == '' ? 'selected' : '' }}>Todo</option>
-                                                <option value="null" {{ request('area') == 'null' ? 'selected' : '' }}>Sin área</option>
+                                                <option value="" {{ request('area') == '' ? 'selected' : '' }}>Todo
+                                                </option>
+                                                <option value="null" {{ request('area') == 'null' ? 'selected' : '' }}>
+                                                    Sin área</option>
                                                 @foreach ($areas as $a)
-                                                    <option value="{{ $a->id_area }}" {{ request('area') == $a->id_area ? 'selected' : '' }}>
+                                                    <option value="{{ $a->id_area }}"
+                                                        {{ request('area') == $a->id_area ? 'selected' : '' }}>
                                                         {{ $a->descripcion }}
                                                     </option>
                                                 @endforeach
@@ -126,22 +134,67 @@
                                         </div>
                                         <div class="col-1">
 
-                                            <select name="date_cite" id="date_cite" class="form-control">
-                                                <option value="%" {{ request('date_cite') == '' ? 'selected' : '' }}>Todo</option>
-                                                <option value="Vence_hoy" {{ request('date_cite') == 'Vence_hoy' ? 'selected' : '' }}>Vence Hoy</option>
-                                                <option value="Ni Definir ni segun tramite" {{ request('date_cite') == 'Ni Definir ni segun tramite' ? 'selected' : '' }}>Ni Definir ni segun tramite</option>
-                                                <option value="Por Definir" {{ request('date_cite') == 'Por Definir' ? 'selected' : '' }}>Por Definir</option>
-                                                <option value="Segun_tramite" {{ request('date_cite') == 'Segun_tramite' ? 'selected' : '' }}>Según el Trámite</option>
-                                                <option value="Filtrar por Fecha" {{ request('date_cite') == 'Filtrar por Fecha' ? 'selected' : '' }}>Filtrar por Fecha</option>
+                                            <select name="date_cite" id="date_cite" class="form-control"
+                                                onchange="activateInput()">
+                                                <option value="%" {{ request('date_cite') == '' ? 'selected' : '' }}>
+                                                    Todo</option>
+                                                <option value="Vence_hoy"
+                                                    {{ request('date_cite') == 'Vence_hoy' ? 'selected' : '' }}>Vence Hoy
+                                                </option>
+                                                <option value="Ni Definir ni segun tramite"
+                                                    {{ request('date_cite') == 'Ni Definir ni segun tramite' ? 'selected' : '' }}>
+                                                    Ni Definir ni segun tramite</option>
+                                                <option value="Por Definir"
+                                                    {{ request('date_cite') == 'Por Definir' ? 'selected' : '' }}>Por
+                                                    Definir</option>
+                                                <option value="Segun_tramite"
+                                                    {{ request('date_cite') == 'Segun_tramite' ? 'selected' : '' }}>Según
+                                                    el Trámite</option>
+                                                <option value="Filtrar por Fecha"
+                                                    {{ request('date_cite') == 'Filtrar por Fecha' ? 'selected' : '' }}>
+                                                    Filtrar por Fecha</option>
                                             </select>
                                         </div>
+
+
+                                        <script defer>
+                                            document.addEventListener("DOMContentLoaded", function() {
+                                                activateInput(); // Ejecuta la función al cargar la página
+                                                document.getElementById("date_cite").addEventListener("change",
+                                                activateInput); // Escucha cambios en el select
+                                            });
+
+                                            function activateInput() {
+
+                                                let date_cite_value = document.getElementById("date_cite").value;
+
+                                                let date_start = document.getElementById("date_start");
+                                                let date_end = document.getElementById("date_end");
+                                                if (date_cite_value == "Filtrar por Fecha") {
+                                                    date_start.disabled = false;
+                                                    date_end.disabled = false;
+                                                } else {
+                                                    date_start.disabled = true;
+                                                    date_end.disabled = true;
+                                                }
+                                                // if (date_cite_value != "Filtrar por Fecha") {
+                                                //     date_start.disabled = true;
+                                                //     date_end.disabled = true;
+                                                // }
+                                            }
+                                        </script>
+
+
+
                                         <div class="col-1">
 
-                                            <input type="date" name="date_start" class="form-control" value="{{ request('date_start') }}">
+                                            <input type="date" name="date_start"id="date_start" class="form-control"
+                                                value="{{ request('date_start') }}"disabled>
                                         </div>
                                         <div class="col-1">
 
-                                            <input type="date" name="date_end" class="form-control" value="{{ request('date_end') }}">
+                                            <input type="date" name="date_end"id="date_end" class="form-control"
+                                                value="{{ request('date_end') }}"disabled>
                                         </div>
 
                                         <div class="col-2 text-start">
@@ -149,34 +202,88 @@
                                         </div>
                                         <div class="col-1">
 
-                                            <input type="date" name="date_start_gen" class="form-control" value="{{ request('date_start_gen') }}">
+                                            <input type="date" name="date_start_gen" class="form-control"
+                                                value="{{ request('date_start_gen') }}">
                                         </div>
                                         <div class="col-1">
 
-                                            <input type="date" name="date_end_gen" class="form-control" value="{{ request('date_end_gen') }}">
+                                            <input type="date" name="date_end_gen" class="form-control"
+                                                value="{{ request('date_end_gen') }}">
                                         </div>
 
                                         <div class="col-1 text-start">
                                             <label class="fw-bold">Fecha Reprogramación</label>
                                         </div>
                                         <div class="col-1">
-                                            <select name="date_reprog" id="date_reprog" class="form-control">
-                                                <option value="" {{ request('date_reprog') == '' ? 'selected' : '' }}>Todo</option>
-                                                <option value="Vence_hoy" {{ request('date_repro') == 'Vence_hoy' ? 'selected' : '' }}>Vence Hoy</option>
-                                                <option value="Con Reprogramación" {{ request('date_reprog') == 'Con Reprogramación' ? 'selected' : '' }}>Con Reprogramación</option>
-                                                <option value="Sin Reprogramación" {{ request('date_reprog') == 'Sin Reprogramación' ? 'selected' : '' }}>Sin Reprogramación</option>
-                                                <option value="Segun_tramite" {{ request('date_reprog') == 'Segun_tramite' ? 'selected' : '' }}>Según el Trámite</option>
-                                                <option value="Filtrar por Fecha" {{ request('date_reprog') == 'Filtrar por Fecha' ? 'selected' : '' }}>Filtrar por Fecha</option>
+                                            <select name="date_reprog" id="date_reprog" class="form-control"onchange="activateInput_2();">
+                                                <option value=""
+                                                    {{ request('date_reprog') == '' ? 'selected' : '' }}>Todo</option>
+                                                <option value="Vence_hoy"
+                                                    {{ request('date_repro') == 'Vence_hoy' ? 'selected' : '' }}>Vence Hoy
+                                                </option>
+                                                <option value="Con Reprogramación"
+                                                    {{ request('date_reprog') == 'Con Reprogramación' ? 'selected' : '' }}>
+                                                    Con Reprogramación</option>
+                                                <option value="Sin Reprogramación"
+                                                    {{ request('date_reprog') == 'Sin Reprogramación' ? 'selected' : '' }}>
+                                                    Sin Reprogramación</option>
+                                                <option value="Segun_tramite"
+                                                    {{ request('date_reprog') == 'Segun_tramite' ? 'selected' : '' }}>Según
+                                                    el Trámite</option>
+                                                <option value="Filtrar por Fecha"
+                                                    {{ request('date_reprog') == 'Filtrar por Fecha' ? 'selected' : '' }}>
+                                                    Filtrar por Fecha</option>
                                             </select>
                                         </div>
 
+
+
+
+                                        <script defer>
+                                            document.addEventListener("DOMContentLoaded", function() {
+                                                activateInput_2(); // Ejecuta la función al cargar la página
+                                                document.getElementById("date_reprog").addEventListener("change",
+                                                activateInput_2); // Escucha cambios en el select
+                                            });
+
+                                            function activateInput_2() {
+
+                                                let date_reprog_value = document.getElementById("date_reprog").value;
+
+                                                let date_start_reprog = document.getElementById("date_start_reprog");
+                                                let date_end_reprog = document.getElementById("date_end_reprog");
+                                                if (date_reprog_value == "Filtrar por Fecha") {
+                                                    date_start_reprog.disabled = false;
+                                                    date_end_reprog.disabled = false;
+                                                } else {
+                                                    date_start_reprog.disabled = true;
+                                                    date_end_reprog.disabled = true;
+                                                }
+                                                // if (date_cite_value != "Filtrar por Fecha") {
+                                                //     date_start.disabled = true;
+                                                //     date_end.disabled = true;
+                                                // }
+                                            }
+                                        </script>
+
+
+
+
+
+
+
+
+
+
                                         <div class="col-1">
 
-                                            <input type="date" name="date_start_reprog" class="form-control" value="{{ request('date_start_reprog') }}">
+                                            <input type="date" name="date_start_reprog" id="date_start_reprog" class="form-control"
+                                                value="{{ request('date_start_reprog') }}" disabled>
                                         </div>
                                         <div class="col-1">
 
-                                            <input type="date" name="date_end_reprog" class="form-control" value="{{ request('date_end_reprog') }}">
+                                            <input type="date" name="date_end_reprog"id="date_end_reprog" class="form-control"
+                                                value="{{ request('date_end_reprog') }}" disabled>
                                         </div>
 
                                     </div>
