@@ -128,7 +128,6 @@
 
                                             <select name="date_cite" id="date_cite" class="form-control">
                                                 <option value="%" {{ request('date_cite') == '' ? 'selected' : '' }}>Todo</option>
-                                                <option value="Vencido por Fecha" {{ request('date_cite') == 'Vencido por Fecha' ? 'selected' : '' }}>Vencido por Fecha</option>
                                                 <option value="Vence_hoy" {{ request('date_cite') == 'Vence_hoy' ? 'selected' : '' }}>Vence Hoy</option>
                                                 <option value="Ni Definir ni segun tramite" {{ request('date_cite') == 'Ni Definir ni segun tramite' ? 'selected' : '' }}>Ni Definir ni segun tramite</option>
                                                 <option value="Por Definir" {{ request('date_cite') == 'Por Definir' ? 'selected' : '' }}>Por Definir</option>

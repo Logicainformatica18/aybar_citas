@@ -95,16 +95,9 @@ class CiteController extends Controller
 
         ////////////////// FECHA DE CITA ///////////////////////////////////////////////////////
 
-        if($date_cite=="Vencido por Fecha"){
 
-           // $fecha_actual = Carbon::now('America/Lima');
 
-            $query->where("fecha", ">", $fecha_actual)
-            ->where("fecha", "<>", "Según el Trámite")
-            ->where("fecha", "<>", "Por Definir");
-        }
-
-        elseif($date_cite=="Vence_hoy"){
+        if($date_cite=="Vence_hoy"){
 
             $fecha_inicio = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
             $fecha_fin = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
