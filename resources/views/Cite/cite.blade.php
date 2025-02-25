@@ -345,9 +345,9 @@
                         <div class="mb-2">
                             <h4 class="card-title mb-0">Exportar</h4>
                             <button type="button" class="btn mb-0  btn-primary" style="width:300px"
-                                
+
                                 onclick="exportarExcelConFiltros()">
-                                Exportar Todo - Excel
+                                Exportar Filtrado - Excel
                             </button>
 
                             <script>
