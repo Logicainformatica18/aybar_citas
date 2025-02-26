@@ -35,7 +35,9 @@
             <!-- end row -->
         </thead>
         <tbody>
+
             @foreach ($cite as $cites)
+
                 <tr>
 
                     <td>
