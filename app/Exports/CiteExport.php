@@ -177,7 +177,7 @@ class CiteExport implements FromCollection, WithHeadings
             'Hora de cita',        // citas.hora
             'Motivo',              // citas.motivo
             'Estado',              // citas.estado
-            'Restante',            // Calculado si aplica
+
             'Fecha Generada',      // citas.fecha_generada
             'Fecha Reprogramada'   // citas.fecha_repro
         ];
