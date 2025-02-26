@@ -431,8 +431,7 @@
                     <div class="modal-body">
 
 
-                        <form action="" method="post" role="form" id="cite"
-                            name="cite"enctype="multipart/form-data">
+
                             <input type="hidden" name="id" id="id">
                             {{ csrf_field() }}
 
@@ -452,7 +451,7 @@
                             id="update">
                             @endcanany --}}
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        </form>
+
 
 
 
@@ -480,6 +479,10 @@
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
+                    <form   role="form" id="cite"
+                    name="cite"enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="id_cita" id="id_cita">
                     <h5 class="modal-title h4" id="exampleModalFullscreenLabel">
                         Detalles de la Cita
                     </h5>
@@ -517,8 +520,12 @@
                                 Cita</label>
                             <li class="d-flex align-items-center gap-2 mb-4">
                                 <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <input type="time" id="hora_cita_update"name="hora_cita_update" class="form-control w-70" value="00:00:00" style="display:none">
                                 <span id="hora_cita"></span>
-                                <button class="btn btn-primary w-10 ti ti-clock-hour-1 fs-3" id="aumentarh"></button>
+                                <button
+                                onclick="document.getElementById('hora_cita_update').style.display='block';
+                                document.getElementById('hora_cita').style.display='none'"
+                                type="button" class="btn btn-primary w-10 ti ti-clock-hour-1 fs-3" id="aumentarh"></button>
                             </li>
                             <label for=""
                                 class="control-label border-bottom border-primary custom-cursor-default-hover">Motivo</label>
@@ -554,8 +561,13 @@
                                 Cita</label>
                             <li class="d-flex align-items-center gap-2 mb-3">
                                 <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <input type="date" id="fecha_cita_update"name="fecha_cita_update"value="dd-mm-yyyy" class="form-control w-70" style="display:none">
                                 <span id="fecha_cita"></span>
-                                <button class="btn btn-primary w-10 ti ti-calendar-plus fs-3" id="aumentar"></button>
+                                <button type="button" class="btn btn-primary w-10 ti ti-calendar-plus fs-3" id="aumentar"
+                                onclick="document.getElementById('fecha_cita_update').style.display='block';
+                                document.getElementById('fecha_cita').style.display='none'"
+                                ></button>
+                             
 
                             </li>
                             <label for=""
@@ -631,7 +643,7 @@
                         <div class="row border-bottom border-primary mb-4"
                             style="padding-bottom: 4vh; margin-left: 0; margin-right: 0;">
                             <div class="d-flex" style="justify-content: flex-end; height: 5vh;">
-                                <button class="btn btn-primary" id="actualizarBtn">Actualizar Cita</button>
+                                <button class="btn btn-primary" id="actualizarBtn" onclick="citeUpdate();return false">Actualizar Cita</button>
                             </div>
 
                             {{-- @if ($id_rol == 3):
@@ -791,7 +803,7 @@
 
             </div>
 
-
+        </form>
         </div>
         <!-- /.modal-content -->
     </div>
@@ -799,4 +811,23 @@
     </div>
     <!-- /.modal-dialog -->
     </div>
+    <script>
+            // $('#aumentar').on('click', function () {
+            //         // Verificar si #fecha_cita ya es un input para evitar duplicación
+            //         if (!$('#fecha_cita').is('input')) {
+            //             // Reemplazar el span por un input de fecha
+            //             $('#fecha_cita').replaceWith(`<input type="date" id="fecha_cita_update"name="fecha_cita_update" class="form-control w-70">`);
+            //         }
+            //         $('#actualizarBtn').show();
+            // });
+
+            // $('#aumentarh').on('click', function () {
+            //         // Verificar si #fecha_cita ya es un input para evitar duplicación
+            //         if (!$('#hora_cita').is('input')) {
+            //             // Reemplazar el span por un input de fecha
+            //             $('#hora_cita').replaceWith(`<input type="time" id="hora_cita_update"name="hora_cita_update" class="form-control w-70" value="00:00:00">`);
+            //         }
+            //         $('#actualizarBtn').show();
+            // });
+    </script>
 @endsection

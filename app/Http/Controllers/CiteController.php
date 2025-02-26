@@ -245,10 +245,9 @@ class CiteController extends Controller
                 });
         })
         ->orderBy("codigo", "asc")->paginate(7);
-
-          // ✅ Retornar JSON para que Axios lo pueda interpretar correctamente
-  //  return response()->json($cite);
-        $crit = $request->criterio;
+              // ✅ Retornar JSON para que Axios lo pueda interpretar correctamente
+             //  return response()->json($cite);
+            $crit = $request->criterio;
             return view("Cite.Citetable", compact("cite","crit"));
     }
     public function count()
@@ -289,9 +288,6 @@ class CiteController extends Controller
             ->where('id_area', '=', $request->id)
             ->orderBy("nombre_motivo", "asc")->get();
         }
-
-
-
         return $motivo;
     }
 
@@ -309,9 +305,38 @@ class CiteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCiteRequest $request, Cite $cite)
+    public function update(Request $request)
     {
-        //
+     
+       $datosActualizar = [];
+
+       if (!empty($request->fecha_cita_update)) {
+           $datosActualizar['fecha'] = $request->fecha_cita_update;
+       }
+       
+       if (!empty($request->hora_cita_update)) {
+           $datosActualizar['hora'] = $request->hora_cita_update;
+       }
+       
+       if (!empty($datosActualizar)) {
+           $updated = DB::table('citas')
+               ->where('id_cita', (int) $request->id_cita)
+               ->update($datosActualizar);
+       
+           if ($updated) {
+               return response()->json(["mensaje" => "Cita actualizada correctamente"]);
+           } else {
+               return response()->json(["error" => "No se pudo actualizar la cita"], 400);
+           }
+       } else {
+           return response()->json(["error" => "No se enviaron valores para actualizar"], 400);
+       }
+       
+
+        
+        
+        
+        
     }
 
     /**

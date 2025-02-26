@@ -36,7 +36,8 @@ function citeEdit(id) {
     .then(function(response) {
       //handle success
       //var contentdiv = document.getElementById("mycontent");
-
+      var id_cita = document.getElementById("id_cita");
+      id_cita.value=id;
       var descripcion = document.getElementById("descripcion");
       descripcion.innerHTML = response.data["descripcion"]|| "Sin Dato";
 
@@ -78,7 +79,8 @@ function citeEdit(id) {
         archivo.innerHTML ="No hay archivo disponible";
       }
       else{
-        archivo.innerHTML = "<a target='_blank' href='"+response.data["archivo"] + "'>Ver Archivo</a> ";
+
+        archivo.innerHTML = "<a target='_blank' href='https://atenciones.aybarsac.com/php/ver_pdf.php?file="+response.data["archivo"] + "'>Ver Archivo</a> ";
 
       }
     })
@@ -100,10 +102,11 @@ function citeUpdate() {
   })
     .then(function(response) {
       //handle success
-      var contentdiv = document.getElementById("mycontent");
-      contentdiv.innerHTML = response.data;
+     // var contentdiv = document.getElementById("mycontent");
+     // contentdiv.innerHTML = response.data;
       //carga pdf- csv - excel
-      datatable_load();
+     // datatable_load();
+     console.log(response.data);
       alert("Modificado Correctamente");
     })
     .catch(function(response) {

@@ -9,7 +9,10 @@ class Cite extends Model
 {
     use HasFactory;
     protected $table ="citas";
+    protected $primaryKey = 'id_cita';
+
     protected $fillable = [
+        'id_cita',
         'codigo',
         'id_cliente',
         'tipo',

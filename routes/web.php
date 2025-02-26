@@ -38,6 +38,8 @@ Route::get('/exportar-citas/{estado}', function ($estado, Request $request) {
 });
 
 Route::post('/buscar-clientes', [App\Http\Controllers\CiteController::class, 'show']);
+Route::post('citeUpdate', [App\Http\Controllers\CiteController::class, 'update']);
+
 
 
 
