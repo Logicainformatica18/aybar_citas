@@ -37,7 +37,7 @@ Route::get('/exportar-citas/{estado}', function ($estado, Request $request) {
     return Excel::download(new CiteExport($request, $estado), 'citas.xlsx');
 });
 
-
+Route::post('/buscar-clientes', [App\Http\Controllers\CiteController::class, 'show']);
 
 
 

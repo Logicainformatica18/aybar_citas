@@ -234,6 +234,23 @@ class CiteController extends Controller
     {
         //
     }
+    public function show(Request $request)
+    {
+        $cite = Cite::with('customer') // Cargar la relación
+        ->when($request->criterio, function ($query, $criterio) {
+            $query->orWhere("codigo", "like", "$criterio")
+                ->orWhere("motivo", "like", "%$criterio%")
+                ->orWhereHas('customer', function ($subquery) use ($criterio) {
+                    $subquery->where("razon_social", "like", "%$criterio%");
+                });
+        })
+        ->orderBy("codigo", "asc")->paginate(7);
+
+          // ✅ Retornar JSON para que Axios lo pueda interpretar correctamente
+  //  return response()->json($cite);
+        $crit = $request->criterio;
+            return view("Cite.Citetable", compact("cite","crit"));
+    }
     public function count()
     {
         $cite = new stdClass();
@@ -284,10 +301,10 @@ class CiteController extends Controller
      */
     public function edit(Request $request)
     {
-        $cite = Cite::where("id_cita", "=", $request->id)->first();
+        $cite = Cite::with('customer')->where("id_cita", "=", $request->id)->first();
         return $cite;
-
     }
+
 
     /**
      * Update the specified resource in storage.

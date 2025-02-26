@@ -524,7 +524,7 @@
                                 class="control-label border-bottom border-primary custom-cursor-default-hover">Motivo</label>
                             <li class="d-flex align-items-center gap-2 mb-4">
                                 <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="motivo"></span>
+                                <span id="motivo_cita"></span>
                             </li>
                             <label for=""
                                 class="control-label border-bottom border-primary custom-cursor-default-hover">Manzana</label>
@@ -589,7 +589,7 @@
                                 class="control-label border-bottom border-primary custom-cursor-default-hover">Tipo</label>
                             <li class="d-flex align-items-center gap-2 mb-4">
                                 <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="tipo"></span>
+                                <span id="tipo_cita"></span>
                             </li>
                             <label for=""
                                 class="control-label border-bottom border-primary custom-cursor-default-hover">Fecha

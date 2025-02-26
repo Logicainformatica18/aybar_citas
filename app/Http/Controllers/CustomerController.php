@@ -12,15 +12,15 @@ use Illuminate\Support\Facades\Mail;
 use App\Notifications\CustomerNotification;
 class CustomerController extends Controller
 {
-  
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $Customer = Customer::orderBy('id','DESC')->get();
-        $Project = Project::orderBy('id','DESC')->get();
-        return view('Customer.Customer', compact('Customer',"Project"));
+        $Customer = Customer::orderBy('id', 'DESC')->get();
+        $Project = Project::orderBy('id', 'DESC')->get();
+        return view('Customer.Customer', compact('Customer', "Project"));
     }
 
     /**
@@ -28,7 +28,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        $Customer = Customer::orderBy('id','DESC')->get();
+        $Customer = Customer::orderBy('id', 'DESC')->get();
         return view('Customer.Customertable', compact('Customer'));
     }
 
@@ -50,7 +50,7 @@ class CustomerController extends Controller
     }
     public function storePublic(StoreCustomerRequest $request)
     {
-    //      funciona localmente con hos
+        //      funciona localmente con hos
         // $user = User::find(3); // Encuentra al usuario que recibirá la notificación
         // $user->notify(new CustomerNotification());
         //  $name_ =$request->names;
@@ -58,29 +58,29 @@ class CustomerController extends Controller
         // Mail::raw('Cliente nuevo: ' . $name_, function ($message) use ($name_) {
         //     $message->to('soporte@aybar.credilotesperu.com') // Cambia por un correo real
         //             ->subject('Un cliente se ha registrado')
-                    
+
         //             ->from('soporte@aybar.credilotesperu.com', 'Credilotes Perú');
         // });
 
         $data = $request->validated();
 
 
-       $Customer = new Customer;
+        $Customer = new Customer;
         //data es un array
         $Customer->names = $data["names"];
         $Customer->dni = $data["dni"];
         $Customer->project_id = $data["project_id"];
-        $Customer->cellphone = $data["code_country"]. $data["cellphone"];
+        $Customer->cellphone = $data["code_country"] . $data["cellphone"];
         $Customer->message = $data["message"] ?? '';
 
         $Customer->save();
-  
- 
-    
+
+
+
     }
     public function ProjectList()
     {
-        $Project = Project::orderBy('id','DESC')->get();
+        $Project = Project::orderBy('id', 'DESC')->get();
         return $Project;
     }
     /**
@@ -88,7 +88,8 @@ class CustomerController extends Controller
      */
     public function show(Request $request)
     {
-        //
+
+
     }
 
     /**
@@ -105,7 +106,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request)
     {
-        $Customer =  Customer::find($request->id);
+        $Customer = Customer::find($request->id);
         $Customer->firstname = $request->firstname;
         $Customer->lastname = $request->lastname;
         $Customer->names = $request->names;

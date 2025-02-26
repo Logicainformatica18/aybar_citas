@@ -8,7 +8,7 @@
                 <th><img width="20" src="https://cdn-icons-png.flaticon.com/512/6671/6671938.png" alt=""
                         srcset=""></th>
 
-                {{-- <th>Acción</th> --}}
+                <th>Acción</th>
                 <th>Código</th>
                 <th>Cliente</th>
                 <th>DNI</th>
@@ -74,12 +74,12 @@
 
 
 
-                    {{-- <td>
+                    <td>
                         <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#success-header-modal"
                             fdprocessedid="cw61t3"
                             onclick="citeEdit('{{ $cites->id_cita }}');return false"style="width: 100px">+ Ver
                             más</button>
-                    </td> --}}
+                    </td>
                     <td>{{ $cites->codigo }}</td>
                     <td>{{ $cites->customer->Razon_Social }}</td>
                     <td>{{ $cites->customer->DNI }}</td>
@@ -192,6 +192,16 @@
 
 
 
+{{-- @if (isset($crit)!="")
+<script>
+
+    setTimeout(() => {
 
 
-<script></script>
+}, 500);
+  </script>
+@endif --}}
+
+
+
+

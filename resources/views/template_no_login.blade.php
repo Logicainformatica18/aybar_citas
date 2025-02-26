@@ -2000,12 +2000,9 @@
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
     <script defer>
-        function datatable_load() {
+        function datatable_load(criterio) {
 
-            //
-            //    File export                              //
-            //
-            $("#file_export").DataTable({
+            var table = $("#file_export").DataTable({
                 dom: "Bfrtip",
                 buttons: ["copy", "csv", "excel", "pdf", "print"],
                 paging: false // Deshabilita la paginación
@@ -2014,181 +2011,49 @@
             $(".buttons-copy, .buttons-csv, .buttons-print, .buttons-pdf, .buttons-excel")
                 .addClass("btn btn-primary");
 
-            //
-            //  Show / hide columns dynamically                 //
-            //
-            var table = $("#show_hide_col").DataTable({
-                scrollY: "200px",
-                paging: false // Deshabilita la paginación
-            });
+            // Capturar búsqueda con debounce (esperar antes de ejecutar la petición)
+            let searchTimeout;
 
-            $("a.toggle-vis").on("click", function(e) {
-                e.preventDefault();
-                var column = $("#show_hide_col").dataTable().api().column($(this).attr("data-column"));
-                column.visible(!column.visible());
-            });
-
-            //
-            //    Column rendering                         //
-            //
-            $("#col_render").DataTable({
-                columnDefs: [{
-                        render: function(data, type, row) {
-                            return data + " (" + row[3] + ")";
-                        },
-                        targets: 0
-                    },
-                    {
-                        visible: false,
-                        targets: [3]
-                    }
-                ],
-                paging: false // Deshabilita la paginación
-            });
-
-            //
-            //     Row grouping                            //
-            //
-            var table = $("#row_group").DataTable({
-                columnDefs: [{
-                    visible: false,
-                    targets: 2
-                }],
-                order: [
-                    [2, "asc"]
-                ],
-                drawCallback: function(settings) {
-                    var api = this.api();
-                    var rows = api.rows({
-                        page: "current"
-                    }).nodes();
-                    var last = null;
-
-                    api.column(2, {
-                        page: "current"
-                    }).data().each(function(group, i) {
-                        if (last !== group) {
-                            $(rows)
-                                .eq(i)
-                                .before('<tr class="group"><td colspan="5">' + group + "</td></tr>");
-                            last = group;
-                        }
-                    });
-                },
-                paging: false // Deshabilita la paginación
-            });
-
-            //
-            // Order by the grouping
-            //
-            $("#row_group tbody").on("click", "tr.group", function() {
-                var currentOrder = table.order()[0];
-                if (currentOrder[0] === 2 && currentOrder[1] === "asc") {
-                    table.order([2, "desc"]).draw();
-                } else {
-                    table.order([2, "asc"]).draw();
+            // Ejecutar la búsqueda cuando se cambia el input (cuando el usuario sale)
+            $("#file_export_filter input").on("change", function() {
+                let searchValue = $(this).val().trim();
+                if (searchValue.length > 0) {
+                    fetchData(searchValue);
                 }
             });
 
-            //
-            //    Multiple table control element           //
-            //
-            $("#multi_control").DataTable({
-                dom: '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
-                paging: false // Deshabilita la paginación
-            });
-
-            //
-            //    DOM/jquery events                        //
-            //
-            var table = $("#dom_jq_event").DataTable({
-                paging: false // Deshabilita la paginación
-            });
-
-            $("#dom_jq_event tbody").on("click", "tr", function() {
-                var data = table.row(this).data();
-                alert("You clicked on " + data[0] + "'s row");
-            });
-
-            //
-            //    Language File                            //
-            //
-            $("#lang_file").DataTable({
-                language: {
-                    url: "../../assets/js/datatable/German.json"
-                },
-                paging: false // Deshabilita la paginación
-            });
-
-            //
-            //    Complex headers with column visibility   //
-            //
-            $("#complex_head_col").DataTable({
-                columnDefs: [{
-                    visible: false,
-                    targets: -1
-                }],
-                paging: false // Deshabilita la paginación
-            });
-
-            //
-            //    Setting defaults                         //
-            //
-            var defaults = {
-                searching: false,
-                ordering: false,
-                paging: false
-            };
-            $("#setting_defaults").dataTable($.extend(true, {}, defaults, {}));
-
-            //
-            //    Footer callback                          //
-            //
-            $("#footer_callback").DataTable({
-                footerCallback: function(row, data, start, end, display) {
-                    var api = this.api(),
-                        data;
-                    var intVal = function(i) {
-                        return typeof i === "string" ? i.replace(/[\$,]/g, "") * 1 : typeof i === "number" ?
-                            i : 0;
-                    };
-                    total = api.column(4).data().reduce(function(a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
-                    pageTotal = api.column(4, {
-                        page: "current"
-                    }).data().reduce(function(a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
-                    $(api.column(4).footer()).html("$" + pageTotal + " ( $" + total + " total)");
-                },
-                paging: false // Deshabilita la paginación
-            });
-
-            //
-            //    Custom toolbar elements                  //
-            //
-            $("#custom_tool_ele").DataTable({
-                dom: '<"toolbar">frtip',
-                paging: false // Deshabilita la paginación
-            });
-
-            $("div.toolbar").html("<b>Custom tool bar! Text/images etc.</b>");
-
-            //
-            //    Row created callback                     //
-            //
-            $("#row_create_call").DataTable({
-                createdRow: function(row, data, index) {
-                    if (data[5].replace(/[\$,]/g, "") * 1 > 150000) {
-                        $("td", row).eq(5).addClass("highlight");
+            // Ejecutar la búsqueda cuando el usuario presiona Enter
+            $("#file_export_filter input").on("keyup", function(event) {
+                if (event.keyCode === 13) { // 13 = Enter
+                    let searchValue = $(this).val().trim();
+                    if (searchValue.length > 0) {
+                        fetchData(searchValue);
                     }
-                },
-                paging: false // Deshabilita la paginación
+                }
             });
+
+            if (criterio !== "") {
+                table.search(criterio).draw(); // Aplicar el criterio al filtro de DataTables
+            }
+
         }
 
-        datatable_load();
+        function fetchData(criterio) {
+            axios.post("/buscar-clientes", {
+                    criterio: criterio
+                })
+                .then(function(response) {
+                    var contentdiv = document.getElementById("mycontent");
+                    contentdiv.innerHTML = response.data;
+                    //carga pdf- csv - excel
+                    datatable_load(criterio);
+                })
+                .catch(function(error) {
+                    console.error("Error en la búsqueda:", error);
+                });
+        }
+        // Cargar DataTable
+        datatable_load("");
     </script>
 
 
