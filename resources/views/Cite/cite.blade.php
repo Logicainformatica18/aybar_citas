@@ -85,9 +85,9 @@
                                                 <option value="" {{ request('motivo') == '' ? 'selected' : '' }}>
                                                     Todos</option>
                                                 @foreach ($motivos as $m)
-                                                    <option value="{{ $m->motivo }}"
-                                                        {{ request('motivo') == $m->motivo ? 'selected' : '' }}>
-                                                        {{ $m->motivo }}
+                                                    <option value="{{ $m->nombre_motivo }}"
+                                                        {{ request('nombre_motivo') == $m->nombre_motivo ? 'selected' : '' }}>
+                                                        {{ $m->nombre_motivo }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -111,7 +111,7 @@
                                         <!-- Botón Filtrar -->
                                         <div class="col-4">
                                             <label for="area" class="form-label fw-bold">Áreas</label>
-                                            <select name="area" id="area" class="form-control">
+                                            <select name="area" id="area" class="form-control" onchange="filterMotivoArea(this)">
                                                 <option value="" {{ request('area') == '' ? 'selected' : '' }}>Todo
                                                 </option>
                                                 <option value="null" {{ request('area') == 'null' ? 'selected' : '' }}>

@@ -16,35 +16,35 @@ class CiteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($estado,Request $request)
+    public function index($estado, Request $request)
     {
 
 
-     // Obtener los valores desde la query string
-     $motivo = $request->query('motivo', '');
-     $tipo = $request->query('tipo', '');
-     $date_start = $request->query('date_start', '');
-     $date_end = $request->query('date_end', '');
-     $date_reprog = $request->query('date_reprog', '');
-     $date_start_reprog = $request->query('date_start_reprog', '');
-     $date_end_reprog = $request->query('date_end_reprog', '');
-     $date_start_gen = $request->query('date_start_gen', '');
-     $date_end_gen = $request->query('date_end_gen', '');
-     $date_cite = $request->query('date_cite', '');
-     $area = $request->query('area', '');
+        // Obtener los valores desde la query string
+        $motivo = $request->query('motivo', '');
+        $tipo = $request->query('tipo', '');
+        $date_start = $request->query('date_start', '');
+        $date_end = $request->query('date_end', '');
+        $date_reprog = $request->query('date_reprog', '');
+        $date_start_reprog = $request->query('date_start_reprog', '');
+        $date_end_reprog = $request->query('date_end_reprog', '');
+        $date_start_gen = $request->query('date_start_gen', '');
+        $date_end_gen = $request->query('date_end_gen', '');
+        $date_cite = $request->query('date_cite', '');
+        $area = $request->query('area', '');
 
 
         // Si el estado es "Todos", usar "%"
-        if($estado=="Todos"){
+        if ($estado == "Todos") {
 
-            $estado = '%'  ;
+            $estado = '%';
         }
 
 
         // Obtener motivos y tipos únicos
-        $motivos = DB::table('citas')->select('motivo')->distinct()->orderBy("motivo", "asc")->get();
+        $motivos = DB::table(table: 'motivos_cita')->select('nombre_motivo')->orderBy("nombre_motivo", "asc")->get();
         $tipos = DB::table('citas')->select('tipo')->distinct()->orderBy("tipo", "asc")->get();
-        $areas = DB::table('areas')->select('id_area','descripcion')->orderBy("descripcion", "asc")->get();
+        $areas = DB::table('areas')->select('id_area', 'descripcion')->orderBy("descripcion", "asc")->get();
         // Obtener conteos de estado
         $total_cite = Cite::count();
         $total_pendiente = Cite::where('estado', 'Pendiente')->count();
@@ -56,8 +56,8 @@ class CiteController extends Controller
         $total_cerrado = Cite::where('estado', 'Cerrado')->count();
 
         // Obtener información del usuario autenticado
-         $user = User::where('id_usuario', '=', '1')->first();
-         Auth::login($user);
+        $user = User::where('id_usuario', '=', '1')->first();
+        Auth::login($user);
         $id_usuario = $user->id;
         $id_rol = $user->id_rol;
         $id_area = $user->id_area;
@@ -66,21 +66,20 @@ class CiteController extends Controller
         $query = Cite::leftJoin('motivos_cita', function ($join) {
             $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
         })
-        ->leftJoin('areas', function ($join) {
-            $join->on('motivos_cita.id_area', '=', 'areas.id_area');
-        })
-            ->select('citas.*','areas.*')
+            ->leftJoin('areas', function ($join) {
+                $join->on('motivos_cita.id_area', '=', 'areas.id_area');
+            })
+            ->select('citas.*', 'areas.*')
             ->where('citas.estado', 'like', $estado)
             ->orderBy('codigo', 'asc');
 
 
-            $fecha_actual = Carbon::now( 'America/Lima')->toDateString();
+        $fecha_actual = Carbon::now('America/Lima')->toDateString();
         // Aplicar filtros si existen en sesión
-        if ($area=="null") {
+        if ($area == "null") {
             $query->whereNull("areas.id_area");
 
-        }
-        else{
+        } else {
             if (!empty($area)) {
                 $query->where("areas.id_area", "like", $area);
             }
@@ -97,69 +96,61 @@ class CiteController extends Controller
 
 
 
-        if($date_cite=="Vence_hoy"){
+        if ($date_cite == "Vence_hoy") {
 
             $fecha_inicio = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
             $fecha_fin = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
-            $query->whereBetween("fecha", [$fecha_inicio,$fecha_fin])
-            ->where("fecha", "<>", "Según el Trámite")
-            ->where("fecha", "<>", "Por Definir");
-        }
-        elseif($date_cite=="Ni Definir ni segun tramite"){
+            $query->whereBetween("fecha", [$fecha_inicio, $fecha_fin])
+                ->where("fecha", "<>", "Según el Trámite")
+                ->where("fecha", "<>", "Por Definir");
+        } elseif ($date_cite == "Ni Definir ni segun tramite") {
 
 
 
             $query->where("fecha", "<>", "Según el Trámite")
-            ->where("fecha", "<>", "Por Definir");
+                ->where("fecha", "<>", "Por Definir");
 
-        }
-        elseif($date_cite=="Filtrar por Fecha"){
+        } elseif ($date_cite == "Filtrar por Fecha") {
             if (!empty($date_start) && !empty($date_end)) {
                 $query->whereBetween('fecha', [$date_start, $date_end])
-                ->where("fecha", "<>", "Según el Trámite")
-                ->where("fecha", "<>", "Por Definir");
+                    ->where("fecha", "<>", "Según el Trámite")
+                    ->where("fecha", "<>", "Por Definir");
             }
+        } elseif ($date_cite == "Por Definir") {
+
+            $query->where("fecha", "=", "Por Definir");
+
+        } elseif ($date_cite == "Segun_tramite") {
+
+            $query->where("fecha", "like", "Según el Trámite");
+
         }
-        elseif($date_cite=="Por Definir"){
-
-                $query->where("fecha", "=", "Por Definir");
-
-        }elseif($date_cite=="Segun_tramite"){
-
-                $query->where("fecha", "like", "Según el Trámite");
-
-            }
 
 
         ///////////////////////////////////////  FECHA REPROGRAMACION ////////////////////////////////////////////////////
-        if ($date_reprog=="Filtrar por Fecha") {
+        if ($date_reprog == "Filtrar por Fecha") {
             if (!empty($date_start_reprog) && !empty($date_end_reprog)) {
                 $query->whereBetween('fecha_repro', [$date_start_reprog, $date_end_reprog]);
             }
             if (!empty($date_start_gen) && !empty($date_end_gen)) {
                 $query->whereBetween('fecha_generada', [$date_start_gen, $date_end_gen]);
             }
-        }
-        elseif($date_reprog=="Con Reprogramación"){
-            $query->where('fecha_repro', "<>","Sin Reprogramación");
-        }
-        elseif($date_reprog=="Vence_hoy"){
+        } elseif ($date_reprog == "Con Reprogramación") {
+            $query->where('fecha_repro', "<>", "Sin Reprogramación");
+        } elseif ($date_reprog == "Vence_hoy") {
             $fecha_inicio = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
             $fecha_fin = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
-            $query->whereBetween("fecha_repro", [$fecha_inicio,$fecha_fin])
-            ->where("fecha_repro", "<>", "Según el Trámite")
-            ->where("fecha_repro", "<>", "Por Definir");
+            $query->whereBetween("fecha_repro", [$fecha_inicio, $fecha_fin])
+                ->where("fecha_repro", "<>", "Según el Trámite")
+                ->where("fecha_repro", "<>", "Por Definir");
 
 
-        }
-        elseif($date_reprog=="Sin Reprogramación"){
-            $query->where('fecha_repro', "like","Sin Reprogramación");
-        }
-        elseif($date_reprog=="Sin Reprogramación"){
-            $query->where('fecha_repro', "like","Sin Reprogramación");
-        }
-        elseif($date_reprog=="Segun_tramite"){
-            $query->where('fecha_repro', "like",'Según el Trámite');
+        } elseif ($date_reprog == "Sin Reprogramación") {
+            $query->where('fecha_repro', "like", "Sin Reprogramación");
+        } elseif ($date_reprog == "Sin Reprogramación") {
+            $query->where('fecha_repro', "like", "Sin Reprogramación");
+        } elseif ($date_reprog == "Segun_tramite") {
+            $query->where('fecha_repro', "like", 'Según el Trámite');
         }
 
 
@@ -270,23 +261,21 @@ class CiteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function filter(Request $request)
+    public function filterMotivoArea(Request $request)
     {
-        // Guardar los filtros en la sesión
-        session([
-            'estado' => $request->estado ?? 'Todos',
-            'motivo' => $request->motivo ?? '',
-            'tipo' => $request->tipo ?? '',
-            'date_start' => $request->date_start ?? '',
-            'date_end' => $request->date_end ?? '',
-            'date_start_reprog' => $request->date_start_reprog ?? '',
-            'date_end_reprog' => $request->date_end_reprog ?? '',
-            'date_start_gen' => $request->date_start_gen ?? '',
-            'date_end_gen' => $request->date_end_gen ?? '',
-        ]);
+        if($request->id==""){
+            $motivo = DB::table(table: 'motivos_cita')->select('nombre_motivo')->orderBy("nombre_motivo", "asc")->get();
+        }
+        else{
+            $motivo = DB::table('motivos_cita')
+            ->select( 'nombre_motivo')
+            ->where('id_area', '=', $request->id)
+            ->orderBy("nombre_motivo", "asc")->get();
+        }
 
-        // Redirigir al index para aplicar los filtros
-        return redirect()->route('citas.index');
+
+
+        return $motivo;
     }
 
 

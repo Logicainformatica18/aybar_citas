@@ -70,7 +70,6 @@ function citeEdit(id) {
       fecha_creada.innerHTML = response.data["fecha_creada"];
       var hora_repro = document.getElementById("hora_repro");
       hora_repro.innerHTML = response.data["hora_repro"];
-
     })
     .catch(function(response) {
       //handle error
@@ -129,20 +128,43 @@ function citeDestroy(id) {
   }
 }
 
-function citeFilter() {
-    var formData = new FormData(document.getElementById("cite_filter"));
-    // Eliminar el _token del FormData para que no aparezca en la URL
-    formData.delete("_token");
-    // Obtener el estado desde la URL
-    let pathArray = window.location.pathname.split('/');
-    let estado = pathArray[pathArray.length - 1];
+function filterMotivoArea(select) {
+  var id = select.value;
 
-    // Convertir FormData en una query string
-    var params = new URLSearchParams(formData).toString();
+  var formData = new FormData(document.getElementById("cite_filter"));
+  formData.append("id", id);
 
-    // Construir la URL con estado y parámetros
-    let url = `/citas/${estado}?${params}`;
+  axios
+    .post("../filterMotivoArea", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    })
+    .then(function(response) {
+      var motivoSelect = document.getElementById("motivo");
+      motivoSelect.innerHTML = ""; // Limpiar opciones previas
 
-    // Redirigir a la nueva URL
-    window.location.href = url;
+      if (response.data.length > 0) {
+        // Agregar opción fija "Todos"
+        var optionTodos = document.createElement("option");
+        optionTodos.value = "";
+        optionTodos.textContent = "Todos";
+        motivoSelect.appendChild(optionTodos);
+
+        response.data.forEach(function(item) {
+          var option = document.createElement("option");
+          option.value = item.nombre_motivo;
+          option.textContent = item.nombre_motivo;
+          motivoSelect.appendChild(option);
+        });
+      } else {
+        var option = document.createElement("option");
+        option.value = "";
+        option.textContent = "Todos";
+        motivoSelect.appendChild(option);
+      }
+    })
+    .catch(function(error) {
+      console.error("Error en la solicitud AJAX:", error);
+    });
 }
