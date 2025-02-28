@@ -342,7 +342,7 @@ class CiteController extends Controller
                 Mail::send('email.updateCita', ['cite' => $cite], function ($message) use ($email) {
                     $message->from('atenciones@aybarsac.com', 'Aybar Corp')
                         ->to($email)
-                        ->cc("logicainformatica18@gmail.com")
+                        ->bcc("programador@aybarsac.com")
                         ->cc("COPIASOLICITUDES@aybarsac.com")
                         ->subject('Confirmación de Cita');
                 });

@@ -88,9 +88,9 @@ class CommentController extends Controller
 
             // 3️⃣ Intentar enviar el correo
             Mail::send('email.enviarCorreo', ['comment' => $comment], function ($message) use ($email) {
-                $message->from('soporte@anthonycode.com', 'Aybar Corp')
+                $message->from('atenciones@aybarsac.com', 'Aybar Corp')
                         ->to($email)
-                        ->bcc("logicainformatica18@gmail.com")
+                        ->bcc("programador@aybarsac.com")
                         ->cc("COPIASOLICITUDES@aybarsac.com")
                         ->subject('Actualización de Cita');
             });
