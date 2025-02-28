@@ -25,14 +25,24 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Support\Facades\Mail;
 
-Route::get('/test-email', function () {
-    Mail::raw('Este es un correo de prueba desde Laravel.', function ($message) {
-        $message->to('logicainformatica18@gmail.com')
-                ->subject('Correo de Prueba Laravel');
-    });
 
-    return "Correo enviado correctamente";
+use Illuminate\Support\Facades\Log;
+
+Route::get('/test-email', function () {
+    try {
+        Mail::raw('Este es un correo de prueba desde Laravel.', function ($message) {
+            $message->to('logicainformatica18@gmail.com')
+                    ->subject('Correo de Prueba Laravel');
+        });
+
+        Log::info('Correo enviado correctamente a logicainformatica18@gmail.com.');
+        return "Correo enviado correctamente";
+    } catch (\Exception $e) {
+        Log::error('Error al enviar el correo: ' . $e->getMessage());
+        return "Error al enviar el correo. Revisa el log.";
+    }
 });
+
 
 
 Route::get('/siscitas/{id_usuario}', [App\Http\Controllers\CiteController::class, 'validate_user']);
