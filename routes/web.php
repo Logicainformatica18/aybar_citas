@@ -32,7 +32,7 @@ Route::get('/test-email', function () {
     try {
         Mail::raw('Este es un correo de prueba desde Laravel.', function ($message) {
             $message->from('atenciones@aybarsac.com', 'Aybar Corp') // Agrega el remitente
-                    ->to('programador@aybarsac.com') // Destinatario
+                    ->to('logicainformatica18@gmail.com') // Destinatario
                     ->subject('Correo de Prueba Laravel');
         });
 
