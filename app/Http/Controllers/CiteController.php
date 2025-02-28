@@ -251,7 +251,7 @@ class CiteController extends Controller
         // ✅ Retornar JSON para que Axios lo pueda interpretar correctamente
         //  return response()->json($cite);
         $crit = $request->criterio;
-        return view("Cite.Citetable", compact("cite", "crit"));
+        return view("cite.citetable", compact("cite", "crit"));
     }
     public function count()
     {
