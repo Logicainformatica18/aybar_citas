@@ -68,7 +68,7 @@ Route::post('/commentNotify', [App\Http\Controllers\CommentController::class, 'n
 Route::post('/commentStore', [App\Http\Controllers\CommentController::class, 'store']);
 
 
-Route::get('prueba', function () {
+Route::get('prueba/prueba', function () {
     return view("home.home");
 });
 Route::get('/ejecutar', [App\Http\Controllers\GenerateProductionController::class, 'generate']);

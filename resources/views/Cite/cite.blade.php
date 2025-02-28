@@ -143,6 +143,27 @@
                                     <!-- Primera Fila -->
                                     <div class="row text-center">
                                         <!-- Motivo -->
+                                              <!-- Botón Filtrar -->
+                                              <div class="col-4">
+                                                <label for="area" class="form-label fw-bold">Áreas</label>
+                                                <select name="area" id="area" class="form-control"
+                                                    onchange="filterMotivoArea(this)">
+                                                    <option value="" {{ request('area') == '' ? 'selected' : '' }}>Todo
+                                                    </option>
+                                                    <option value="null" {{ request('area') == 'null' ? 'selected' : '' }}>
+                                                        Sin área</option>
+                                                    @foreach ($areas as $a)
+                                                        <option value="{{ $a->id_area }}"
+                                                            {{ request('area') == $a->id_area ? 'selected' : '' }}>
+                                                            {{ $a->descripcion }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+    
+                                            </div>
+
+                                        <!-- Tipo -->
+                                  
                                         <div class="col-4">
                                             <label for="motivo" class="form-label fw-bold">Motivo</label>
                                             <select name="motivo" id="motivo" class="form-control">
@@ -156,8 +177,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-
-                                        <!-- Tipo -->
+                                 
                                         <div class="col-4">
                                             <label for="tipo" class="form-label fw-bold">Tipos</label>
                                             <select name="tipo" id="tipo" class="form-control">
@@ -170,25 +190,6 @@
                                                     </option>
                                                 @endforeach
                                             </select>
-                                        </div>
-
-                                        <!-- Botón Filtrar -->
-                                        <div class="col-4">
-                                            <label for="area" class="form-label fw-bold">Áreas</label>
-                                            <select name="area" id="area" class="form-control"
-                                                onchange="filterMotivoArea(this)">
-                                                <option value="" {{ request('area') == '' ? 'selected' : '' }}>Todo
-                                                </option>
-                                                <option value="null" {{ request('area') == 'null' ? 'selected' : '' }}>
-                                                    Sin área</option>
-                                                @foreach ($areas as $a)
-                                                    <option value="{{ $a->id_area }}"
-                                                        {{ request('area') == $a->id_area ? 'selected' : '' }}>
-                                                        {{ $a->descripcion }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-
                                         </div>
                                     </div>
 

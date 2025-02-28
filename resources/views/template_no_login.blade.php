@@ -90,7 +90,7 @@
                             <!-- ---------------------------------- -->
                             <!-- Dashboard -->
                             <!-- ---------------------------------- -->
-                            <nav class="sidebar-nav" id="menu-right-mini-1" data-simplebar>
+                            {{-- <nav class="sidebar-nav" id="menu-right-mini-1" data-simplebar>
                                 <ul class="sidebar-menu" id="sidebarnav">
                                     <a href=""></a>
                                     <!-- ---------------------------------- -->
@@ -112,138 +112,364 @@
                                     <li>
                                         <span class="sidebar-divider"></span>
                                     </li>
+                                </ul>
+                            </nav> --}}
+                            <nav class="sidebar-nav" id="menu-right-mini-1" data-simplebar>
+                                <ul class="sidebar-menu" id="sidebarnav">
+                                    <li class="nav-small-cap">
+                                        <a href=""></a>
+                                        <span class="hide-menu">General</span>
+                                    </li>
 
-
-                                    {{-- <li class="nav-small-cap">
-                                        <span class="hide-menu">Módulos</span>
-                                    </li> --}}
-                                    {{-- @canany(['administrar', 'usuarios'])
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link has-arrow " href="javascript:void(0)"
-                                                aria-expanded="false">
-                                                <iconify-icon icon="solar:shield-user-line-duotone"></iconify-icon>
-                                                <span class="hide-menu">Usuarios</span>
-                                            </a>
-                                            <ul aria-expanded="false" class="collapse first-level">
-                                                <li class="sidebar-item">
-                                                    <a class="sidebar-link" href="{{ url('admin/usuarios') }}">
-                                                        <span class="icon-small"></span> Usuarios
-                                                    </a>
-                                                </li>
-
-                                                <li class="sidebar-item">
-                                                    <a class="sidebar-link" href="{{ url('admin/roles') }}">
-                                                        <span class="icon-small"></span> Roles
-                                                    </a>
-                                                </li>
-
-
-                                            </ul>
-                                        </li>
-                                    @endcanany --}}
-
-
-                                    {{-- <li class="sidebar-item">
-                                        <a class="sidebar-link has-arrow " href="javascript:void(0)"
-                                            aria-expanded="false">
-                                            <iconify-icon icon="solar:shield-user-line-duotone"></iconify-icon>
-                                            <span class="hide-menu">Secciones</span>
+                                    <!-- Verificar si el usuario tiene acceso al módulo 'Dashboard' -->
+                          
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/inicio.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:pie-chart-3-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Dashboard</span>
                                         </a>
-
-                                        <ul aria-expanded="false" class="collapse first-level">
-                                            @canany(['administrar', 'secciones'])
-                                                <li class="sidebar-item">
-                                                    <a target="_blank" class="sidebar-link" href="{{ url('admin/secciones') }}">
-                                                        <span class="icon-small"></span> Secciones
-                                                    </a>
-                                                </li>
-                                            @endcanany
-                                            @canany(['administrar', 'editar_plantilla'])
-                                                <li class="sidebar-item">
-                                                    <a target="_blank" class="sidebar-link" href="{{ url('home_edit/plantilla') }}">
-                                                        <span class="icon-small"></span> Plantilla
-                                                    </a>
-                                                </li>
-                                            @endcanany
-                                            @canany(['administrar', 'editar_inicio'])
-                                                <li class="sidebar-item">
-                                                    <a target="_blank" class="sidebar-link" href="{{ url('home_edit/inicio') }}">
-                                                        <span class="icon-small"></span> Inicio
-                                                    </a>
-                                                </li>
-                                            @endcanany
-                                            @canany(['administrar', 'editar_nosotros'])
-                                                <li class="sidebar-item">
-                                                    <a target="_blank" class="sidebar-link" href="{{ url('home_edit/nosotros') }}">
-                                                        <span class="icon-small"></span>Nosotros
-                                                    </a>
-                                                </li>
-                                            @endcanany
-                                            @canany(['administrar', 'editar_proyectos'])
-                                                <li class="sidebar-item">
-                                                    <a target="_blank" class="sidebar-link" href="{{ url('home_edit/proyectos') }}">
-                                                        <span class="icon-small"></span>Proyectos
-                                                    </a>
-                                                </li>
-                                            @endcanany
-                                            @canany(['administrar', 'editar_blog'])
-                                                <li class="sidebar-item">
-                                                    <a target="_blank" class="sidebar-link" href="{{ url('home_edit/blog') }}">
-                                                        <span class="icon-small"></span>Blogs
-                                                    </a>
-                                                </li>
-                                            @endcanany
-                                            @canany(['administrar', 'editar_contactos'])
-                                                <li class="sidebar-item">
-                                                    <a target="_blank" class="sidebar-link" href="{{ url('home_edit/contacto') }}">
-                                                        <span class="icon-small"></span>Contáctos
-                                                    </a>
-                                                </li>
-                                            @endcanany
-                                        </ul>
-                                    </li> --}}
+                                    </li>
+                               
 
 
-                                    {{--
-                                    @canany(['administrar', 'imagenes'])
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link has-arrow " href="javascript:void(0)"
-                                                aria-expanded="false">
-                                                <iconify-icon icon="solar:shield-user-line-duotone"></iconify-icon>
-                                                <span class="hide-menu">Imágenes</span>
-                                            </a>
-                                            <ul aria-expanded="false" class="collapse first-level">
-                                                <li class="sidebar-item">
-                                                    <a class="sidebar-link" href="{{ url('admin/imagenes') }}">
-                                                        <span class="icon-small"></span> Imágenes
-                                                    </a>
-                                                </li>
-
-
-
-                                            </ul>
-                                        </li>
-                                    @endcanany --}}
-                                    {{-- <li class="sidebar-item">
-                                        <a class="sidebar-link has-arrow " href="javascript:void(0)"
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow" href="javascript:void(0)"
                                             aria-expanded="false">
-                                            <iconify-icon icon="solar:shield-user-line-duotone"></iconify-icon>
-                                            <span class="hide-menu">Documentación</span>
+                                            <iconify-icon icon="solar:ticket-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Reportes</span>
                                         </a>
                                         <ul aria-expanded="false" class="collapse first-level">
                                             <li class="sidebar-item">
-                                                <a class="sidebar-link" href="{{ url('admin/documentacion') }}">
-                                                    <span class="icon-small"></span> Video tutoriales
+                                                <a class="sidebar-link"target="_blank"
+                                                    href="https://atenciones2.aybarsac.com/citas/Todos"
+                                                    aria-expanded="false">
+                                                    <span class="icon-small"></span>Todos
+                                                    <span class="badge ms-auto" style="background-color: #EE7777;"
+                                                        id="total_2"></span>
+                                                </a>
+                                            </li>
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" target="_blank"
+                                                    href="https://atenciones2.aybarsac.com/citas/Pendiente">
+                                                    <span class="icon-small"></span>Pendientes
+                                                    <span class="badge ms-auto text-bg-success"
+                                                        id="total_pendiente_2"></span>
+                                                </a>
+                                            </li>
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link"target="_blank"
+                                                    href="https://atenciones2.aybarsac.com/citas/Proceso">
+                                                    <span class="icon-small"></span>Procesos
+                                                    <span class="badge ms-auto text-bg-primary"
+                                                        id="total_proceso_2"></span>
+                                                </a>
+                                            </li>
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" target="_blank"
+                                                    href="https://atenciones2.aybarsac.com/citas/Atendido">
+                                                    <span class="icon-small"></span>Atendidas
+                                                    <span class="badge ms-auto text-bg-info"
+                                                        id="total_atendido_2"></span>
+                                                </a>
+                                            </li>
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link"target="_blank"
+                                                    href="https://atenciones2.aybarsac.com/citas/Observado">
+                                                    <span class="icon-small"></span>Observadas
+                                                    <span class="badge ms-auto text-bg-danger"
+                                                        id="total_observado_2"></span>
+                                                </a>
+                                            </li>
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" target="_blank"
+                                                    href="https://atenciones2.aybarsac.com/citas/Derivado">
+                                                    <span class="icon-small"></span>Derivados
+                                                    <span class="badge ms-auto text-bg-secondary"
+                                                        id="total_derivado_2"></span>
+                                                </a>
+                                            </li>
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" target="_blank"
+                                                    href="https://atenciones2.aybarsac.com/citas/Finalizado">
+                                                    <span class="icon-small"></span>Finalizadas
+                                                    <span class="badge ms-auto text-bg-light"
+                                                        id="total_finalizado_2"></span>
+                                                </a>
+                                            </li>
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" target="_blank"
+                                                    href="https://atenciones2.aybarsac.com/citas/Cerrado">
+                                                    <span class="icon-small"></span>Cerradas
+                                                    <span class="badge ms-auto text-bg-dark"
+                                                        id="total_cerrado_2"></span>
                                                 </a>
                                             </li>
 
+                                        </ul>
+                                    </li>
 
+
+
+
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                            aria-expanded="false">
+                                            <iconify-icon icon="solar:ticket-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Vencen Hoy</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse first-level">
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link"target="_blank"
+                                                    href="https://atenciones2.aybarsac.com/citas/Todos?date_cite=Vence_hoy"
+                                                    aria-expanded="false">
+                                                    <span class="icon-small"></span>Fecha
+                                                    <span class="badge ms-auto" style="background-color: #EE7777;"
+                                                        id="vence_hoy_fecha"></span>
+                                                </a>
+                                            </li>
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" target="_blank"
+                                                    href="https://atenciones2.aybarsac.com/citas/Todos?date_reprog=Vence_hoy">
+                                                    <span class="icon-small"></span>Fecha Reprogramada
+                                                    <span class="badge ms-auto text-bg-success"
+                                                        id="vence_hoy_repro"></span>
+                                                </a>
+                                            </li>
 
                                         </ul>
+                                    </li>
+
+
+
+
+
+
+
+
+
+                                   
+
+                                   
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/ver_cita_otros.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:ticket-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Visualizar Cita Otros</span>
+                                        </a>
+                                    </li>
+                                   
+
+                                  
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/ver_cita_visita.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:ticket-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Visualizar Cita Visita</span>
+                                        </a>
+                                    </li>
+                                
+                                    <!-- Verificar si el usuario tiene acceso al módulo 'Gestionar Usuarios' -->
+                                   
+                                    {{-- <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/usuarios.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:users-group-rounded-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Gestionar Usuarios</span>
+                                        </a>
                                     </li> --}}
+                                  
+
+                                    <!-- Verificar si el usuario tiene acceso al módulo 'Gestionar Clientes' -->
+                                  
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/clientes.php" aria-expanded="false">
+                                            <iconify-icon
+                                                icon="solar:users-group-two-rounded-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Gestionar Clientes</span>
+                                        </a>
+                                    </li>
+                              
+
+                                  
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/gestion_estadoc.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:document-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Gestión de Estado</span>
+                                        </a>
+                                    </li>
+                                   
+
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                            aria-expanded="false">
+                                            <iconify-icon icon="solar:ticket-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">BackOffice</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse first-level">
+                                         
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" href="https://atenciones.aybarsac.com/back_pendiente.php">
+                                                    <span class="icon-small"></span>Letras de Cambio<span
+                                                        class="badge ms-auto text-bg-success" id="bpendiente"></span>
+                                                </a>
+                                            </li>
+                                    
+                                          
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" href="https://atenciones.aybarsac.com/backoffice.php" aria-expanded="false">
+                                                    <span class="icon-small"></span>Constancia de no <br> Adeudo<span
+                                                        class="badge ms-auto text-bg-success" id="back"></span>
+                                                </a>
+                                            </li>
+                                          
+                                        </ul>
+                                    </li>
+
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                            aria-expanded="false">
+                                            <iconify-icon icon="solar:ticket-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Archivo</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse first-level">
+                                           
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" href="https://atenciones.aybarsac.com/archivo.php">
+                                                    <span class="icon-small"></span>Solicitudes<span
+                                                        class="badge ms-auto text-bg-success"
+                                                        id="a_solicitudes"></span>
+                                                </a>
+                                            </li>
+                                          
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" href="https://atenciones.aybarsac.com/cargos.php">
+                                                    <span class="icon-small"></span>Cargos<span
+                                                        class="badge ms-auto text-bg-success" id="a_cargos"></span>
+                                                </a>
+                                            </li>
+                                      
+                                        </ul>
+                                    </li>
+
+                                    <li class="nav-small-cap">
+                                        <span class="hide-menu">Mantenimiento</span>
+                                    </li>
+
+                                    <!-- Verificar si el usuario tiene acceso al módulo 'Motivo' -->
+                                 
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/mnt_motivo.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:clipboard-list-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Motivo</span>
+                                        </a>
+                                    </li>
+                               
+
+                                 
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/mnt_cliente.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:user-id-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Actualizar Datos</span>
+                                        </a>
+                                    </li>
+                                 
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/calendario.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:calendar-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Calendario</span>
+                                        </a>
+                                    </li>
+                                 
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/c_clave.php" aria-expanded="false">
+                                            <iconify-icon
+                                                icon="solar:lock-keyhole-minimalistic-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Generar Clave</span>
+                                        </a>
+                                    </li>
+                                  
+
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                            aria-expanded="false">
+                                            <iconify-icon icon="solar:ticket-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Empresa/Proyecto</span>
+                                        </a>
+                                        <ul aria-expanded="false" class="collapse first-level">
+                                            <!-- Verificar si el usuario tiene acceso al módulo 'Visualizar Cita' -->
+                                         
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" href="https://atenciones.aybarsac.com/empresa.php">
+                                                    <span class="icon-small"></span>Unión<span
+                                                        class="badge ms-auto text-bg-success" id="union"></span>
+                                                </a>
+                                            </li>
+                                         
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" href="https://atenciones.aybarsac.com/mnt_empresa.php">
+                                                    <span class="icon-small"></span>Empresa<span
+                                                        class="badge ms-auto text-bg-success" id="empresae"></span>
+                                                </a>
+                                            </li>
+                                           
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" href="https://atenciones.aybarsac.com/mnt_proyecto.php">
+                                                    <span class="icon-small"></span>Proyecto<span
+                                                        class="badge ms-auto text-bg-primary" id="proyecto"></span>
+                                                </a>
+                                            </li>
+                                          
+                                        </ul>
+                                    </li>
+
+                                    <li class="nav-small-cap">
+                                        <span class="hide-menu">Dux</span>
+                                    </li>
+
+                                
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/gr_citas.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:ticket-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Generar Cita</span>
+                                        </a>
+                                    </li>
+                                 
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/consulta_datos.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:bill-check-linear"></iconify-icon>
+                                            <span class="hide-menu">Citas Generadas</span>
+                                        </a>
+                                    </li>
+                                   
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/consulta_datosdux.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:bill-check-linear"></iconify-icon>
+                                            <span class="hide-menu" id="b_entregas">Citas Generadas DUX</span>
+                                        </a>
+                                    </li>
+                                    
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/consulta_datosvpt.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:bill-check-linear"></iconify-icon>
+                                            <span class="hide-menu" id="b_entregas">Citas Generadas VPT</span>
+                                        </a>
+                                    </li>
+                                   
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/generar_clientes.php" aria-expanded="false">
+                                            <iconify-icon icon="solar:user-plus-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Generar Clientes</span>
+                                        </a>
+                                    </li>
+                                  
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="https://atenciones.aybarsac.com/entregas.php" aria-expanded="false">
+                                            <iconify-icon
+                                                icon="solar:checklist-minimalistic-line-duotone"></iconify-icon>
+                                            <span class="hide-menu" id="b_entregas">Entregas Cargos</span>
+                                        </a>
+                                    </li>
+                                 
+
                                 </ul>
                             </nav>
-
 
 
 
@@ -287,9 +513,10 @@
                             </li>
                             <li class="nav-item d-none d-lg-flex dropdown nav-icon-hover-bg rounded-circle">
                                 <div class="hover-dd">
-                                    <a class="nav-link" id="drop2" href="javascript:void(0)" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        <iconify-icon icon="solar:widget-3-line-duotone" class="fs-6"></iconify-icon>
+                                    <a class="nav-link" id="drop2" href="javascript:void(0)"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <iconify-icon icon="solar:widget-3-line-duotone"
+                                            class="fs-6"></iconify-icon>
                                     </a>
 
                                 </div>
