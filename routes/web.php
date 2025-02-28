@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Log;
 Route::get('/test-email', function () {
     try {
         Mail::raw('Este es un correo de prueba desde Laravel.', function ($message) {
-            $message->to('logicainformatica18@gmail.com')
+            $message->to('programador@aybarsac.com')
                     ->subject('Correo de Prueba Laravel');
         });
 
