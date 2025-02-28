@@ -340,7 +340,7 @@ class CiteController extends Controller
 
 
                 Mail::send('email.updateCita', ['cite' => $cite], function ($message) use ($email) {
-                    $message->from('soporte@anthonycode.com', 'Aybar Corp')
+                    $message->from('atenciones@aybarsac.com', 'Aybar Corp')
                         ->to($email)
                         ->cc("logicainformatica18@gmail.com")
                         ->cc("COPIASOLICITUDES@aybarsac.com")
