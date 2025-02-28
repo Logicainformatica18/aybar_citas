@@ -31,11 +31,13 @@ use Illuminate\Support\Facades\Log;
 Route::get('/test-email', function () {
     try {
         Mail::raw('Este es un correo de prueba desde Laravel.', function ($message) {
-            $message->to('programador@aybarsac.com')
+            $message->from('atenciones@aybarsac.com', 'Aybar Corp') // Agrega el remitente
+                    ->to('programador@aybarsac.com') // Destinatario
                     ->subject('Correo de Prueba Laravel');
         });
 
-        Log::info('Correo enviado correctamente a logicainformatica18@gmail.com.');
+
+        Log::info('Correo enviado correctamente a .');
         return "Correo enviado correctamente";
     } catch (\Exception $e) {
         Log::error('Error al enviar el correo: ' . $e->getMessage());
