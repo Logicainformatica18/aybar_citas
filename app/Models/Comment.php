@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
+    protected $table ="comentarios";
+
+    public function cite(){
+        return $this->belongsTo("App\Models\Cite", 'id_cita', 'id_cita');
+    }
 }

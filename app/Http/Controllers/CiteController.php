@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Cite;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreCiteRequest;
 use App\Http\Requests\UpdateCiteRequest;
+use Illuminate\Support\Facades\Session; // Importar la clase Session
 use stdClass;
 use Carbon\Carbon;
+
 class CiteController extends Controller
 {
     /**
@@ -237,18 +240,18 @@ class CiteController extends Controller
     public function show(Request $request)
     {
         $cite = Cite::with('customer') // Cargar la relación
-        ->when($request->criterio, function ($query, $criterio) {
-            $query->orWhere("codigo", "like", "$criterio")
-                ->orWhere("motivo", "like", "%$criterio%")
-                ->orWhereHas('customer', function ($subquery) use ($criterio) {
-                    $subquery->where("razon_social", "like", "%$criterio%");
-                });
-        })
-        ->orderBy("codigo", "asc")->paginate(7);
-              // ✅ Retornar JSON para que Axios lo pueda interpretar correctamente
-             //  return response()->json($cite);
-            $crit = $request->criterio;
-            return view("Cite.Citetable", compact("cite","crit"));
+            ->when($request->criterio, function ($query, $criterio) {
+                $query->orWhere("codigo", "like", "$criterio")
+                    ->orWhere("motivo", "like", "%$criterio%")
+                    ->orWhereHas('customer', function ($subquery) use ($criterio) {
+                        $subquery->where("razon_social", "like", "%$criterio%");
+                    });
+            })
+            ->orderBy("codigo", "asc")->paginate(7);
+        // ✅ Retornar JSON para que Axios lo pueda interpretar correctamente
+        //  return response()->json($cite);
+        $crit = $request->criterio;
+        return view("Cite.Citetable", compact("cite", "crit"));
     }
     public function count()
     {
@@ -279,14 +282,13 @@ class CiteController extends Controller
      */
     public function filterMotivoArea(Request $request)
     {
-        if($request->id==""){
+        if ($request->id == "") {
             $motivo = DB::table(table: 'motivos_cita')->select('nombre_motivo')->orderBy("nombre_motivo", "asc")->get();
-        }
-        else{
+        } else {
             $motivo = DB::table('motivos_cita')
-            ->select( 'nombre_motivo')
-            ->where('id_area', '=', $request->id)
-            ->orderBy("nombre_motivo", "asc")->get();
+                ->select('nombre_motivo')
+                ->where('id_area', '=', $request->id)
+                ->orderBy("nombre_motivo", "asc")->get();
         }
         return $motivo;
     }
@@ -297,7 +299,8 @@ class CiteController extends Controller
      */
     public function edit(Request $request)
     {
-        $cite = Cite::with('customer')->where("id_cita", "=", $request->id)->first();
+        $cite = Cite::with('comment', 'customer')->where("id_cita", "=", $request->id)->first();
+        session(['customer_email' => $cite->customer->Email]);
         return $cite;
     }
 
@@ -307,36 +310,66 @@ class CiteController extends Controller
      */
     public function update(Request $request)
     {
-     
-       $datosActualizar = [];
 
-       if (!empty($request->fecha_cita_update)) {
-           $datosActualizar['fecha'] = $request->fecha_cita_update;
-       }
-       
-       if (!empty($request->hora_cita_update)) {
-           $datosActualizar['hora'] = $request->hora_cita_update;
-       }
-       
-       if (!empty($datosActualizar)) {
-           $updated = DB::table('citas')
-               ->where('id_cita', (int) $request->id_cita)
-               ->update($datosActualizar);
-       
-           if ($updated) {
-               return response()->json(["mensaje" => "Cita actualizada correctamente"]);
-           } else {
-               return response()->json(["error" => "No se pudo actualizar la cita"], 400);
-           }
-       } else {
-           return response()->json(["error" => "No se enviaron valores para actualizar"], 400);
-       }
-       
+        $datosActualizar = [];
 
-        
-        
-        
-        
+        if (!empty($request->fecha_cita_update)) {
+            $datosActualizar['fecha'] = $request->fecha_cita_update;
+        }
+
+        if (!empty($request->hora_cita_update)) {
+            $datosActualizar['hora'] = $request->hora_cita_update;
+        }
+
+        if (!empty($datosActualizar)) {
+            $updated = DB::table('citas')
+                ->where('id_cita', (int) $request->id_cita)
+                ->update($datosActualizar);
+
+
+
+            $cite = DB::table('citas')
+                ->where('id_cita', (int) $request->id_cita)
+                ->first(); // Obtiene un solo registro
+
+            $email = DB::table('clientes')
+                ->where('id_cliente', $cite->id_cliente)
+                ->value('email'); // Obtiene solo el email
+
+            if ($email) {
+
+
+                Mail::send('email.updateCita', ['cite' => $cite], function ($message) use ($email) {
+                    $message->from('soporte@anthonycode.com', 'Aybar Corp')
+                        ->to($email)
+                        ->cc("logicainformatica18@gmail.com")
+                        ->cc("COPIASOLICITUDES@aybarsac.com")
+                        ->subject('Confirmación de Cita');
+                });
+                return response()->json(["mensaje" => "Cita actualizada correctamente"]);
+            } else {
+                return response()->json(["error" => "No se pudo actualizar la cita"], 400);
+            }
+
+
+
+            // if ($updated) {
+            //     return response()->json(["mensaje" => "Cita actualizada correctamente"]);
+            // } else {
+            //     return response()->json(["error" => "No se pudo actualizar la cita"], 400);
+            // }
+
+
+        } else {
+            return response()->json(["error" => "No se enviaron valores para actualizar"], 400);
+        }
+
+
+
+
+
+
+
     }
 
     /**

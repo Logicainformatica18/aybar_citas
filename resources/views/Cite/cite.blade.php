@@ -567,7 +567,7 @@
                                 onclick="document.getElementById('fecha_cita_update').style.display='block';
                                 document.getElementById('fecha_cita').style.display='none'"
                                 ></button>
-                             
+
 
                             </li>
                             <label for=""
@@ -679,10 +679,10 @@
                         </div>
 
                         <div class="estado_desc mb-2">
-
+                            <form action=""id="comment_form">
                             <label for="control-label" style="color: #000; margin-bottom: 2vh;">¿En qué estado se
                                 encuentra la Cita generada?</label>
-                            <select class="form-control mb-4" id="estado">
+                            <select class="form-control mb-4" name="estado">
                                 <option selected disabled>Seleccione el Estado</option>
                                 <option value="Pendiente">Pendiente</option>
                                 <option value="Proceso">Proceso</option>
@@ -693,9 +693,9 @@
                             </select>
 
                             <label for="control-label" style="color: #000; margin-bottom: 2vh;">Comentario</label>
-                            <textarea class="form-control" rows="6" name="comentario_pendiente" id="comentario_pendiente"
-                                style="display: none;"></textarea>
-                            <textarea class="form-control" rows="6" name="comentario_proceso" id="comentario_proceso"
+                            <textarea class="form-control" rows="6" name="comentario"
+                                style=""></textarea>
+                            {{-- <textarea class="form-control" rows="6" name="comentario_proceso" id="comentario_proceso"
                                 style="display: none;"></textarea>
                             <textarea class="form-control" rows="6" name="comentario_atendido" id="comentario_atendido"
                                 style="display: none;"></textarea>
@@ -706,13 +706,17 @@
                             <textarea class="form-control" rows="6" name="comentario_observado" id="comentario_observado"
                                 style="display: none;"></textarea>
                             <textarea class="form-control" rows="6" name="comentario_derivado" id="comentario_derivado"
-                                style="display: none;"></textarea>
+                                style="display: none;"></textarea> --}}
 
                         </div>
+
+                  
 
                         <div class="row mb-3" id="comentariosContainer"
                             style="overflow-y: auto; height: 38vh; box-shadow: 0px 1px 5px -1px #a7a7a7; background: white; padding: 0; margin: 0;">
 
+
+
                         </div>
 
 
@@ -720,7 +724,7 @@
 
 
 
-                        {{-- @if ($id_rol == 1 || $id_rol == 3 || $id_rol == 4 || $id_rol == 5):
+                       {{-- @if ($id_rol == 1 || $id_rol == 3 || $id_rol == 4 || $id_rol == 5):
 
                         <label for="control-label" style="color: #000; margin-top: 2vh; margin-bottom: 2vh;">Comentario de Jefe</label>
                         <div class="col-md-12 single-note-item all-category note-important">
@@ -738,6 +742,7 @@
                         <div class="d-flex" style="justify-content:space-between">
                             <div>
                                 <button type="button" class="btn bg-success-subtle text-success fs-5" id="guardarBtn"
+                                onclick="commentStore();"
                                     style="margin-right: 2vh; height: 5vh;">
                                     Guardar
                                 </button>
@@ -748,7 +753,7 @@
                                 </button>
                             </div>
                         </div>
-
+                    </form>
                     </div>
 
 

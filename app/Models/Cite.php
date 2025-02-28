@@ -51,5 +51,8 @@ class Cite extends Model
     public function motivo(){
         return $this->belongsTo("App\Models\Reason_appointment", 'motivo', 'nombre_motivo');
     }
+    public function comment(){
+        return $this->hasMany("App\Models\Comment", 'id_cita', 'id_cita')->orderBy('id_comentario', 'desc');
+    }
 
 }
