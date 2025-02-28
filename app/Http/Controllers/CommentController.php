@@ -28,13 +28,32 @@ class CommentController extends Controller
     }
     public function store(Request $request)
     {
-        $comment = new Comment();
-        $comment->comentario = $request->comentario;
-        $comment->id_cita = $request->id_cita;
-        $comment->estado = $request->estado;
-        $comment->fecha = $request->fecha;
-        $comment->hora = $request->hora;
-        $comment->save();
+        try {
+            $comment = new Comment();
+            $comment->comentario = $request->comentario;
+            $comment->id_cita = $request->id_cita;
+            $comment->estado = $request->estado;
+            $comment->fecha = $request->fecha;
+            $comment->hora = $request->hora;
+            $comment->habilitado = 0;
+            $comment->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Comentario guardado exitosamente.',
+                'data' => $comment
+            ], 201);
+        } catch (\Exception $e) {
+            // Registrar el error en los logs de Laravel
+            \Log::error('Error al guardar el comentario: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un error al guardar el comentario.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+
     }
     /**
      * Store a newly created resource in storage.

@@ -417,55 +417,7 @@
         <!-- /.modal -->
 
         <!-- success Header Modal -->
-        <div id="success-header-modal1" class="modal fade" tabindex="-1" aria-labelledby="success-header-modalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header modal-colored-header bg-success text-white">
-                        <h4 class="modal-title text-white" id="success-header-modalLabel">
-                            Citas
-                        </h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
 
-
-
-                            <input type="hidden" name="id" id="id">
-                            {{ csrf_field() }}
-
-                            Descripción : <input type="text" name="description" id="description"
-                                class="form-control">
-
-                            Detalle : <input type="text" name="detail" id="detail" class="form-control">
-
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" value="Nuevo" class="btn btn-primary"
-                            onclick="New();$('#cite')[0].reset();" name="new">
-                        {{-- @canany(['administrar', 'agregar'])<input type="button" value="Guardar" class="btn bg-success-subtle text-success "
-                            onclick="citeStore()" id="create">@endcanany
-                            @canany(['administrar', 'actualizar'])
-                        <input type="button" value="Modificar" class="btn bg-danger-subtle text-danger" onclick="citeUpdate();"
-                            id="update">
-                            @endcanany --}}
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-
-
-
-
-
-
-
-
-                    </div>
-
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
         <!-- /.modal -->
 
 
@@ -520,7 +472,7 @@
                                 Cita</label>
                             <li class="d-flex align-items-center gap-2 mb-4">
                                 <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <input type="time" id="hora_cita_update"name="hora_cita_update" class="form-control w-70" value="00:00:00" style="display:none">
+                                <input type="time" id="hora_cita_update"name="hora_cita_update" class="form-control w-70" style="display:none">
                                 <span id="hora_cita"></span>
                                 <button
                                 onclick="document.getElementById('hora_cita_update').style.display='block';
@@ -677,9 +629,10 @@
                             </div>
 
                         </div>
-
+                    </form>
                         <div class="estado_desc mb-2">
-                            <form action=""id="comment_form">
+                            <form id="comment_form">
+                                @csrf
                             <label for="control-label" style="color: #000; margin-bottom: 2vh;">¿En qué estado se
                                 encuentra la Cita generada?</label>
                             <select class="form-control mb-4" name="estado">
@@ -710,7 +663,7 @@
 
                         </div>
 
-                  
+
 
                         <div class="row mb-3" id="comentariosContainer"
                             style="overflow-y: auto; height: 38vh; box-shadow: 0px 1px 5px -1px #a7a7a7; background: white; padding: 0; margin: 0;">
@@ -808,7 +761,7 @@
 
             </div>
 
-        </form>
+
         </div>
         <!-- /.modal-content -->
     </div>

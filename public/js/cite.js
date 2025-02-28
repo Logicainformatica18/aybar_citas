@@ -47,14 +47,23 @@ function citeEdit(id) {
       razon_social.innerHTML = response.data.customer.Razon_Social || "Sin Dato";
 
       var hora_cita = document.getElementById("hora_cita");
+      var hora_cita_update = document.getElementById("hora_cita_update");
+
       hora_cita.innerHTML = response.data["hora"] || "Sin Dato";
+      hora_cita_update.value = response.data["hora"] || "Sin Dato";
+
+
       var motivo = document.getElementById("motivo_cita");
       motivo.innerHTML = response.data["motivo"] || "Sin Dato";
 
       var manzana = document.getElementById("manzana");
       manzana.innerHTML = response.data["manzana"] || "Sin Dato";
+
       var fecha_cita = document.getElementById("fecha_cita");
+      var fecha_cita_update = document.getElementById("fecha_cita_update");
+      fecha_cita_update.value = response.data["fecha"] || "Sin Dato";
       fecha_cita.innerHTML = response.data["fecha"] || "Sin Dato";
+
       var encargado = document.getElementById("encargado");
       encargado.innerHTML = response.data["generado"] || "Sin Dato";
       var lote = document.getElementById("lote");
@@ -259,7 +268,11 @@ function commentNotify(id_comentario,id_cita) {
   }
   function commentStore() {
     var formData = new FormData(document.getElementById("comment_form"));
-      formData.append("id_comentario", id_comentario);
+    let fecha_cita_update =document.getElementById("fecha_cita_update").value;
+    let hora_cita_update =document.getElementById("hora_cita_update").value;
+    let id_cita =document.getElementById("id_cita").value;
+      formData.append("fecha", fecha_cita_update);
+      formData.append("hora", hora_cita_update);
       formData.append("id_cita", id_cita);
       axios({
         method: "post",
@@ -273,6 +286,8 @@ function commentNotify(id_comentario,id_cita) {
           //carga pdf- csv - excel
 
           alert("Agregado correctamente");
+          citeEdit(id_cita);
+          console.log(response);
         })
         .catch(function(response) {
           //handle error
