@@ -5,8 +5,8 @@
             <tr>
 
 
-                <th><img width="20" src="https://cdn-icons-png.flaticon.com/512/6671/6671938.png" alt=""
-                        srcset=""></th>
+                {{-- <th><img width="20" src="https://cdn-icons-png.flaticon.com/512/6671/6671938.png" alt=""
+                        srcset=""></th> --}}
 
                 <th>Acción</th>
                 <th>Código</th>
@@ -40,13 +40,13 @@
 
                 <tr>
 
-                    <td>
+                    {{-- <td>
                         <div class="dropdown dropstart">
                             <a href="javascript:void(0)" class="text-muted" id="dropdownMenuButton"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="ti ti-dots-vertical fs-6"></i>
                             </a>
-                            {{-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
 
                             @canany(['administrar', 'editar'])
                                 <li>
@@ -65,10 +65,10 @@
                                 </a>
                             </li>
                             @endcanany
-                        </ul> --}}
+                        </ul>
                         </div>
 
-                    </td>
+                    </td> --}}
 
 
 
