@@ -16,12 +16,17 @@
                                                 <div class="col">
                                                     <div class="card " style="background: rgba(0, 17, 255, 0.089);">
                                                         <div class="card-body text-center px-9 pb-4">
-                                                            <div class="d-flex align-items-center justify-content-center round-48 rounded   flex-shrink-0 mb-3 mx-auto"style="background: rgb(0,18,255);">
-                                                                <iconify-icon icon="solar:card-linear" class="fs-10 text-white"></iconify-icon>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center round-48 rounded   flex-shrink-0 mb-3 mx-auto"style="background: rgb(0,18,255);">
+                                                                <iconify-icon icon="solar:card-linear"
+                                                                    class="fs-10 text-white"></iconify-icon>
                                                             </div>
                                                             <span class="fw-normal fs-3 mb-1 text-black">Total</span>
-                                                            <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">{{ $total_cite }}</h4>
-                                                            <a href="{{ url('citas/Todos') }}" class="btn btn-warning" style="border: solid 1px white;width:100%">Ver</a>
+                                                            <h4
+                                                                class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
+                                                                {{ $total_cite }}</h4>
+                                                            <a href="{{ url('citas/Todos') }}" class="btn btn-warning"
+                                                                style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -29,12 +34,18 @@
                                                 <div class="col">
                                                     <div class="card success-gradient">
                                                         <div class="card-body text-center px-9 pb-4">
-                                                            <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-success flex-shrink-0 mb-3 mx-auto">
-                                                                <iconify-icon icon="solar:users-group-rounded-linear" class="fs-10 text-white"></iconify-icon>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center round-48 rounded text-bg-success flex-shrink-0 mb-3 mx-auto">
+                                                                <iconify-icon icon="solar:users-group-rounded-linear"
+                                                                    class="fs-10 text-white"></iconify-icon>
                                                             </div>
                                                             <span class="fw-normal fs-3 mb-1 text-black">Pendiente</span>
-                                                            <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">{{ $total_pendiente }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Pendiente') }}" class="btn btn-success" style="border: solid 1px white;width:100%">Ver</a>
+                                                            <h4
+                                                                class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
+                                                                {{ $total_pendiente }}</h4>
+                                                            <a target="_blank" href="{{ url('citas/Pendiente') }}"
+                                                                class="btn btn-success"
+                                                                style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -42,25 +53,37 @@
                                                 <div class="col">
                                                     <div class="card" style="background-color: #743dda2a;">
                                                         <div class="card-body text-center px-9 pb-4">
-                                                            <div class="d-flex align-items-center justify-content-center round-48 rounded flex-shrink-0 mb-3 mx-auto text-white"style="background-color:#6f42c1">
-                                                                <iconify-icon icon="solar:siderbar-linear"  class="fs-10 text-white"></iconify-icon>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center round-48 rounded flex-shrink-0 mb-3 mx-auto text-white"style="background-color:#6f42c1">
+                                                                <iconify-icon icon="solar:siderbar-linear"
+                                                                    class="fs-10 text-white"></iconify-icon>
                                                             </div>
                                                             <span class="fw-normal fs-3 mb-1 text-black">Proceso</span>
-                                                            <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">{{ $total_proceso }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Proceso') }}" class="btn text-white" style="border: solid 1px white;width:100%;background-color:#6f42c1">Ver</a>
+                                                            <h4
+                                                                class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
+                                                                {{ $total_proceso }}</h4>
+                                                            <a target="_blank" href="{{ url('citas/Proceso') }}"
+                                                                class="btn text-white"
+                                                                style="border: solid 1px white;width:100%;background-color:#6f42c1">Ver</a>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col">
-                                                    <div class="card  info-graddient"  >
+                                                    <div class="card  info-graddient">
                                                         <div class="card-body text-center px-9 pb-4">
-                                                            <div class="d-flex align-items-center justify-content-center round-48 rounded   flex-shrink-0 mb-3 mx-auto bg-info"style=" ">
-                                                                <iconify-icon icon="solar:library-linear" class="fs-10 text-white"></iconify-icon>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center round-48 rounded   flex-shrink-0 mb-3 mx-auto bg-info"style=" ">
+                                                                <iconify-icon icon="solar:library-linear"
+                                                                    class="fs-10 text-white"></iconify-icon>
                                                             </div>
                                                             <span class="fw-normal fs-3 mb-1">Atendido</span>
-                                                            <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">{{ $total_atendido }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Atendido') }}" class="btn bg-info text-white" style="border: solid 1px white;width:100%;background-color:#1cbcaf">Ver</a>
+                                                            <h4
+                                                                class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
+                                                                {{ $total_atendido }}</h4>
+                                                            <a target="_blank" href="{{ url('citas/Atendido') }}"
+                                                                class="btn bg-info text-white"
+                                                                style="border: solid 1px white;width:100%;background-color:#1cbcaf">Ver</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -68,12 +91,18 @@
                                                 <div class="col">
                                                     <div class="card secondary-gradient">
                                                         <div class="card-body text-center px-9 pb-4">
-                                                            <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-secondary flex-shrink-0 mb-3 mx-auto">
-                                                                <iconify-icon icon="solar:card-2-linear" class="fs-10 text-white"></iconify-icon>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center round-48 rounded text-bg-secondary flex-shrink-0 mb-3 mx-auto">
+                                                                <iconify-icon icon="solar:card-2-linear"
+                                                                    class="fs-10 text-white"></iconify-icon>
                                                             </div>
                                                             <span class="fw-normal fs-3 mb-1">Derivado</span>
-                                                            <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">{{ $total_derivado }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Derivado') }}" class="btn btn-secondary" style="border: solid 1px white;width:100%">Ver</a>
+                                                            <h4
+                                                                class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
+                                                                {{ $total_derivado }}</h4>
+                                                            <a target="_blank" href="{{ url('citas/Derivado') }}"
+                                                                class="btn btn-secondary"
+                                                                style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -81,12 +110,18 @@
                                                 <div class="col">
                                                     <div class="card danger-gradient">
                                                         <div class="card-body text-center px-9 pb-4">
-                                                            <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-danger flex-shrink-0 mb-3 mx-auto">
-                                                                <iconify-icon icon="solar:notification-lines-remove-linear" class="fs-10 text-white"></iconify-icon>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center round-48 rounded text-bg-danger flex-shrink-0 mb-3 mx-auto">
+                                                                <iconify-icon icon="solar:notification-lines-remove-linear"
+                                                                    class="fs-10 text-white"></iconify-icon>
                                                             </div>
                                                             <span class="fw-normal fs-3 mb-1">Observado</span>
-                                                            <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">{{ $total_observado }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Observado') }}" class="btn btn-danger" style="border: solid 1px white;width:100%">Ver</a>
+                                                            <h4
+                                                                class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
+                                                                {{ $total_observado }}</h4>
+                                                            <a target="_blank" href="{{ url('citas/Observado') }}"
+                                                                class="btn btn-danger"
+                                                                style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -94,12 +129,18 @@
                                                 <div class="col">
                                                     <div class="card" style="background-color: #e7e7e7;">
                                                         <div class="card-body text-center px-9 pb-4">
-                                                            <div class="d-flex align-items-center justify-content-center round-48 rounded flex-shrink-0 mb-3 mx-auto text-black">
-                                                                <iconify-icon icon="solar:checklist-minimalistic-linear" class="fs-10 text-black"></iconify-icon>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center round-48 rounded flex-shrink-0 mb-3 mx-auto text-black">
+                                                                <iconify-icon icon="solar:checklist-minimalistic-linear"
+                                                                    class="fs-10 text-black"></iconify-icon>
                                                             </div>
                                                             <span class="fw-normal fs-3 mb-1 text-black">Finalizado</span>
-                                                            <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">{{ $total_finalizado }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Finalizado') }}" class="btn text-black" style="border: solid 1px white;width:100%">Ver</a>
+                                                            <h4
+                                                                class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
+                                                                {{ $total_finalizado }}</h4>
+                                                            <a target="_blank" href="{{ url('citas/Finalizado') }}"
+                                                                class="btn text-black"
+                                                                style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -107,12 +148,18 @@
                                                 <div class="col">
                                                     <div class="card bg-dark text-white">
                                                         <div class="card-body text-center px-9 pb-4">
-                                                            <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-dark flex-shrink-0 mb-3 mx-auto">
-                                                                <iconify-icon icon="solar:card-transfer-linear" class="fs-10 text-white"></iconify-icon>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center round-48 rounded text-bg-dark flex-shrink-0 mb-3 mx-auto">
+                                                                <iconify-icon icon="solar:card-transfer-linear"
+                                                                    class="fs-10 text-white"></iconify-icon>
                                                             </div>
                                                             <span class="fw-normal fs-3 mb-1 text-white">Cerrado</span>
-                                                            <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1">{{ $total_cerrado }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Cerrado') }}" class="btn btn-dark" style="border: solid 1px white;width:100%">Ver</a>
+                                                            <h4
+                                                                class="mb-3 d-flex align-items-center justify-content-center gap-1">
+                                                                {{ $total_cerrado }}</h4>
+                                                            <a target="_blank" href="{{ url('citas/Cerrado') }}"
+                                                                class="btn btn-dark"
+                                                                style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -131,8 +178,8 @@
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne">
+                                <button class="accordion-button bg-dark text-white" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseOne">
                                     Filtros Avanzados (Expandible)
                                 </button>
 
@@ -143,24 +190,24 @@
                                     <!-- Primera Fila -->
                                     <div class="row text-center">
                                         <!-- Motivo -->
-                                              <!-- Botón Filtrar -->
-                                              <div class="col-4">
-                                                <label for="area" class="form-label fw-bold">Áreas</label>
-                                                <select name="area" id="area" class="form-control"
-                                                    onchange="filterMotivoArea(this)">
-                                                    <option value="" {{ request('area') == '' ? 'selected' : '' }}>Todo
+                                        <!-- Botón Filtrar -->
+                                        <div class="col-4">
+                                            <label for="area" class="form-label fw-bold">Áreas</label>
+                                            <select name="area" id="area" class="form-control"
+                                                onchange="filterMotivoArea(this)">
+                                                <option value="" {{ request('area') == '' ? 'selected' : '' }}>Todo
+                                                </option>
+                                                <option value="null" {{ request('area') == 'null' ? 'selected' : '' }}>
+                                                    Sin área</option>
+                                                @foreach ($areas as $a)
+                                                    <option value="{{ $a->id_area }}"
+                                                        {{ request('area') == $a->id_area ? 'selected' : '' }}>
+                                                        {{ $a->descripcion }}
                                                     </option>
-                                                    <option value="null" {{ request('area') == 'null' ? 'selected' : '' }}>
-                                                        Sin área</option>
-                                                    @foreach ($areas as $a)
-                                                        <option value="{{ $a->id_area }}"
-                                                            {{ request('area') == $a->id_area ? 'selected' : '' }}>
-                                                            {{ $a->descripcion }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                @endforeach
+                                            </select>
 
-                                            </div>
+                                        </div>
 
                                         <!-- Tipo -->
 
@@ -500,7 +547,8 @@
                     <h5 class="modal-title h4" id="exampleModalFullscreenLabel">
                         Detalles de la Cita
                     </h5>
-                        <button type="button" class="text-end btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="text-end btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
 
                     <form role="form" id="cite" name="cite"enctype="multipart/form-data">
                         @csrf
@@ -510,169 +558,207 @@
 
 
                 </div>
-                <div class="modal-body d-flex row" style="justify-content: space-evenly;">
 
-                    <div class="row col-md-11
-              "
-                        style="margin-left: 0; margin-right: 0; border-right: 1px solid #ededed; box-shadow:0px 0px 5px -1px #a7a7a7; border-radius: 12px; height: 160vh;">
+                <div class="modal-body row container"
+                    style="margin-left: 0; margin-right: 0; border-right: 1px solid #ededed; box-shadow:0px 0px 5px -1px #a7a7a7; border-radius: 12px; height: 160vh;">
 
-                        <div class="d-flex align-items-center mb-3" style="border-radius: 12px; color:#000; ">
-                            <h4 class="mb-4 mb-md-0 card-title">Atención al Cliente</h4>
-                        </div>
+                    <h4 class="mb-4 mb-md-0 card-title">Datos de cliente</h4>
+                    <div class="col-4 mt-2">
 
-                        <div class="col-md-12">
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Razón
+                            Social</label>
+                        <li class="d-flex align-items-center gap-2 mb-4">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <span id="razon_social"></span>
+                        </li>
+                    </div>
+                    <div class="col-4">
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Teléfono</label>
+                        <li class="d-flex align-items-center gap-2 mb-4">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <span id="telefono"></span>
+                        </li>
+                    </div>
+                    <div class="col-4">
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">DNI/CE</label>
+                        <li class="d-flex align-items-center gap-2 mb-4">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <span id="dni"></span>
+                        </li>
+                    </div>
+                    <div class="col-4">
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Lote</label>
+                        <li class="d-flex align-items-center gap-2">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <span id="lote"></span>
+                        </li>
+                    </div>
+                    <div class="col-4">
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Manzana</label>
+                        <li class="d-flex align-items-center gap-2 mb-4">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <span id="manzana"></span>
+                        </li>
+                    </div>
+                    <div class="col-4 mt-2">
+
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Encargado</label>
+                        <li class="d-flex align-items-center gap-2 mb-4">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <span id="encargado"></span>
+                        </li>
+                    </div>
+
+
+
+
+
+                    <h4 class="mb-4 mb-md-0 card-title mt-2">Datos de la Cita</h4>
+                    <div class="col-3 mt-2">
+
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Codigo</label>
+                        <li class="d-flex align-items-center gap-2 mb-4">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <span id="codigo"></span>
+                            <!-- valor aqui-->
+                        </li>
+                    </div>
+                    <div class="col-3">
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Fecha de
+                            Cita</label>
+                        <li class="d-flex align-items-center gap-2 mb-3">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <input type="date" id="fecha_cita_update"name="fecha_cita_update" value="dd-mm-yyyy"
+                                class="form-control w-70" style="display:none">
+                            <span id="fecha_cita"></span>
+                            <button type="button" class="btn btn-primary w-10 ti ti-calendar-plus fs-3" id="aumentar"
+                                onclick="document.getElementById('fecha_cita_update').style.display='block';
+        document.getElementById('fecha_cita').style.display='none'"></button>
+
+
+                        </li>
+                    </div>
+                    <div class="col-3">
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Hora de
+                            Cita</label>
+                        <li class="d-flex align-items-center gap-2 mb-4">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <input type="time" id="hora_cita_update"name="hora_cita_update" class="form-control w-70"
+                                style="display:none">
+                            <span id="hora_cita"></span>
+                            <button
+                                onclick="document.getElementById('hora_cita_update').style.display='block';
+        document.getElementById('hora_cita').style.display='none'"
+                                type="button" class="btn btn-primary w-10 ti ti-clock-hour-1 fs-3"
+                                id="aumentarh"></button>
+                        </li>
+                    </div>
+                    <div class="col-3">
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Tipo</label>
+                        <li class="d-flex align-items-center gap-2 mb-4">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <span id="tipo_cita"></span>
+                        </li>
+                    </div>
+                    <div class="col-6">
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Motivo</label>
+                        <li class="d-flex align-items-center gap-2 mb-4">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <span id="motivo_cita"></span>
+                        </li>
+                    </div>
+                    <div class="col-6">
+                        <label for=""
+                        class="control-label border-bottom border-primary custom-cursor-default-hover">Archivo
+                        Adjuntado</label>
+                    <li class="d-flex align-items-center gap-2 mb-4">
+                        <span class="p-1 rounded-circle text-bg-primary"></span>
+                        <span id="archivo" class="text-primary" style="cursor: pointer;">Ver</span>
+                    </li>
+                    </div>
+
+
+
+                    <h4 class="mb-4 mb-md-0 card-title">Fecha de la Cita</h4>
+                    <div class="col-4 mt-2">
+
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Fecha
+                            Reprogramada</label>
+                        <li class="d-flex align-items-center gap-2 mb-4">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <span id="fecha_repro"></span>
+                        </li>
+                    </div>
+                    <div class="col-4">
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Hora
+                            Reprogramada</label>
+                        <li class="d-flex align-items-center gap-2">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <span id="hora_repro"></span>
+                        </li>
+                    </div>
+
+                    <h4 class="mb-4 mb-md-0 card-title">Asunto</h4>
+                    <div class="col-12 mt-2">
+
+                        <label for=""
+                            class="control-label border-bottom border-primary custom-cursor-default-hover">Detalle de
+                            Cita</label>
+                        <li class="d-flex align-items-center gap-2">
+                            <span class="p-1 rounded-circle text-bg-primary"></span>
+                            <span id="descripcion"></span>
+                        </li>
+                    </div>
+                    <p></p>
+                    <div class="col-12" style="width:200px">
+                        <button class="btn btn-primary" id="actualizarBtn"
+                            onclick="citeUpdate();return false">Actualizar Cita</button>
+                    </div>
+                    <div class="text-end mt-5">
+
+                        <span>*Esta cita ha sido generada el día   <span id="fecha_creada"></span> a las  <span id="hora_creada"></span> horas.</span>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                    {{-- <div id="arealegal" style="display: none;">
                             <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Detalle de
-                                Cita</label>
+                                class="control-label border-bottom border-primary custom-cursor-default-hover mb-2">¿Confirmar
+                                cita?</label>
                             <li class="d-flex align-items-center gap-2">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="descripcion"></span>
+                                <input class="form-check-input success fs-4" type="checkbox" id="confirmar">
                             </li>
-                        </div>
-                        <div class="col-md-3">
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Codigo</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="codigo"></span>
-                                <!-- valor aqui-->
-                            </li>
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Hora de
-                                Cita</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <input type="time" id="hora_cita_update"name="hora_cita_update"
-                                    class="form-control w-70" style="display:none">
-                                <span id="hora_cita"></span>
-                                <button
-                                    onclick="document.getElementById('hora_cita_update').style.display='block';
-                                document.getElementById('hora_cita').style.display='none'"
-                                    type="button" class="btn btn-primary w-10 ti ti-clock-hour-1 fs-3"
-                                    id="aumentarh"></button>
-                            </li>
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Motivo</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="motivo_cita"></span>
-                            </li>
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Manzana</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="manzana"></span>
-                            </li>
-                            <div id="arealegal" style="display: none;">
-                                <label for=""
-                                    class="control-label border-bottom border-primary custom-cursor-default-hover mb-2">¿Confirmar
-                                    cita?</label>
-                                <li class="d-flex align-items-center gap-2">
-                                    <input class="form-check-input success fs-4" type="checkbox" id="confirmar">
-                                </li>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Razón
-                                Social</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="razon_social"></span>
-                            </li>
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Fecha de
-                                Cita</label>
-                            <li class="d-flex align-items-center gap-2 mb-3">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <input type="date" id="fecha_cita_update"name="fecha_cita_update" value="dd-mm-yyyy"
-                                    class="form-control w-70" style="display:none">
-                                <span id="fecha_cita"></span>
-                                <button type="button" class="btn btn-primary w-10 ti ti-calendar-plus fs-3"
-                                    id="aumentar"
-                                    onclick="document.getElementById('fecha_cita_update').style.display='block';
-                                document.getElementById('fecha_cita').style.display='none'"></button>
+                        </div> --}}
 
 
-                            </li>
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Encargado</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="encargado"></span>
-                            </li>
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Lote</label>
-                            <li class="d-flex align-items-center gap-2">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="lote"></span>
-                            </li>
-                        </div>
-                        <div class="col-md-3">
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">DNI/CE</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="dni"></span>
-                            </li>
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Hora de Cita
-                                creada</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="hora_creada"></span>
-                            </li>
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Tipo</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="tipo_cita"></span>
-                            </li>
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Fecha
-                                Reprogramada</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="fecha_repro"></span>
-                            </li>
-                        </div>
-                        <div class="col-md-3">
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Teléfono</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="telefono"></span>
-                            </li>
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Fecha de
-                                Cita creada</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="fecha_creada"></span>
-                            </li>
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Archivo
-                                Adjuntado</label>
-                            <li class="d-flex align-items-center gap-2 mb-4">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="archivo" class="text-primary" style="cursor: pointer;">Ver</span>
-                            </li>
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover">Hora
-                                Reprogramada</label>
-                            <li class="d-flex align-items-center gap-2">
-                                <span class="p-1 rounded-circle text-bg-primary"></span>
-                                <span id="hora_repro"></span>
-                            </li>
-                        </div>
-                        <div class="row border-bottom border-primary mb-4"
-                            style="padding-bottom: 4vh; margin-left: 0; margin-right: 0;">
-                            <div class="d-flex" style="justify-content: flex-end; height: 5vh;">
-                                <button class="btn btn-primary" id="actualizarBtn"
-                                    onclick="citeUpdate();return false">Actualizar Cita</button>
-                            </div>
 
-                            {{-- @if ($id_rol == 3):
+
+                    <div class="row border-bottom border-primary mb-4"
+                        style="padding-bottom: 4vh; margin-left: 0; margin-right: 0;">
+
+
+                        {{-- @if ($id_rol == 3):
                             <div class="d-flex" style="padding: 0; align-items:flex-end;">
                                 <div class="d-flex" style="flex-direction: column; margin-right: 6px;">
                                     <label class="control-label custom-cursor-default-hover"
@@ -687,41 +773,41 @@
                             </div>
                              @endif --}}
 
-                            <div class="d-none" id="contenedor-texto">
-                                <hr>
-                                <label for="control-label" style="padding:0px; margin-bottom: 6px;">Comentario de Petición
-                                    de Derivación</label>
-                                <div class="col-md-6 col-lg-3" style="padding:0px;">
-                                    <div class="card"
-                                        style="box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.11); margin-bottom: 0px;">
-                                        <div class="card-body" style="margin-bottom: 0px;">
-                                            <!--<h5 class="card-title">James Smith</h5>-->
-                                            <p class="card-text" id="texto-derivacion"></p>
-                                        </div>
+                        {{-- <div class="d-none" id="contenedor-texto">
+                            <hr>
+                            <label for="control-label" style="padding:0px; margin-bottom: 6px;">Comentario de Petición
+                                de Derivación</label>
+                            <div class="col-md-6 col-lg-3" style="padding:0px;">
+                                <div class="card"
+                                    style="box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.11); margin-bottom: 0px;">
+                                    <div class="card-body" style="margin-bottom: 0px;">
+                                        <!--<h5 class="card-title">James Smith</h5>-->
+                                        <p class="card-text" id="texto-derivacion"></p>
                                     </div>
                                 </div>
                             </div>
+                        </div> --}}
 
-                        </div>
-                        </form>
-                        <div class="estado_desc mb-2">
-                            <form id="comment_form">
-                                @csrf
-                                <label for="control-label" style="color: #000; margin-bottom: 2vh;">¿En qué estado se
-                                    encuentra la Cita generada?</label>
-                                <select class="form-control mb-4" name="estado">
-                                    <option selected disabled>Seleccione el Estado</option>
-                                    <option value="Pendiente">Pendiente</option>
-                                    <option value="Proceso">Proceso</option>
-                                    <option value="Atendido">Atendido</option>
-                                    <option value="Observado">Observado</option>
-                                    <option value="Finalizado">Finalizado</option>
-                                    <option value="Cerrado">Cerrado</option>
-                                </select>
+                    </div>
+                    </form>
+                    <div class="estado_desc mb-2">
+                        <form id="comment_form">
+                            @csrf
+                            <label for="control-label" style="color: #000; margin-bottom: 2vh;">¿En qué estado se
+                                encuentra la Cita generada?</label>
+                            <select class="form-control mb-4" name="estado">
+                                <option selected disabled>Seleccione el Estado</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Proceso">Proceso</option>
+                                <option value="Atendido">Atendido</option>
+                                <option value="Observado">Observado</option>
+                                <option value="Finalizado">Finalizado</option>
+                                <option value="Cerrado">Cerrado</option>
+                            </select>
 
-                                <label for="control-label" style="color: #000; margin-bottom: 2vh;">Comentario</label>
-                                <textarea class="form-control" rows="6" name="comentario" style=""></textarea>
-                                {{-- <textarea class="form-control" rows="6" name="comentario_proceso" id="comentario_proceso"
+                            <label for="control-label" style="color: #000; margin-bottom: 2vh;">Comentario</label>
+                            <textarea class="form-control" rows="6" name="comentario" style=""></textarea>
+                            {{-- <textarea class="form-control" rows="6" name="comentario_proceso" id="comentario_proceso"
                                 style="display: none;"></textarea>
                             <textarea class="form-control" rows="6" name="comentario_atendido" id="comentario_atendido"
                                 style="display: none;"></textarea>
@@ -734,23 +820,23 @@
                             <textarea class="form-control" rows="6" name="comentario_derivado" id="comentario_derivado"
                                 style="display: none;"></textarea> --}}
 
-                        </div>
+                    </div>
 
 
 
-                        <div class="row mb-3" id="comentariosContainer"
-                            style="overflow-y: auto; height: 38vh; box-shadow: 0px 1px 5px -1px #a7a7a7; background: white; padding: 0; margin: 0;">
+                    <div class="row mb-3" id="comentariosContainer"
+                        style="overflow-y: auto; height: 38vh; box-shadow: 0px 1px 5px -1px #a7a7a7; background: white; padding: 0; margin: 0;">
 
 
 
-                        </div>
+                    </div>
 
 
 
 
 
 
-                        {{-- @if ($id_rol == 1 || $id_rol == 3 || $id_rol == 4 || $id_rol == 5):
+                    {{-- @if ($id_rol == 1 || $id_rol == 3 || $id_rol == 4 || $id_rol == 5):
 
                         <label for="control-label" style="color: #000; margin-top: 2vh; margin-bottom: 2vh;">Comentario de Jefe</label>
                         <div class="col-md-12 single-note-item all-category note-important">
@@ -765,29 +851,29 @@
 
                    @endif --}}
 
-                        <div class="d-flex" style="justify-content:space-between">
-                            <div>
-                                <button type="button" class="btn bg-success-subtle text-success fs-5" id="guardarBtn"
-                                    onclick="commentStore();" style="margin-right: 2vh; height: 5vh;">
-                                    Guardar
-                                </button>
+                    <div class="d-flex" style="justify-content:space-between">
+                        <div>
+                            <button type="button" class="btn bg-success-subtle text-success fs-5" id="guardarBtn"
+                                onclick="commentStore();" style="margin-right: 2vh; height: 5vh;">
+                                Guardar
+                            </button>
 
-                                <button type="button" class="btn bg-danger-subtle text-danger fs-5"
-                                    data-bs-dismiss="modal" style="margin-right: 2vh; height: 5vh;">
-                                    Cerrar
-                                </button>
-                            </div>
+                            <button type="button" class="btn bg-danger-subtle text-danger fs-5" data-bs-dismiss="modal"
+                                style="margin-right: 2vh; height: 5vh;">
+                                Cerrar
+                            </button>
                         </div>
-                        </form>
                     </div>
+                    </form>
+                </div>
 
 
-                    @php
-                        //   $id_rol = $_SESSION['id_rol'];
-                        //   $id_usuario = $_SESSION['id_usuario'];
-                        //   $id_area = $_SESSION['id_area'];
-                    @endphp
-                    {{-- @if ($id_rol == 4 || $id_usuario == 51 || $id_usuario == 31 || $id_usuario == 38 || $id_area == 7)
+                @php
+                    //   $id_rol = $_SESSION['id_rol'];
+                    //   $id_usuario = $_SESSION['id_usuario'];
+                    //   $id_area = $_SESSION['id_area'];
+                @endphp
+                {{-- @if ($id_rol == 4 || $id_usuario == 51 || $id_usuario == 31 || $id_usuario == 38 || $id_area == 7)
                         :
                         <div class="border-bottom border-top"
                             style="margin-top: 10vh; padding: 3vh 1vh 3vh 1vh; box-shadow: 0px 2px 5px -1px#dbdbdb; border-radius:12px;">
@@ -829,13 +915,13 @@
                     @endif --}}
 
 
-                </div>
-
             </div>
 
-
         </div>
-        <!-- /.modal-content -->
+
+
+    </div>
+    <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
     </div>
