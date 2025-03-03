@@ -4,7 +4,7 @@
         <div class="">
             <div class="card card-body py-3">
                 <form action=""id="cite_filter" name="cite_filter">
-                    
+
                     <h2 class="text-primary">Listado de Citas</h2>
                     <div class="row align-items-center">
                         <div class="col-12">
@@ -25,7 +25,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="col">
                                                     <div class="card success-gradient">
                                                         <div class="card-body text-center px-9 pb-4">
@@ -38,7 +38,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                            
+
                                                 <div class="col">
                                                     <div class="card" style="background-color: #6f42c1;">
                                                         <div class="card-body text-center px-9 pb-4">
@@ -51,7 +51,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                            
+
                                                 <div class="col">
                                                     <div class="card bg-info text-white">
                                                         <div class="card-body text-center px-9 pb-4">
@@ -64,7 +64,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                            
+
                                                 <div class="col">
                                                     <div class="card secondary-gradient">
                                                         <div class="card-body text-center px-9 pb-4">
@@ -77,7 +77,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                            
+
                                                 <div class="col">
                                                     <div class="card danger-gradient">
                                                         <div class="card-body text-center px-9 pb-4">
@@ -90,7 +90,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                            
+
                                                 <div class="col">
                                                     <div class="card" style="background-color: #e7e7e7;">
                                                         <div class="card-body text-center px-9 pb-4">
@@ -103,7 +103,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                            
+
                                                 <div class="col">
                                                     <div class="card bg-dark text-white">
                                                         <div class="card-body text-center px-9 pb-4">
@@ -116,15 +116,15 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                            
-                                               
-                            
+
+
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                     <span>* Elegir <b>Filtrar por Fecha</b> para aplicar el cambio</span>
@@ -159,11 +159,11 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
-    
+
                                             </div>
 
                                         <!-- Tipo -->
-                                  
+
                                         <div class="col-4">
                                             <label for="motivo" class="form-label fw-bold">Motivo</label>
                                             <select name="motivo" id="motivo" class="form-control">
@@ -177,7 +177,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                 
+
                                         <div class="col-4">
                                             <label for="tipo" class="form-label fw-bold">Tipos</label>
                                             <select name="tipo" id="tipo" class="form-control">
@@ -493,16 +493,22 @@
 
     <div class="modal fade" id="success-header-modal" tabindex="-1" aria-labelledby="bs-example-modal-lg"
         aria-hidden="true" style="display: none;">
-        <div class="modal-dialog modal-fullscreen">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
+
+                    <h5 class="modal-title h4" id="exampleModalFullscreenLabel">
+                        Detalles de la Cita
+                    </h5>
+                        <button type="button" class="text-end btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                     <form role="form" id="cite" name="cite"enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id_cita" id="id_cita">
-                        <h5 class="modal-title h4" id="exampleModalFullscreenLabel">
-                            Detalles de la Cita
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <p></p>
+
+
+
                 </div>
                 <div class="modal-body d-flex row" style="justify-content: space-evenly;">
 
