@@ -131,25 +131,35 @@
                                 $dias_diferencia = 0;
 
                                 // Calcular la diferencia en días (si hay una fecha válida de reprogramación, usar esa)
-                                if ($fecha_repro) {
-                                    $dias_diferencia = $fecha_actual->diffInDays($fecha_repro, false);
-                                } elseif ($fecha_cita) {
+                           if ($fecha_repro > $fecha_cita) {
+                                $dias_diferencia = $fecha_actual->diffInDays($fecha_repro, false);
+                                 }
+
+                                elseif ($fecha_cita > $fecha_repro ) {
                                     $dias_diferencia = $fecha_actual->diffInDays($fecha_cita, false);
-                                } else {
+                                } elseif($cites->fecha =="Según el Trámite" || $cites->fecha =="Por Definir"|| $cites->fecha ="Otras Solicitudes"){
+                                    $estadoFecha = 'Por Definir';
+                                }
+                                else {
                                     $estadoFecha = 'Por Definir'; // Si ambas fechas son inválidas
                                 }
 
                                 // Determinar el estado de la fecha
-                                if ($dias_diferencia == 0 && $fecha_cita != '') {
+                                if ($dias_diferencia == 0 && $estadoFecha !="Por Definir") {
                                     $estadoFecha = 'Hoy';
                                 } elseif ($dias_diferencia > 0) {
                                     $estadoFecha = "$dias_diferencia días";
-                                } else {
+                                }
+
+                                else {
                                     $estadoFecha = 'Vencido';
                                 }
                             } catch (\Exception $e) {
                                 $estadoFecha = 'Error en fecha';
                             }
+                        }
+                        else{
+                            $estadoFecha = 'Atendido'; //
                         }
                     @endphp
 
