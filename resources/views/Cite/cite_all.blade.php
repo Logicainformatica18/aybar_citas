@@ -725,7 +725,7 @@
 
                 <div class="card bg-white"style="border: solid 1px #054988">
                     <div class="container  row">
-                        <h4 class="mb-4 mb-md-0 card-title">Asunto</h4>
+                        <h4 class="mb-4 mb-md-0 card-title mt-3">Asunto</h4>
                         <div class="col-12 col-sm-12 mt-2">
 
                             <label for=""
@@ -757,9 +757,13 @@
 
 
 
+
                 <div class="row mb-3" id="comentariosContainer"
                     style="overflow-y: auto; height: 38vh; box-shadow: 0px 1px 5px -1px #a7a7a7; background: white; padding: 0; margin: 0;">
                 </div>
+
+
+
                 <div class="" style="justify-content:space-between">
                     <div>
 
@@ -788,5 +792,14 @@
     </div>
     <!-- /.modal-dialog -->
     </div>
+    <script defer>
+        document.addEventListener("DOMContentLoaded", function () {
+            let boton = document.getElementById("btn_enviar_correo_cita");
+
+            if (boton) {
+                boton.style.display = "none"; // Oculta el botón si existe
+            }
+        });
+    </script>
 
 @endsection

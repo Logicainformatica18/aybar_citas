@@ -79,7 +79,7 @@
                     <td>
                         <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#success-header-modal"
                             fdprocessedid="cw61t3"
-                            onclick="citeEdit('{{ $cites->id_cita }}');return false"style="width: 100px">+ Ver
+                            onclick="citeEdit_all('{{ $cites->id_cita }}');return false"style="width: 100px">+ Ver
                             más</button>
                     </td>
                     <td>{{ $cites->codigo }}</td>
