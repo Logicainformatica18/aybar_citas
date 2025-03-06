@@ -523,10 +523,10 @@ class CiteController extends Controller
             Auth::login($user);
 
             // Redirigir a la página deseada
-            if ($request->filtro="todo") {
+            if ($request->filtro=="todo") {
                 return redirect()->route('citas.all', ['estado' => 'Todos']);
             }
-            elseif($request->filtro="area"){
+            elseif($request->filtro=="area"){
                 return redirect()->route('citas.index', ['estado' => 'Todos']);
             }
 
