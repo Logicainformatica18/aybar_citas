@@ -21,7 +21,10 @@ class CiteController extends Controller
      */
     public function index($estado, Request $request)
     {
-
+        $user = Auth::user();
+        $id_usuario = $user->id;
+        $id_rol = $user->id_rol;
+        $id_area = $user->id_area;
 
         // Obtener los valores desde la query string
         $motivo = $request->query('motivo', '');
@@ -48,6 +51,7 @@ class CiteController extends Controller
         $motivos = DB::table(table: 'motivos_cita')->select('nombre_motivo')->orderBy("nombre_motivo", "asc")->get();
         $tipos = DB::table('citas')->select('tipo')->distinct()->orderBy("tipo", "asc")->get();
         $areas = DB::table('areas')->select('id_area', 'descripcion')->orderBy("descripcion", "asc")->get();
+
         // Obtener conteos de estado
         $total_cite = Cite::count();
         $total_pendiente = Cite::where('estado', 'Pendiente')->count();
@@ -59,11 +63,9 @@ class CiteController extends Controller
         $total_cerrado = Cite::where('estado', 'Cerrado')->count();
 
         // Obtener información del usuario autenticado
-        $user = User::where('id_usuario', '=', '1')->first();
-        Auth::login($user);
-        $id_usuario = $user->id;
-        $id_rol = $user->id_rol;
-        $id_area = $user->id_area;
+       // $user = User::where('id_usuario', '=', '1')->first();
+       // Auth::login($user);
+
 
         // Consulta base con LEFT JOIN y LIKE en motivos_cita
         $query = Cite::leftJoin('motivos_cita', function ($join) {
@@ -75,6 +77,68 @@ class CiteController extends Controller
             ->select('citas.*', 'areas.*')
             ->where('citas.estado', 'like', $estado)
             ->orderBy('codigo', 'asc');
+
+
+
+
+
+            if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
+                // Si el rol es 1 o 5 y no tiene área, mostramos todas las citas
+
+                // $query = Cite::leftJoin('motivos_cita', function ($join) {
+                //     $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+                // })
+                //     ->leftJoin('areas', function ($join) {
+                //         $join->on('motivos_cita.id_area', '=', 'areas.id_area');
+                //     })
+                //     ->select('citas.*', 'areas.*')
+                //     ->where('citas.estado', 'like', $estado)
+                //     ->orderBy('codigo', 'asc');
+
+            } elseif ($id_rol == 5 && !empty($id_area)) {
+                // Obtener las áreas habilitadas del usuario
+                $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
+
+                if (!empty($areas_)) {
+                    $cite = $query->whereIn('motivos_cita.id_area', $areas_);
+                } else {
+                    $cite = $query->where('motivos_cita.id_area', $id_area);
+                }
+            } elseif ($id_rol == 4 || in_array($id_area, [1, 2, 3])) {
+                // Obtener las áreas habilitadas del usuario
+                $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
+
+                if (!empty($areas_)) {
+                    $cite = $query->whereIn('motivos_cita.id_area', $areas_);
+                } else {
+                    $cite = $query->where('motivos_cita.id_area', $id_area);
+                }
+            } else {
+                // Si el usuario no está en ningún grupo especial, se filtra por su área
+                $cite = $query->where('motivos_cita.id_area', $id_area);
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         $fecha_actual = Carbon::now('America/Lima')->toDateString();
@@ -159,6 +223,23 @@ class CiteController extends Controller
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Obtener citas con paginación
         $cite = $query->paginate(7)->appends($request->query());
 
@@ -192,7 +273,7 @@ class CiteController extends Controller
     public function validate_user(Request $request)
     {
         // Buscar el usuario por ID
-        $user = User::where('id_usuario', '=', '1')->first();
+        $user = User::where('id_usuario', '=', $request->id_usuario)->first();
 
         if ($user != '') {
             // Iniciar sesión manualmente con Auth
