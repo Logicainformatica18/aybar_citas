@@ -539,381 +539,254 @@
     <!-- /.modal----------------------------------------------------------------------------------------------- -->
 
     <div class="modal fade" id="success-header-modal" tabindex="-1" aria-labelledby="bs-example-modal-lg"
-        aria-hidden="true" style="display: none;">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
+    aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
 
-                    <h5 class="modal-title h4" id="exampleModalFullscreenLabel">
-                        Detalles de la Cita
-                    </h5>
-                    <button type="button" class="text-end btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                <h5 class="modal-title h4" id="exampleModalFullscreenLabel">
+                    Detalles de la Cita
+                </h5>
+                <button type="button" class="text-end btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
 
-                    <form role="form" id="cite" name="cite"enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="id_cita" id="id_cita">
-                        <p></p>
-
-
-
-                </div>
-
-                <div class="modal-body row container"
-                    style="margin-left: 0; margin-right: 0; border-right: 1px solid #ededed; box-shadow:0px 0px 5px -1px #a7a7a7; border-radius: 12px; height: 160vh;">
-
-                    <h4 class="mb-4 mb-md-0 card-title">Datos de cliente</h4>
-                    <div class="col-4 mt-2">
-
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Razón
-                            Social</label>
-                        <li class="d-flex align-items-center gap-2 mb-4">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <span id="razon_social"></span>
-                        </li>
-                    </div>
-                    <div class="col-4">
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Teléfono</label>
-                        <li class="d-flex align-items-center gap-2 mb-4">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <span id="telefono"></span>
-                        </li>
-                    </div>
-                    <div class="col-4">
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">DNI/CE</label>
-                        <li class="d-flex align-items-center gap-2 mb-4">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <span id="dni"></span>
-                        </li>
-                    </div>
-                    <div class="col-4">
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Lote</label>
-                        <li class="d-flex align-items-center gap-2">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <span id="lote"></span>
-                        </li>
-                    </div>
-                    <div class="col-4">
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Manzana</label>
-                        <li class="d-flex align-items-center gap-2 mb-4">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <span id="manzana"></span>
-                        </li>
-                    </div>
-                    <div class="col-4 mt-2">
-
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Encargado</label>
-                        <li class="d-flex align-items-center gap-2 mb-4">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <span id="encargado"></span>
-                        </li>
-                    </div>
-
-
-
-
-
-                    <h4 class="mb-4 mb-md-0 card-title mt-2">Datos de la Cita</h4>
-                    <div class="col-3 mt-2">
-
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Codigo</label>
-                        <li class="d-flex align-items-center gap-2 mb-4">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <span id="codigo"></span>
-                            <!-- valor aqui-->
-                        </li>
-                    </div>
-                    <div class="col-3">
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Fecha de
-                            Cita</label>
-                        <li class="d-flex align-items-center gap-2 mb-3">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <input type="date" id="fecha_cita_update"name="fecha_cita_update" value="dd-mm-yyyy"
-                                class="form-control w-70" style="display:none">
-                            <span id="fecha_cita"></span>
-
-
-
-                        </li>
-                    </div>
-                    <div class="col-3">
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Hora de
-                            Cita</label>
-                        <li class="d-flex align-items-center gap-2 mb-4">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <input type="time" id="hora_cita_update"name="hora_cita_update" class="form-control w-70"
-                                style="display:none">
-                            <span id="hora_cita"></span>
-
-                        </li>
-                    </div>
-                    <div class="col-3">
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Tipo</label>
-                        <li class="d-flex align-items-center gap-2 mb-4">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <span id="tipo_cita"></span>
-                        </li>
-                    </div>
-                    <div class="col-6">
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Motivo</label>
-                        <li class="d-flex align-items-center gap-2 mb-4">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <span id="motivo_cita"></span>
-                        </li>
-                    </div>
-                    <div class="col-6">
-                        <label for=""
-                        class="control-label border-bottom border-primary custom-cursor-default-hover">Archivo
-                        Adjuntado</label>
-                    <li class="d-flex align-items-center gap-2 mb-4">
-                        <span class="p-1 rounded-circle text-bg-primary"></span>
-                        <span id="archivo" class="text-primary" style="cursor: pointer;">Ver</span>
-                    </li>
-                    </div>
-
-
-
-                    <h4 class="mb-4 mb-md-0 card-title">Fecha de la Cita</h4>
-                    <div class="col-4 mt-2">
-
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Fecha
-                            Reprogramada</label>
-                        <li class="d-flex align-items-center gap-2 mb-4">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <span id="fecha_repro"></span>
-                        </li>
-                    </div>
-                    <div class="col-4">
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Hora
-                            Reprogramada</label>
-                        <li class="d-flex align-items-center gap-2">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <span id="hora_repro"></span>
-                        </li>
-                    </div>
-
-                    <h4 class="mb-4 mb-md-0 card-title">Asunto</h4>
-                    <div class="col-12 mt-2">
-
-                        <label for=""
-                            class="control-label border-bottom border-primary custom-cursor-default-hover">Detalle de
-                            Cita</label>
-                        <li class="d-flex align-items-center gap-2">
-                            <span class="p-1 rounded-circle text-bg-primary"></span>
-                            <span id="descripcion"></span>
-                        </li>
-                    </div>
+                <form role="form" id="cite" name="cite"enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="id_cita" id="id_cita">
                     <p></p>
-                    <div class="col-12" style="width:200px">
 
-                    </div>
-                    <div class="text-end mt-5">
-
-                        <span>*Esta cita ha sido generada el día   <span id="fecha_creada"></span> a las  <span id="hora_creada"></span> horas.</span>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
-                    {{-- <div id="arealegal" style="display: none;">
-                            <label for=""
-                                class="control-label border-bottom border-primary custom-cursor-default-hover mb-2">¿Confirmar
-                                cita?</label>
-                            <li class="d-flex align-items-center gap-2">
-                                <input class="form-check-input success fs-4" type="checkbox" id="confirmar">
-                            </li>
-                        </div> --}}
-
-
-
-
-                    <div class="row border-bottom border-primary mb-4"
-                        style="padding-bottom: 4vh; margin-left: 0; margin-right: 0;">
-
-
-                        {{-- @if ($id_rol == 3):
-                            <div class="d-flex" style="padding: 0; align-items:flex-end;">
-                                <div class="d-flex" style="flex-direction: column; margin-right: 6px;">
-                                    <label class="control-label custom-cursor-default-hover"
-                                        id="titulo-derivacion">Descripción de Solicitud de Derivación</label>
-                                    <textarea id="mensaje-derivacion" class="form-control"></textarea>
-                                </div>
-                                <div>
-                                    <button class="btn btn-success" id="derivar-jefe" style="margin-right: 4px;">Derivar
-                                        a Jefe</button>
-                                    <button class="btn btn-warning" id="enviar-jefe">Enviar</button>
-                                </div>
-                            </div>
-                             @endif --}}
-
-                        {{-- <div class="d-none" id="contenedor-texto">
-                            <hr>
-                            <label for="control-label" style="padding:0px; margin-bottom: 6px;">Comentario de Petición
-                                de Derivación</label>
-                            <div class="col-md-6 col-lg-3" style="padding:0px;">
-                                <div class="card"
-                                    style="box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.11); margin-bottom: 0px;">
-                                    <div class="card-body" style="margin-bottom: 0px;">
-                                        <!--<h5 class="card-title">James Smith</h5>-->
-                                        <p class="card-text" id="texto-derivacion"></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-
-                    </div>
-                    </form>
-                    <div class="estado_desc mb-2">
-                        <form id="comment_form">
-
-
-
-
-                            {{-- <textarea class="form-control" rows="6" name="comentario_proceso" id="comentario_proceso"
-                                style="display: none;"></textarea>
-                            <textarea class="form-control" rows="6" name="comentario_atendido" id="comentario_atendido"
-                                style="display: none;"></textarea>
-                            <textarea class="form-control" rows="6" name="comentario_finalizado" id="comentario_finalizado"
-                                style="display: none;"></textarea>
-                            <textarea class="form-control" rows="6" name="comentario_cerrado" id="comentario_cerrado"
-                                style="display: none;"></textarea>
-                            <textarea class="form-control" rows="6" name="comentario_observado" id="comentario_observado"
-                                style="display: none;"></textarea>
-                            <textarea class="form-control" rows="6" name="comentario_derivado" id="comentario_derivado"
-                                style="display: none;"></textarea> --}}
-
-                    </div>
-
-
-
-                    <div class="row mb-3" id="comentariosContainer"
-                        style="overflow-y: auto; height: 38vh; box-shadow: 0px 1px 5px -1px #a7a7a7; background: white; padding: 0; margin: 0;">
-
-
-
-                    </div>
-
-
-
-
-
-
-                    {{-- @if ($id_rol == 1 || $id_rol == 3 || $id_rol == 4 || $id_rol == 5):
-
-                        <label for="control-label" style="color: #000; margin-top: 2vh; margin-bottom: 2vh;">Comentario de Jefe</label>
-                        <div class="col-md-12 single-note-item all-category note-important">
-                          <div class="card card-body" style="box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);">
-                            <span class="side-stick"></span>
-                            <div class="note-content">
-                              <p class="note-inner-content" id="comentario_jefe2"></p>
-                            </div>
-                          </div>
-                        </div>
-
-
-                   @endif --}}
-
-
-                    </form>
-                </div>
-
-
-                @php
-                    //   $id_rol = $_SESSION['id_rol'];
-                    //   $id_usuario = $_SESSION['id_usuario'];
-                    //   $id_area = $_SESSION['id_area'];
-                @endphp
-                {{-- @if ($id_rol == 4 || $id_usuario == 51 || $id_usuario == 31 || $id_usuario == 38 || $id_area == 7)
-                        :
-                        <div class="border-bottom border-top"
-                            style="margin-top: 10vh; padding: 3vh 1vh 3vh 1vh; box-shadow: 0px 2px 5px -1px#dbdbdb; border-radius:12px;">
-                            <h4>Enviar registro a:</h4>
-                            <div class="d-flex" style="justify-content: space-between;">
-                                <div>
-                                    <button type='button' class='btn bg-info-subtle text-info d-flex align-items-center'
-                                        id="retornar1">
-                                        Retornar
-                                    </button>
-                                </div>
-                                <div style="display: flex; flex-direction: column;">
-                                    <button type='button' class='btn bg-info-subtle text-info' id="derivar">
-                                        Otras áreas
-                                    </button>
-                                    <div class="form-group mb-4" id="contenedor-derivar">
-                                        <label class="form-label mb-2">¿A qué motivo pertenece?</label>
-                                        <select class="form-select mr-sm-2" id="ListarMotivo1">
-                                        </select>
-                                        <div class="d-flex justify-content-end" style="margin-top: 4px;">
-                                            <button class="btn bg-success-subtle text-success" id="saveRedicMotivo1">
-                                                Aceptar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button type="button" class="btn bg-info-subtle text-info" id="backoffice1">
-                                        BackOffice
-                                    </button>
-                                </div>
-                                <div>
-                                    <button type="button" class="btn bg-info-subtle text-info" id="archivo1">
-                                        Archivo
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    @endif --}}
 
 
             </div>
 
+            <div class="modal-body row container"
+                style="margin-left: 0; margin-right: 0; border-right: 1px solid #ededed; box-shadow:0px 0px 5px -1px #a7a7a7; border-radius: 12px;">
+
+                <div class="card bg-white"style="border: solid 1px #054988">
+                    <div class="container  row">
+                        <h4 class="mb-4 mt-4 mb-md-0 card-title">Datos de cliente</h4>
+                        <div class="col-12 col-sm-4 mt-2">
+
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Razón
+                                Social</label>
+                            <li class="d-flex align-items-center gap-2 mb-4">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="razon_social"></span>
+                            </li>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Teléfono</label>
+                            <li class="d-flex align-items-center gap-2 mb-4">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="telefono"></span>
+                            </li>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">DNI/CE</label>
+                            <li class="d-flex align-items-center gap-2 mb-4">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="dni"></span>
+                            </li>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Lote</label>
+                            <li class="d-flex align-items-center gap-2">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="lote"></span>
+                            </li>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Manzana</label>
+                            <li class="d-flex align-items-center gap-2 mb-4">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="manzana"></span>
+                            </li>
+                        </div>
+                        <div class="col-12 col-sm-4 mt-2">
+
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Encargado</label>
+                            <li class="d-flex align-items-center gap-2 mb-4">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="encargado"></span>
+                            </li>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="card bg-white"style="border: solid 1px #054988">
+                    <div class="container  row">
+
+                        <h4 class="mb-4 mb-md-0 card-title mt-4">Datos de la Cita</h4>
+                        <div class="col-12 col-sm-4  mt-2">
+
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Codigo</label>
+                            <li class="d-flex align-items-center gap-2 mb-4">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="codigo"></span>
+                                <!-- valor aqui-->
+                            </li>
+                        </div>
+                        <div class="col-12 col-sm-8">
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Motivo</label>
+                            <li class="d-flex align-items-center gap-2 mb-4">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="motivo_cita"></span>
+                            </li>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Archivo
+                            </label>
+                            <li class="d-flex align-items-center gap-2 mb-4">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="archivo" class="text-primary" style="cursor: pointer;">Ver</span>
+                            </li>
+                        </div>
+                        <div class="col-12 col-sm-8">
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Tipo</label>
+                            <li class="d-flex align-items-center gap-2 mb-4">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="tipo_cita"></span>
+                            </li>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+
+                <div class="card bg-white"style="border: solid 1px #054988">
+                    <div class="container  row">
+                        <h4 class=" card-title mt-4">Programación de la Cita</h4>
+                        <div class="col-12 col-sm-3  mt-2">
+
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Fecha de
+                                Cita</label>
+                            <li class="d-flex align-items-center gap-2 mb-3">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <input type="date" id="fecha_cita_update"name="fecha_cita_update"
+                                    value="dd-mm-yyyy" class="form-control w-70" style="display:none">
+                                <span id="fecha_cita"></span>
+
+
+
+                            </li>
+                        </div>
+                        <div class="col-12 col-sm-3 mt-2">
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Hora de
+                                Cita</label>
+                            <li class="d-flex align-items-center gap-2 mb-4">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <input type="time" id="hora_cita_update"name="hora_cita_update"
+                                    class="form-control w-70" style="display:none">
+                                <span id="hora_cita"></span>
+
+                            </li>
+                        </div>
+                        <div class="col-12 col-sm-3 mt-2">
+
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Fecha
+                                Reprogramada</label>
+                            <li class="d-flex align-items-center gap-2 mb-4">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="fecha_repro"></span>
+                            </li>
+                        </div>
+                        <div class="col-12 col-sm-3">
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Hora
+                                Reprogramada</label>
+                            <li class="d-flex align-items-center gap-2">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="hora_repro"></span>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="card bg-white"style="border: solid 1px #054988">
+                    <div class="container  row">
+                        <h4 class="mb-4 mb-md-0 card-title">Asunto</h4>
+                        <div class="col-12 col-sm-12 mt-2">
+
+                            <label for=""
+                                class="control-label border-bottom border-primary custom-cursor-default-hover">Detalle de
+                                Cita</label>
+                            <li class="d-flex align-items-center gap-2">
+                                <span class="p-1 rounded-circle text-bg-primary"></span>
+                                <span id="descripcion"></span>
+                            </li>
+                            <p></p>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="text-end mt-1">
+                    <span>*Esta cita ha sido generada el día <span id="fecha_creada"></span> a las <span
+                            id="hora_creada"></span> horas.</span>
+                </div>
+                <div class="row border-bottom border-primary mb-4"
+                    style="padding-bottom: 4vh; margin-left: 0; margin-right: 0;">
+                </div>
+                </form>
+                <div class="estado_desc mb-2">
+                    <form id="comment_form">
+
+                </div>
+
+
+
+                <div class="row mb-3" id="comentariosContainer"
+                    style="overflow-y: auto; height: 38vh; box-shadow: 0px 1px 5px -1px #a7a7a7; background: white; padding: 0; margin: 0;">
+                </div>
+                <div class="" style="justify-content:space-between">
+                    <div>
+
+
+                    </div>
+                </div>
+                </form>
+            </div>
+
+            <button type="button" class=" btn bg-danger text-white fs-5" data-bs-dismiss="modal"
+            >
+            Cerrar
+        </button>
+
+
+
         </div>
 
-
     </div>
+
+
+</div>
     <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
     </div>
     <!-- /.modal-dialog -->
     </div>
-    <script>
-        // $('#aumentar').on('click', function () {
-        //         // Verificar si #fecha_cita ya es un input para evitar duplicación
-        //         if (!$('#fecha_cita').is('input')) {
-        //             // Reemplazar el span por un input de fecha
-        //             $('#fecha_cita').replaceWith(`<input type="date" id="fecha_cita_update"name="fecha_cita_update" class="form-control w-70">`);
-        //         }
-        //         $('#actualizarBtn').show();
-        // });
 
-        // $('#aumentarh').on('click', function () {
-        //         // Verificar si #fecha_cita ya es un input para evitar duplicación
-        //         if (!$('#hora_cita').is('input')) {
-        //             // Reemplazar el span por un input de fecha
-        //             $('#hora_cita').replaceWith(`<input type="time" id="hora_cita_update"name="hora_cita_update" class="form-control w-70" value="00:00:00">`);
-        //         }
-        //         $('#actualizarBtn').show();
-        // });
-    </script>
 @endsection
