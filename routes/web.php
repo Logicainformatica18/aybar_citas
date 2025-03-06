@@ -47,11 +47,14 @@ Route::get('/test-email', function () {
 
 
 
-Route::get('/siscitas/{id_usuario}', [App\Http\Controllers\CiteController::class, 'validate_user']);
+Route::get('/siscitas/{id_usuario}/{filtro}', [App\Http\Controllers\CiteController::class, 'validate_user']);
+
+
 
 //Route::get('/citas/{estado}', [App\Http\Controllers\CiteController::class, 'index']);
 
 Route::get('/citas/{estado}', [App\Http\Controllers\CiteController::class, 'index'])->name('citas.index');
+Route::get('/todo_citas/{estado}', [App\Http\Controllers\CiteController::class, 'all'])->name('citas.all');
 
 Route::post('/filterMotivoArea', [App\Http\Controllers\CiteController::class, 'filterMotivoArea']);
 

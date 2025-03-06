@@ -16,7 +16,6 @@
                 <th>Proyecto</th>
                 <th>Manzana</th>
                 <th>Lote</th>
-
                 <th>Fecha de cita</th>
                 <th>Hora de cita</th>
                 <th>Fecha Reprogramada</th>

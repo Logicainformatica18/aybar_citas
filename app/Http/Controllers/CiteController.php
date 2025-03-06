@@ -100,22 +100,22 @@ class CiteController extends Controller
                 $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
 
                 if (!empty($areas_)) {
-                    $cite = $query->whereIn('motivos_cita.id_area', $areas_);
+                    $query->whereIn('motivos_cita.id_area', $areas_);
                 } else {
-                    $cite = $query->where('motivos_cita.id_area', $id_area);
+                    $query->where('motivos_cita.id_area', $id_area);
                 }
             } elseif ($id_rol == 4 || in_array($id_area, [1, 2, 3])) {
                 // Obtener las áreas habilitadas del usuario
                 $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
 
                 if (!empty($areas_)) {
-                    $cite = $query->whereIn('motivos_cita.id_area', $areas_);
+                    $query->whereIn('motivos_cita.id_area', $areas_);
                 } else {
-                    $cite = $query->where('motivos_cita.id_area', $id_area);
+                    $query->where('motivos_cita.id_area', $id_area);
                 }
             } else {
                 // Si el usuario no está en ningún grupo especial, se filtra por su área
-                $cite = $query->where('motivos_cita.id_area', $id_area);
+                 $query->where('motivos_cita.id_area', $id_area);
             }
 
 
@@ -264,7 +264,250 @@ class CiteController extends Controller
         );
     }
 
+    public function all($estado, Request $request)
+    {
+        $user = Auth::user();
+        $id_usuario = $user->id;
+        $id_rol = $user->id_rol;
+        $id_area = $user->id_area;
 
+        // Obtener los valores desde la query string
+        $motivo = $request->query('motivo', '');
+        $tipo = $request->query('tipo', '');
+        $date_start = $request->query('date_start', '');
+        $date_end = $request->query('date_end', '');
+        $date_reprog = $request->query('date_reprog', '');
+        $date_start_reprog = $request->query('date_start_reprog', '');
+        $date_end_reprog = $request->query('date_end_reprog', '');
+        $date_start_gen = $request->query('date_start_gen', '');
+        $date_end_gen = $request->query('date_end_gen', '');
+        $date_cite = $request->query('date_cite', '');
+        $area = $request->query('area', '');
+
+
+        // Si el estado es "Todos", usar "%"
+        if ($estado == "Todos") {
+
+            $estado = '%';
+        }
+
+
+        // Obtener motivos y tipos únicos
+        $motivos = DB::table(table: 'motivos_cita')->select('nombre_motivo')->orderBy("nombre_motivo", "asc")->get();
+        $tipos = DB::table('citas')->select('tipo')->distinct()->orderBy("tipo", "asc")->get();
+        $areas = DB::table('areas')->select('id_area', 'descripcion')->orderBy("descripcion", "asc")->get();
+
+        // Obtener conteos de estado
+        $total_cite = Cite::count();
+        $total_pendiente = Cite::where('estado', 'Pendiente')->count();
+        $total_proceso = Cite::where('estado', 'Proceso')->count();
+        $total_atendido = Cite::where('estado', 'Atendido')->count();
+        $total_derivado = Cite::where('estado', 'Derivado')->count();
+        $total_observado = Cite::where('estado', 'Observado')->count();
+        $total_finalizado = Cite::where('estado', 'Finalizado')->count();
+        $total_cerrado = Cite::where('estado', 'Cerrado')->count();
+
+        // Obtener información del usuario autenticado
+       // $user = User::where('id_usuario', '=', '1')->first();
+       // Auth::login($user);
+
+
+        // Consulta base con LEFT JOIN y LIKE en motivos_cita
+        $query = Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })
+            ->leftJoin('areas', function ($join) {
+                $join->on('motivos_cita.id_area', '=', 'areas.id_area');
+            })
+            ->select('citas.*', 'areas.*')
+            ->where('citas.estado', 'like', $estado)
+            ->orderBy('codigo', 'asc');
+
+
+
+
+
+            // if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
+            //     // Si el rol es 1 o 5 y no tiene área, mostramos todas las citas
+
+            //     // $query = Cite::leftJoin('motivos_cita', function ($join) {
+            //     //     $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+            //     // })
+            //     //     ->leftJoin('areas', function ($join) {
+            //     //         $join->on('motivos_cita.id_area', '=', 'areas.id_area');
+            //     //     })
+            //     //     ->select('citas.*', 'areas.*')
+            //     //     ->where('citas.estado', 'like', $estado)
+            //     //     ->orderBy('codigo', 'asc');
+
+            // } elseif ($id_rol == 5 && !empty($id_area)) {
+            //     // Obtener las áreas habilitadas del usuario
+            //     $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
+
+            //     if (!empty($areas_)) {
+            //       $query->whereIn('motivos_cita.id_area', $areas_);
+            //     } else {
+            //         $cite = $query->where('motivos_cita.id_area', $id_area);
+            //     }
+            // } elseif ($id_rol == 4 || in_array($id_area, [1, 2, 3])) {
+            //     // Obtener las áreas habilitadas del usuario
+            //     $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
+
+            //     if (!empty($areas_)) {
+            //       $query->whereIn('motivos_cita.id_area', $areas_);
+            //     } else {
+            //          $query->where('motivos_cita.id_area', $id_area);
+            //     }
+            // } else {
+            //     // Si el usuario no está en ningún grupo especial, se filtra por su área
+            //    $query->where('motivos_cita.id_area', $id_area);
+            // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $fecha_actual = Carbon::now('America/Lima')->toDateString();
+        // Aplicar filtros si existen en sesión
+        if ($area == "null") {
+            $query->whereNull("areas.id_area");
+
+        } else {
+            if (!empty($area)) {
+                $query->where("areas.id_area", "like", $area);
+            }
+        }
+
+        if (!empty($motivo)) {
+            $query->where("motivo", "like", "%$motivo%");
+        }
+        if (!empty($tipo)) {
+            $query->where("tipo", "like", "%$tipo%");
+        }
+
+        ////////////////// FECHA DE CITA ///////////////////////////////////////////////////////
+
+
+
+        if ($date_cite == "Vence_hoy") {
+
+            $fecha_inicio = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
+            $fecha_fin = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
+            $query->whereBetween("fecha", [$fecha_inicio, $fecha_fin])
+                ->where("fecha", "<>", "Según el Trámite")
+                ->where("fecha", "<>", "Por Definir");
+        } elseif ($date_cite == "Ni Definir ni segun tramite") {
+
+
+
+            $query->where("fecha", "<>", "Según el Trámite")
+                ->where("fecha", "<>", "Por Definir");
+
+        } elseif ($date_cite == "Filtrar por Fecha") {
+            if (!empty($date_start) && !empty($date_end)) {
+                $query->whereBetween('fecha', [$date_start, $date_end])
+                    ->where("fecha", "<>", "Según el Trámite")
+                    ->where("fecha", "<>", "Por Definir");
+            }
+        } elseif ($date_cite == "Por Definir") {
+
+            $query->where("fecha", "=", "Por Definir");
+
+        } elseif ($date_cite == "Segun_tramite") {
+
+            $query->where("fecha", "like", "Según el Trámite");
+
+        }
+
+
+        ///////////////////////////////////////  FECHA REPROGRAMACION ////////////////////////////////////////////////////
+        if ($date_reprog == "Filtrar por Fecha") {
+            if (!empty($date_start_reprog) && !empty($date_end_reprog)) {
+                $query->whereBetween('fecha_repro', [$date_start_reprog, $date_end_reprog]);
+            }
+            if (!empty($date_start_gen) && !empty($date_end_gen)) {
+                $query->whereBetween('fecha_generada', [$date_start_gen, $date_end_gen]);
+            }
+        } elseif ($date_reprog == "Con Reprogramación") {
+            $query->where('fecha_repro', "<>", "Sin Reprogramación");
+        } elseif ($date_reprog == "Vence_hoy") {
+            $fecha_inicio = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
+            $fecha_fin = Carbon::now('America/Lima')->toDateString(); // Devuelve "2025-02-24"
+            $query->whereBetween("fecha_repro", [$fecha_inicio, $fecha_fin])
+                ->where("fecha_repro", "<>", "Según el Trámite")
+                ->where("fecha_repro", "<>", "Por Definir");
+
+
+        } elseif ($date_reprog == "Sin Reprogramación") {
+            $query->where('fecha_repro', "like", "Sin Reprogramación");
+        } elseif ($date_reprog == "Sin Reprogramación") {
+            $query->where('fecha_repro', "like", "Sin Reprogramación");
+        } elseif ($date_reprog == "Segun_tramite") {
+            $query->where('fecha_repro', "like", 'Según el Trámite');
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Obtener citas con paginación
+        $cite = $query->paginate(7)->appends($request->query());
+
+
+        // Retornar la vista con los datos
+        return view(
+            'Cite.cite_all',
+            compact(
+                'motivos',
+                'tipos',
+                'areas',
+                'cite',
+                'total_cite',
+                'total_pendiente',
+                'total_proceso',
+                'total_atendido',
+                'total_derivado',
+                'total_observado',
+                'total_finalizado',
+                'total_cerrado'
+            )
+        );
+    }
 
 
     /**
@@ -280,7 +523,13 @@ class CiteController extends Controller
             Auth::login($user);
 
             // Redirigir a la página deseada
-            return redirect()->route('citas.index', ['estado' => 'Todos']);
+            if ($request->filtro="todo") {
+                return redirect()->route('citas.all', ['estado' => 'Todos']);
+            }
+            elseif($request->filtro="area"){
+                return redirect()->route('citas.index', ['estado' => 'Todos']);
+            }
+
         } else {
             return 'error';
         }

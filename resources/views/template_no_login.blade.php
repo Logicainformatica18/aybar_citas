@@ -136,72 +136,25 @@
                                         <a class="sidebar-link has-arrow" href="javascript:void(0)"
                                             aria-expanded="false">
                                             <iconify-icon icon="solar:ticket-line-duotone"></iconify-icon>
-                                            <span class="hide-menu">Reportes</span>
+                                            <span class="hide-menu">Lista de Citas</span>
                                         </a>
                                         <ul aria-expanded="false" class="collapse first-level">
                                             <li class="sidebar-item">
-                                                <a class="sidebar-link"target="_blank"
+                                                <a class="sidebar-link"
                                                     href="https://atenciones2.aybarsac.com/citas/Todos"
                                                     aria-expanded="false">
-                                                    <span class="icon-small"></span>Todos
+                                                    <span class="icon-small"></span>Ver Listas
                                                     <span class="badge ms-auto" style="background-color: #EE7777;"
                                                         id="total_2"></span>
                                                 </a>
                                             </li>
                                             <li class="sidebar-item">
-                                                <a class="sidebar-link" target="_blank"
-                                                    href="https://atenciones2.aybarsac.com/citas/Pendiente">
-                                                    <span class="icon-small"></span>Pendientes
-                                                    <span class="badge ms-auto text-bg-success"
-                                                        id="total_pendiente_2"></span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a class="sidebar-link"target="_blank"
-                                                    href="https://atenciones2.aybarsac.com/citas/Proceso">
-                                                    <span class="icon-small"></span>Procesos
-                                                    <span class="badge ms-auto text-bg-primary"
-                                                        id="total_proceso_2"></span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a class="sidebar-link" target="_blank"
-                                                    href="https://atenciones2.aybarsac.com/citas/Atendido">
-                                                    <span class="icon-small"></span>Atendidas
-                                                    <span class="badge ms-auto text-bg-info"
-                                                        id="total_atendido_2"></span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a class="sidebar-link"target="_blank"
-                                                    href="https://atenciones2.aybarsac.com/citas/Observado">
-                                                    <span class="icon-small"></span>Observadas
-                                                    <span class="badge ms-auto text-bg-danger"
-                                                        id="total_observado_2"></span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a class="sidebar-link" target="_blank"
-                                                    href="https://atenciones2.aybarsac.com/citas/Derivado">
-                                                    <span class="icon-small"></span>Derivados
-                                                    <span class="badge ms-auto text-bg-secondary"
-                                                        id="total_derivado_2"></span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a class="sidebar-link" target="_blank"
-                                                    href="https://atenciones2.aybarsac.com/citas/Finalizado">
-                                                    <span class="icon-small"></span>Finalizadas
-                                                    <span class="badge ms-auto text-bg-light"
-                                                        id="total_finalizado_2"></span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a class="sidebar-link" target="_blank"
-                                                    href="https://atenciones2.aybarsac.com/citas/Cerrado">
-                                                    <span class="icon-small"></span>Cerradas
-                                                    <span class="badge ms-auto text-bg-dark"
-                                                        id="total_cerrado_2"></span>
+                                                <a class="sidebar-link"
+                                                    href="https://atenciones2.aybarsac.com/todo_citas/Todos"
+                                                    aria-expanded="false">
+                                                    <span class="icon-small"></span>Todas las solicitudes
+                                                    <span class="badge ms-auto" style="background-color: #EE7777;"
+                                                        id="total_2"></span>
                                                 </a>
                                             </li>
 
