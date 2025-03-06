@@ -82,7 +82,7 @@
                         </div>
                         <div class="sidebarmenu">
                             <div class="brand-logo d-flex align-items-center nav-logo">
-                                <a href="{{ url('/') }}" class="text-nowrap logo-img">
+                                <a href="https://atenciones.aybarsac.com/inicio.php" class="text-nowrap logo-img">
                                     <img src="{{ asset('ayba/2.png') }}"width="120px" alt="Logo" />
                                 </a>
 
@@ -569,7 +569,7 @@
                                                         class="p-2 dropdown-item h6 rounded-1">
                                                         Configuraciones
                                                     </a> --}}
-                                                    <a href="{{ url('logout') }}"
+                                                    <a href="https://atenciones.aybarsac.com/php/cerrar_sesion.php"
                                                         class="p-2 dropdown-item h6 rounded-1">
                                                         Salir
                                                     </a>
