@@ -863,9 +863,15 @@ function validateDateTime() {
 
     if (fechaValida && horaValida) {
         btn.style.display = "none";
+        // fechaInput.style.display="none";
+        // horaInput.style.display="none";
 
     } else {
         btn.style.display = "block";
+        document.getElementById("fecha_cita").style.display="block";
+        document.getElementById("hora_cita").style.display="block";
+        // fechaInput.style.display="block";
+        // horaInput.style.display="block";
 
     }
 }
