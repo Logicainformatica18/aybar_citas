@@ -18,20 +18,20 @@
         <div style="margin-bottom: 10px;">
             <h3>Detalles de la Cita:</h3>
         </div>
-        <div style="margin-bottom: 10px;">Código de Cita: <strong>{{ $cite->codigo }}</strong></div>
+        <div style="margin-bottom: 10px;color:white">Código de Cita: <strong>{{ $cite->codigo }}</strong></div>
         <div style="display:flex; justify-content: space-between;">
-            <div style="margin-bottom: 10px;">Motivo: <strong>{{ $cite->motivo }} &nbsp;</strong></div>
-            <div style="margin-bottom: 10px;">Modalidad: <strong>{{ $cite->tipo }}</strong></div>
+            <div style="margin-bottom: 10px; color:white">Motivo: <strong>{{ $cite->motivo }} &nbsp;</strong></div>
+            <div style="margin-bottom: 10px;color:white">Modalidad: <strong>{{ $cite->tipo }}</strong></div>
         </div>
         @if ($cite->reprogramacion_state == 'on')
         <div style="display:flex; justify-content: space-between;">
-            <div style="margin-bottom: 10px;">Fecha de Cita reprogramada: <strong>{{ $cite->fecha }} &nbsp;</strong></div>
-            <div style="margin-bottom: 10px;">Hora de Cita reprogramada: <strong>{{ $cite->hora }}</strong></div>
+            <div style="margin-bottom: 10px;color:white">Fecha de Cita reprogramada: <strong>{{ $cite->fecha }} &nbsp;</strong></div>
+            <div style="margin-bottom: 10px;color:white">Hora de Cita reprogramada: <strong>{{ $cite->hora }}</strong></div>
         </div>
     @else
     <div style="display:flex; justify-content: space-between;">
-        <div style="margin-bottom: 10px;">Fecha de Cita: <strong>{{ $cite->fecha }} &nbsp;</strong></div>
-        <div style="margin-bottom: 10px;">Hora de Cita: <strong>{{ $cite->hora }}</strong></div>
+        <div style="margin-bottom: 10px;color:white">Fecha de Cita: <strong>{{ $cite->fecha }} &nbsp;</strong></div>
+        <div style="margin-bottom: 10px;color:white">Hora de Cita: <strong>{{ $cite->hora }}</strong></div>
     </div>
     @endif
 
