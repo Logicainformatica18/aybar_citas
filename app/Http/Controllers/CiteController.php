@@ -678,20 +678,20 @@ class CiteController extends Controller
                 ->where('id_cliente', $cite->id_cliente)
                 ->value('email'); // Obtiene solo el email
 
-            // if ($email) {
+            if ($email) {
 
 
-            //     Mail::send('email.updateCita', ['cite' => $cite], function ($message) use ($email) {
-            //         $message->from('atenciones@aybarsac.com', 'Aybar Corp')
-            //             ->to($email)
-            //             ->bcc("programador@aybarsac.com")
-            //             ->cc("COPIASOLICITUDES@aybarsac.com")
-            //             ->subject('Confirmación de Cita');
-            //     });
-            //     return response()->json(["mensaje" => "Cita actualizada correctamente"]);
-            // } else {
-            //     return response()->json(["error" => "No se pudo actualizar la cita"], 400);
-            // }
+                Mail::send('email.updateCita', ['cite' => $cite], function ($message) use ($email) {
+                    $message->from('atenciones@aybarsac.com', 'Aybar Corp')
+                        ->to($email)
+                        ->bcc("programador@aybarsac.com")
+                        ->cc("COPIASOLICITUDES@aybarsac.com")
+                        ->subject('Confirmación de Cita');
+                });
+                return response()->json(["mensaje" => "Cita actualizada correctamente"]);
+            } else {
+                return response()->json(["error" => "No se pudo actualizar la cita"], 400);
+            }
 
 
 
