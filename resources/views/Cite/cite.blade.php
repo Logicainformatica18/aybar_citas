@@ -680,10 +680,10 @@
                                     <input type="date" id="fecha_cita_update"name="fecha_cita_update"
                                         value="dd-mm-yyyy" class="form-control w-70" style="display:none">
                                     <span id="fecha_cita"></span>
-                                    <button type="button" class="btn btn-primary w-10 ti ti-calendar-plus fs-3"
+                                    {{-- <button type="button" class="btn btn-primary w-10 ti ti-calendar-plus fs-3"
                                         id="aumentar"
                                         onclick="document.getElementById('fecha_cita_update').style.display='block';
-                document.getElementById('fecha_cita').style.display='none'"></button>
+                document.getElementById('fecha_cita').style.display='none'"></button> --}}
 
 
                                 </li>
@@ -699,9 +699,11 @@
                                     <span id="hora_cita"></span>
                                     <button
                                         onclick="document.getElementById('hora_cita_update').style.display='block';
-                document.getElementById('hora_cita').style.display='none'"
-                                        type="button" class="btn btn-primary w-10 ti ti-clock-hour-1 fs-3"
-                                        id="aumentarh"></button>
+                document.getElementById('hora_cita').style.display='none'
+                document.getElementById('fecha_cita_update').style.display='block';
+                document.getElementById('fecha_cita').style.display='none'"
+                                        type="button" class="btn btn-primary w-10 ti ti-calendar-plus fs-3"
+                                        id="btn_fecha_hora"></button>
                                 </li>
                             </div>
                             <div class="col-12 col-sm-3 mt-2">
@@ -711,7 +713,14 @@
                                     Reprogramada</label>
                                 <li class="d-flex align-items-center gap-2 mb-4">
                                     <span class="p-1 rounded-circle text-bg-primary"></span>
+
+                                    <input type="date" id="fecha_repro_update"name="fecha_repro_update"
+                                        value="dd-mm-yyyy" class="form-control w-70" style="display:none">
                                     <span id="fecha_repro"></span>
+
+                                    {{-- <button type="button" class="btn btn-primary w-10 ti ti-calendar-plus fs-3"
+                                        onclick="document.getElementById('fecha_repro_update').style.display='block';
+                document.getElementById('fecha_repro').style.display='none'"></button> --}}
                                 </li>
                             </div>
                             <div class="col-12 col-sm-3">
@@ -720,9 +729,25 @@
                                     Reprogramada</label>
                                 <li class="d-flex align-items-center gap-2">
                                     <span class="p-1 rounded-circle text-bg-primary"></span>
+
+                                    <input type="time" id="hora_repro_update"name="hora_repro_update"
+                                        class="form-control w-70" style="display:none">
                                     <span id="hora_repro"></span>
+                                    <button
+                                        onclick="document.getElementById('hora_repro_update').style.display='block';
+            document.getElementById('hora_repro').style.display='none'
+            document.getElementById('fecha_repro_update').style.display='block';
+                document.getElementById('fecha_repro').style.display='none'"
+                                        type="button" class="btn btn-primary w-10 ti ti-calendar-plus fs-3"></button>
                                 </li>
                             </div>
+                            <div class="col-12 mb-2" style="width:100%">
+                                <button class="btn btn-primary w-100" id="actualizarBtn"
+                                    onclick="citeUpdate();return false">Actualizar
+                                    Cita</button>
+
+                            </div>
+
                         </div>
                     </div>
 
@@ -736,7 +761,8 @@
                             <div class="col-12 col-sm-12 mt-2">
 
                                 <label for=""
-                                    class="control-label border-bottom border-primary custom-cursor-default-hover">Detalle de
+                                    class="control-label border-bottom border-primary custom-cursor-default-hover">Detalle
+                                    de
                                     Cita</label>
                                 <li class="d-flex align-items-center gap-2">
                                     <span class="p-1 rounded-circle text-bg-primary"></span>
@@ -747,10 +773,7 @@
 
                         </div>
                     </div>
-                    <div class="col-12" style="width:100%">
-                        <button class="btn btn-primary w-100" id="actualizarBtn" onclick="citeUpdate();return false">Actualizar
-                            Cita</button>
-                    </div>
+
 
                     <div class="text-end mt-1">
                         <span>*Esta cita ha sido generada el día <span id="fecha_creada"></span> a las <span
@@ -779,13 +802,13 @@
                                 </div>
                                 <div class="col-6 pt-4 text-end">
                                     <button type="button" class="btn bg-success text-white fs-5" id="guardarBtn"
-                                    onclick="commentStore();" >
-                                    Guardar
-                                </button>
-                                <button type="button" class=" btn bg-danger text-white fs-5" data-bs-dismiss="modal"
-                                    >
-                                    Cerrar
-                                </button>
+                                        onclick="commentStore();">
+                                        Guardar
+                                    </button>
+                                    <button type="button" class=" btn bg-danger text-white fs-5"
+                                        data-bs-dismiss="modal">
+                                        Cerrar
+                                    </button>
                                 </div>
                             </div>
 
@@ -827,4 +850,26 @@
     <!-- /.modal-dialog -->
     </div>
 
+    <script>
+function validateDateTime() {
+    let fechaInput = document.getElementById("fecha_cita_update");
+    let horaInput = document.getElementById("hora_cita_update");
+    let btn = document.getElementById("btn_fecha_hora");
+
+    // Expresión regular para validar formato de fecha YYYY-MM-DD
+    let fechaValida = /^\d{4}-\d{2}-\d{2}$/.test(fechaInput.value);
+    // Expresión regular para validar formato de hora HH:MM (24 horas)
+    let horaValida = /^([01]\d|2[0-3]):[0-5]\d$/.test(horaInput.value);
+
+    if (fechaValida && horaValida) {
+        btn.style.display = "none";
+
+    } else {
+        btn.style.display = "block";
+
+    }
+}
+
+
+        </script>
 @endsection

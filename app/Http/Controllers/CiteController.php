@@ -643,13 +643,20 @@ class CiteController extends Controller
 
         $datosActualizar = [];
 
-        if (!empty($request->fecha_cita_update)) {
+        if (!empty($request->fecha_cita_update) && !empty($request->hora_cita_update)) {
             $datosActualizar['fecha'] = $request->fecha_cita_update;
-        }
-
-        if (!empty($request->hora_cita_update)) {
             $datosActualizar['hora'] = $request->hora_cita_update;
         }
+        $state="";
+
+        if (!empty($request->fecha_repro_update) &&  !empty($request->hora_repro_update)) {
+            $datosActualizar['fecha_repro'] = $request->fecha_repro_update;
+            $datosActualizar['hora_repro'] = $request->hora_repro_update;
+            $state="on";
+
+        }
+
+
 
         if (!empty($datosActualizar)) {
             $updated = DB::table('citas')
@@ -661,25 +668,30 @@ class CiteController extends Controller
             $cite = DB::table('citas')
                 ->where('id_cita', (int) $request->id_cita)
                 ->first(); // Obtiene un solo registro
+            if($state=="on"){
+                $cite->fecha = $cite->fecha_repro;
+                $cite->hora = $cite->hora_repro;
+            }
+
 
             $email = DB::table('clientes')
                 ->where('id_cliente', $cite->id_cliente)
                 ->value('email'); // Obtiene solo el email
 
-            if ($email) {
+            // if ($email) {
 
 
-                Mail::send('email.updateCita', ['cite' => $cite], function ($message) use ($email) {
-                    $message->from('atenciones@aybarsac.com', 'Aybar Corp')
-                        ->to($email)
-                        ->bcc("programador@aybarsac.com")
-                        ->cc("COPIASOLICITUDES@aybarsac.com")
-                        ->subject('Confirmación de Cita');
-                });
-                return response()->json(["mensaje" => "Cita actualizada correctamente"]);
-            } else {
-                return response()->json(["error" => "No se pudo actualizar la cita"], 400);
-            }
+            //     Mail::send('email.updateCita', ['cite' => $cite], function ($message) use ($email) {
+            //         $message->from('atenciones@aybarsac.com', 'Aybar Corp')
+            //             ->to($email)
+            //             ->bcc("programador@aybarsac.com")
+            //             ->cc("COPIASOLICITUDES@aybarsac.com")
+            //             ->subject('Confirmación de Cita');
+            //     });
+            //     return response()->json(["mensaje" => "Cita actualizada correctamente"]);
+            // } else {
+            //     return response()->json(["error" => "No se pudo actualizar la cita"], 400);
+            // }
 
 
 

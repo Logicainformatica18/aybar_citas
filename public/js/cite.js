@@ -48,9 +48,23 @@ function citeEdit(id) {
 
       var hora_cita = document.getElementById("hora_cita");
       var hora_cita_update = document.getElementById("hora_cita_update");
-
       hora_cita.innerHTML = response.data["hora"] || "Sin Dato";
       hora_cita_update.value = response.data["hora"] || "Sin Dato";
+
+      var fecha_cita = document.getElementById("fecha_cita");
+      var fecha_cita_update = document.getElementById("fecha_cita_update");
+      fecha_cita_update.value = response.data["fecha"] || "Sin Dato";
+      fecha_cita.innerHTML = response.data["fecha"] || "Sin Dato";
+
+      var fecha_repro = document.getElementById("fecha_repro");
+      var fecha_repro_update = document.getElementById("fecha_repro_update");
+      fecha_repro_update.value = response.data["fecha_repro"] || "Sin Dato";
+      fecha_repro.innerHTML = response.data["fecha_repro"] || "Sin Dato";
+
+      var hora_repro = document.getElementById("hora_repro");
+      var hora_repro_update = document.getElementById("hora_repro_update");
+      hora_repro.innerHTML = response.data["hora_repro"] || "Sin Dato";
+      hora_repro_update.value = response.data["hora_repro"] || "Sin Dato";
 
 
       var motivo = document.getElementById("motivo_cita");
@@ -59,10 +73,7 @@ function citeEdit(id) {
       var manzana = document.getElementById("manzana");
       manzana.innerHTML = response.data["manzana"] || "Sin Dato";
 
-      var fecha_cita = document.getElementById("fecha_cita");
-      var fecha_cita_update = document.getElementById("fecha_cita_update");
-      fecha_cita_update.value = response.data["fecha"] || "Sin Dato";
-      fecha_cita.innerHTML = response.data["fecha"] || "Sin Dato";
+
 
       var encargado = document.getElementById("encargado");
       encargado.innerHTML = response.data["generado"] || "Sin Dato";
@@ -74,14 +85,12 @@ function citeEdit(id) {
       hora_creada.innerHTML = response.data["horag"] || "Sin Dato";
       var tipo = document.getElementById("tipo_cita");
       tipo.innerHTML = response.data["tipo"] || "Sin Dato";
-      var fecha_repro = document.getElementById("fecha_repro");
-      fecha_repro.innerHTML = response.data["fecha_repro"] || "Sin Dato";
+
       var telefono = document.getElementById("telefono");
       telefono.innerHTML = response.data.customer["Telefono"] || "Sin Dato";
       var fecha_creada = document.getElementById("fecha_creada");
       fecha_creada.innerHTML = response.data["fechag"] || "Sin Dato";
-      var hora_repro = document.getElementById("hora_repro");
-      hora_repro.innerHTML = response.data["hora_repro"] || "Sin Dato";
+
 
       var archivo = document.getElementById("archivo");
       if (!response.data["archivo"]) {
@@ -176,6 +185,8 @@ function citeEdit(id) {
                         </div>
                     </div>
                 </div>`;
+
+
         });
       } else {
         comentariosHTML = '<div class="col-12"><p>No se encontraron comentarios.</p></div>';
