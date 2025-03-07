@@ -48,9 +48,28 @@ class CiteController extends Controller
 
 
         // Obtener motivos y tipos únicos
-        $motivos = DB::table(table: 'motivos_cita')->select('nombre_motivo')->orderBy("nombre_motivo", "asc")->get();
+
+        $motivos = DB::table('motivos_cita')
+        ->select('nombre_motivo')
+        ->when($id_area != 6, function ($query) use ($id_area) {
+            return $query->where("id_area", "like", $id_area);
+        })
+        ->orderBy("nombre_motivo", "asc")
+        ->get();
+
         $tipos = DB::table('citas')->select('tipo')->distinct()->orderBy("tipo", "asc")->get();
-        $areas = DB::table('areas')->select('id_area', 'descripcion')->orderBy("descripcion", "asc")->get();
+
+
+        $areas = DB::table('areas')
+        ->select('id_area', 'descripcion')
+        ->when($id_area != 6, function ($query) use ($id_area) {
+            return $query->where("id_area", $id_area);
+        })
+        ->orderBy("descripcion", "asc")
+        ->get();
+
+
+
 
         // Obtener conteos de estado
         $total_cite = Cite::count();

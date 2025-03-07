@@ -5,8 +5,8 @@
             <tr>
 
 
-                {{-- <th><img width="20" src="https://cdn-icons-png.flaticon.com/512/6671/6671938.png" alt=""
-                        srcset=""></th> --}}
+                <th><img width="20" src="https://cdn-icons-png.flaticon.com/512/6671/6671938.png" alt=""
+                        srcset=""></th>
 
                 <th>Acción</th>
                 <th>Código</th>
@@ -43,7 +43,7 @@
 
                 <tr>
 
-                    {{-- <td>
+                    <td>
                         <div class="dropdown dropstart">
                             <a href="javascript:void(0)" class="text-muted" id="dropdownMenuButton"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -51,27 +51,27 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
 
-                            @canany(['administrar', 'editar'])
+
                                 <li>
-                                    <a onclick="citeEdit('{{ $cites->id }}'); Up();  return false" data-bs-toggle="modal"
-                                        data-bs-target="#success-header-modal" fdprocessedid="cw61t3"
+                                    <a onclick="citeEditDerive('{{ $cites->id }}');   return false" data-bs-toggle="modal"
+                                        data-bs-target="#success-header-modal_2" fdprocessedid="cw61t3"
                                         class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)">
-                                        <i class="fs-4 ti ti-edit"></i>Editar
+                                        <i class="fs-4 ti ti-edit"></i>Derivar
                                     </a>
                                 </li>
-                            @endcanany
-                            @canany(['administrar', 'eliminar'])
+
+                            {{-- @canany(['administrar', 'eliminar'])
                             <li>
                                 <a class="dropdown-item d-flex align-items-center gap-3" href="javascript:void(0)"
                                 onclick="citeDestroy('{{ $cites->id }}'); return false">
                                     <i class="fs-4 ti ti-trash"></i>Delete
                                 </a>
                             </li>
-                            @endcanany
+                            @endcanany --}}
                         </ul>
                         </div>
 
-                    </td> --}}
+                    </td>
 
 
 

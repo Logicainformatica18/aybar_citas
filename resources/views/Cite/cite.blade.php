@@ -195,10 +195,10 @@
                                             <label for="area" class="form-label fw-bold">Áreas</label>
                                             <select name="area" id="area" class="form-control"
                                                 onchange="filterMotivoArea(this)">
-                                                <option value="" {{ request('area') == '' ? 'selected' : '' }}>Todo
+                                                {{-- <option value="" {{ request('area') == '' ? 'selected' : '' }}>Todo
                                                 </option>
                                                 <option value="null" {{ request('area') == 'null' ? 'selected' : '' }}>
-                                                    Sin área</option>
+                                                    Sin área</option> --}}
                                                 @foreach ($areas as $a)
                                                     <option value="{{ $a->id_area }}"
                                                         {{ request('area') == $a->id_area ? 'selected' : '' }}>
@@ -214,8 +214,7 @@
                                         <div class="col-4">
                                             <label for="motivo" class="form-label fw-bold">Motivo</label>
                                             <select name="motivo" id="motivo" class="form-control">
-                                                <option value="" {{ request('motivo') == '' ? 'selected' : '' }}>
-                                                    Todos</option>
+                                                {{-- <option value="" {{ request('motivo') == '' ? 'selected' : '' }}>Todos</option> --}}
                                                 @foreach ($motivos as $m)
                                                     <option value="{{ $m->nombre_motivo }}"
                                                         {{ request('nombre_motivo') == $m->nombre_motivo ? 'selected' : '' }}>
@@ -843,6 +842,59 @@
 
 
     </div>
+
+
+
+
+    <div id="success-header-modal_2" class="modal fade" tabindex="-1" aria-labelledby="success-header-modalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-colored-header bg-success text-white">
+                <h4 class="modal-title text-white" id="success-header-modalLabel">
+                    Categorías
+                </h4>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+                <form action="" method="post" role="form" id="category"
+                    name="category"enctype="multipart/form-data">
+                    <input type="hidden" name="id" id="id">
+                    {{ csrf_field() }}
+
+                    Descripción : <input type="text" name="description" id="description" class="form-control">
+
+                    Detalle : <input type="text" name="detail" id="detail" class="form-control">
+
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Nuevo" class="btn btn-primary"
+                    onclick="New();$('#category')[0].reset();" name="new">
+                @canany(['administrar', 'agregar'])<input type="button" value="Guardar" class="btn bg-success-subtle text-success "
+                    onclick="categoryStore()" id="create">@endcanany
+                    @canany(['administrar', 'actualizar'])
+                <input type="button" value="Modificar" class="btn bg-danger-subtle text-danger" onclick="categoryUpdate();"
+                    id="update">
+                    @endcanany
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </form>
+
+
+
+
+
+
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
     <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
