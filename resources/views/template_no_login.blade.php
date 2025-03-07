@@ -164,7 +164,7 @@
 
 
 
-                                    <li class="sidebar-item">
+                                    {{-- <li class="sidebar-item">
                                         <a class="sidebar-link has-arrow" href="javascript:void(0)"
                                             aria-expanded="false">
                                             <iconify-icon icon="solar:ticket-line-duotone"></iconify-icon>
@@ -190,7 +190,7 @@
                                             </li>
 
                                         </ul>
-                                    </li>
+                                    </li> --}}
 
 
 
@@ -203,7 +203,7 @@
 
 
 
-                                    <li class="sidebar-item">
+                                    {{-- <li class="sidebar-item">
                                         <a class="sidebar-link" href="https://atenciones.aybarsac.com/ver_cita_otros.php" aria-expanded="false">
                                             <iconify-icon icon="solar:ticket-line-duotone"></iconify-icon>
                                             <span class="hide-menu">Visualizar Cita Otros</span>
@@ -217,16 +217,16 @@
                                             <iconify-icon icon="solar:ticket-line-duotone"></iconify-icon>
                                             <span class="hide-menu">Visualizar Cita Visita</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
 
                                     <!-- Verificar si el usuario tiene acceso al módulo 'Gestionar Usuarios' -->
 
-                                    {{-- <li class="sidebar-item">
+                                    <li class="sidebar-item">
                                         <a class="sidebar-link" href="https://atenciones.aybarsac.com/usuarios.php" aria-expanded="false">
                                             <iconify-icon icon="solar:users-group-rounded-line-duotone"></iconify-icon>
                                             <span class="hide-menu">Gestionar Usuarios</span>
                                         </a>
-                                    </li> --}}
+                                    </li>
 
 
                                     <!-- Verificar si el usuario tiene acceso al módulo 'Gestionar Clientes' -->
@@ -240,13 +240,13 @@
                                     </li>
 
 
-
+{{--
                                     <li class="sidebar-item">
                                         <a class="sidebar-link" href="https://atenciones.aybarsac.com/gestion_estadoc.php" aria-expanded="false">
                                             <iconify-icon icon="solar:document-line-duotone"></iconify-icon>
                                             <span class="hide-menu">Gestión de Estado</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
 
 
                                     {{-- <li class="sidebar-item">
