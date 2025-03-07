@@ -671,6 +671,7 @@ class CiteController extends Controller
             if($state=="on"){
                 $cite->fecha = $cite->fecha_repro;
                 $cite->hora = $cite->hora_repro;
+                $cite->reprogramacion_state="on";
             }
 
 
