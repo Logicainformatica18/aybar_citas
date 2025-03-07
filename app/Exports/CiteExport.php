@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Carbon\Carbon;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CiteExport implements FromCollection, WithHeadings
@@ -43,30 +45,54 @@ class CiteExport implements FromCollection, WithHeadings
 
 
 
-
-
+        $user = Auth::user(); // Obtiene el usuario autenticado
+        $id_usuario = $user->id_usuario;
+        $id_rol = $user->id_rol;
+        $id_area = $user->id_area;
 
         $query = Cite::leftJoin('clientes', 'citas.id_cliente', '=', 'clientes.id_cliente')
-        ->leftJoin('motivos_cita', 'citas.motivo', '=', 'motivos_cita.nombre_motivo')
-        ->leftJoin('areas', 'motivos_cita.id_area', '=', 'areas.id_area')
-        ->select(
-            'citas.codigo',
-            'clientes.razon_social as cliente_nombre',
-            'clientes.dni as cliente_dni',
-            'citas.proyecto',
-            'citas.manzana',
-            'citas.lote',
-            'citas.fecha as fecha_cita',
-            'citas.hora as hora_cita',
-            'citas.motivo',
-            'citas.estado',
-            'citas.fechag as fecha_generada',
-            'citas.fecha_repro as fecha_reprogramada'
-        )
-
-
+            ->leftJoin('motivos_cita', 'citas.motivo', '=', 'motivos_cita.nombre_motivo')
+            ->leftJoin('areas', 'motivos_cita.id_area', '=', 'areas.id_area')
+            ->select(
+                'citas.codigo',
+                'clientes.razon_social as cliente_nombre',
+                'clientes.dni as cliente_dni',
+                'citas.proyecto',
+                'citas.manzana',
+                'citas.lote',
+                'citas.fecha as fecha_cita',
+                'citas.hora as hora_cita',
+                'citas.motivo',
+                'citas.estado',
+                'citas.fechag as fecha_generada',
+                'citas.fecha_repro as fecha_reprogramada'
+            )
             ->where('citas.estado', 'like', $this->estado)
             ->orderBy('codigo', 'asc');
+
+        // 📌 Aplicar los mismos filtros de usuario y área
+        if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
+            // Rol 1 o 5 sin área pueden ver todas las citas
+        } elseif ($id_rol == 5 && !empty($id_area)) {
+            $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
+
+            if (!empty($areas_)) {
+                $query->whereIn('motivos_cita.id_area', $areas_);
+            } else {
+                $query->where('motivos_cita.id_area', $id_area);
+            }
+        } elseif ($id_rol == 4 || in_array($id_area, [1, 2, 3])) {
+            $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
+
+            if (!empty($areas_)) {
+                $query->whereIn('motivos_cita.id_area', $areas_);
+            } else {
+                $query->where('motivos_cita.id_area', $id_area);
+            }
+        } else {
+            $query->where('motivos_cita.id_area', $id_area);
+        }
+
 
 
             $fecha_actual = Carbon::now( 'America/Lima')->toDateString();
