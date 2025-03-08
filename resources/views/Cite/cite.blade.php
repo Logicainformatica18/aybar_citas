@@ -194,7 +194,7 @@
                                         <div class="col-4">
                                             <label for="area" class="form-label fw-bold">Áreas</label>
                                             <select name="area" id="area" class="form-control"
-                                                onchange="filterMotivoArea(this)">
+                                                onchange="filterMotivoArea(this,'motivo')">
                                                 {{-- <option value="" {{ request('area') == '' ? 'selected' : '' }}>Todo
                                                 </option>
                                                 <option value="null" {{ request('area') == 'null' ? 'selected' : '' }}>
@@ -815,7 +815,6 @@
                             <label for="control-label" style="color: #000; margin-bottom: 2vh;">Comentario</label>
                             <textarea class="form-control" rows="6" name="comentario" style=""></textarea>
 
-
                     </div>
 
 
@@ -830,6 +829,7 @@
                         </div>
                     </div>
                     </form>
+                   
                 </div>
 
 
@@ -851,36 +851,59 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header modal-colored-header bg-success text-white">
+                <form id="cite_derive" name="cite_derive">
+                    <input type="hidden" name="id_cite_derive">
+@csrf
+                
                 <h4 class="modal-title text-white" id="success-header-modalLabel">
-                    Categorías
+                    Derivar Cita
                 </h4>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body text-black">
+                                        <h1 class="text-black">Cita :  <b id="id_cita_derive"></b></h1>
 
+                <span>
+                *Elija un área para poder ver sus motivos asignados 
+                </span>
+                    <!-- <input type="hidden" name="id" id="id"> -->
+                  Area 
+                    <select name="area_derive" id="area_derive" class="form-control"
+                                                onchange="filterMotivoArea(this,'motivo_derive');">
+                                        <option value="" >Elija un área</option>
+                                                @foreach ($areas_derive as $a)
+                                                    <option value="{{ $a->id_area }}"  >
+                                                      
+                                                        {{ $a->descripcion }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
 
-                <form action="" method="post" role="form" id="category"
-                    name="category"enctype="multipart/form-data">
-                    <input type="hidden" name="id" id="id">
-                    {{ csrf_field() }}
-
-                    Descripción : <input type="text" name="description" id="description" class="form-control">
-
-                    Detalle : <input type="text" name="detail" id="detail" class="form-control">
-
+                                            <label for="motivo_derive" class="form-label fw-bold">Motivo</label>
+                                            <select name="motivo_derive"  id="motivo_derive" class="form-control">>Todos</option>
+                                                @foreach ($motivos_derive as $m)
+                                                    <option value="{{ $m->nombre_motivo }}">
+                                                      
+                                                        {{ $m->nombre_motivo }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                    
+                    Contraseña : <input type="password" name="password" id="password" class="form-control">
+                    <span>
+                     
+                        *Para poder derivar es necesario colocar la clave al administrador
+                    </span>
+                    <p></p>
+                  
             </div>
             <div class="modal-footer">
-                <input type="button" value="Nuevo" class="btn btn-primary"
-                    onclick="New();$('#category')[0].reset();" name="new">
-                @canany(['administrar', 'agregar'])<input type="button" value="Guardar" class="btn bg-success-subtle text-success "
-                    onclick="categoryStore()" id="create">@endcanany
-                    @canany(['administrar', 'actualizar'])
-                <input type="button" value="Modificar" class="btn bg-danger-subtle text-danger" onclick="categoryUpdate();"
-                    id="update">
-                    @endcanany
+                <input type="button" value="Derivar" class="btn btn-primary"
+                    onclick="citeDerive();" name="new">
+
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              </form>
+                </form>
 
 
 

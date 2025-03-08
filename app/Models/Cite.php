@@ -11,6 +11,10 @@ class Cite extends Model
     protected $table ="citas";
     protected $primaryKey = 'id_cita';
 
+
+    // Desactivar el manejo automático de timestamps
+    public $timestamps = false;
+
     protected $fillable = [
         'id_cita',
         'codigo',

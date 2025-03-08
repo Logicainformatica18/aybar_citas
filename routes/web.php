@@ -59,6 +59,8 @@ Route::get('/todo_citas/{estado}', [App\Http\Controllers\CiteController::class, 
 Route::post('/filterMotivoArea', [App\Http\Controllers\CiteController::class, 'filterMotivoArea']);
 
 Route::post('/citeEdit', [App\Http\Controllers\CiteController::class, 'edit']);
+Route::post('/citeEditDerive', [App\Http\Controllers\CiteController::class, 'editDerive']);
+Route::post('/citeDerive', [App\Http\Controllers\CiteController::class, 'derive']);
 
 Route::get('/exportar-citas/{estado}', function ($estado, Request $request) {
     return Excel::download(new CiteExport($request, $estado), 'citas.xlsx');

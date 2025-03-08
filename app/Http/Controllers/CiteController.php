@@ -57,8 +57,7 @@ class CiteController extends Controller
         ->orderBy("nombre_motivo", "asc")
         ->get();
 
-        $tipos = DB::table('citas')->select('tipo')->distinct()->orderBy("tipo", "asc")->get();
-
+     
 
         $areas = DB::table('areas')
         ->select('id_area', 'descripcion')
@@ -67,9 +66,13 @@ class CiteController extends Controller
         })
         ->orderBy("descripcion", "asc")
         ->get();
-
-
-
+      
+        $tipos = DB::table('citas')->select('tipo')->distinct()->orderBy("tipo", "asc")->get();
+        
+        $areas_derive = DB::table('areas')->select('id_area', 'descripcion')->orderBy("descripcion", "asc")->get();
+       
+        $motivos_derive = DB::table('motivos_cita')->select('nombre_motivo')->orderBy("nombre_motivo")->get();
+        
 
         // Obtener conteos de estado
         $total_cite = Cite::count();
@@ -268,8 +271,10 @@ class CiteController extends Controller
             'Cite.cite',
             compact(
                 'motivos',
+                'motivos_derive',
                 'tipos',
                 'areas',
+                'areas_derive',
                 'cite',
                 'total_cite',
                 'total_pendiente',
@@ -315,6 +320,11 @@ class CiteController extends Controller
         $motivos = DB::table(table: 'motivos_cita')->select('nombre_motivo')->orderBy("nombre_motivo", "asc")->get();
         $tipos = DB::table('citas')->select('tipo')->distinct()->orderBy("tipo", "asc")->get();
         $areas = DB::table('areas')->select('id_area', 'descripcion')->orderBy("descripcion", "asc")->get();
+
+
+
+ 
+
 
         // Obtener conteos de estado
         $total_cite = Cite::count();
@@ -528,6 +538,30 @@ class CiteController extends Controller
         );
     }
 
+    public function derive(Request $request){
+        if($request->password=="Ayb4#rx25"){
+            $cite = Cite::find($request->id_cite_derive);
+
+            if (!$cite) {
+                return response()->json(['error' => 'Cite not found'], 404);
+            }
+            
+            $cite->motivo = $request->motivo_derive;
+            $cite->save();
+            return  'Motivo Actualizado correctamente';
+        }
+        else{
+            return "Error de contraseña";
+        }
+
+       
+        
+    }
+
+    public function editDerive(Request $request){
+            $cite = Cite::find($request->id);
+            return $cite;
+    }
 
     /**
      * Show the form for creating a new resource.

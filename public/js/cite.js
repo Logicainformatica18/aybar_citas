@@ -200,7 +200,49 @@ function citeEdit(id) {
       console.log(response);
     });
 }
+function citeEditDerive(id){
+  var formData = new FormData(document.getElementById("cite_filter"));
+  formData.append("id", id);
+  axios({
+    method: "post",
+    url: "../citeEditDerive",
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  })
+    .then(function(response) {
+      cite_derive.id_cite_derive.value=id;
+      console.log(response.data["motivo"]);
+      document.getElementById("motivo_derive").value= response.data["motivo"];
+      document.getElementById("id_cita_derive").innerHTML=response.data["codigo"];
+    })
+    .catch(function(response) {
+      //handle error
+      console.log(response);
+    });
+}
+function citeDerive() {
+  var formData = new FormData(document.getElementById("cite_derive"));
 
+  axios({
+    method: "post",
+    url: "../citeDerive",
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  })
+    .then(function(response) {
+  
+      alert(response.data);
+      window.location.reload();
+    })
+    .catch(function(response) {
+      //handle error
+      console.log(response);
+    });
+}
 function citeUpdate() {
   var formData = new FormData(document.getElementById("cite"));
   axios({
@@ -307,7 +349,7 @@ function commentNotify(id_comentario,id_cita) {
 
   }
 
-function filterMotivoArea(select) {
+function filterMotivoArea(select,motivo) {
   var id = select.value;
 
   var formData = new FormData(document.getElementById("cite_filter"));
@@ -320,27 +362,27 @@ function filterMotivoArea(select) {
       }
     })
     .then(function(response) {
-      var motivoSelect = document.getElementById("motivo");
-      motivoSelect.innerHTML = ""; // Limpiar opciones previas
+     var select_destiny = document.getElementById(motivo);
+      select_destiny.innerHTML = ""; // Limpiar opciones previas
 
       if (response.data.length > 0) {
         // Agregar opción fija "Todos"
         var optionTodos = document.createElement("option");
         optionTodos.value = "";
         optionTodos.textContent = "Todos";
-        motivoSelect.appendChild(optionTodos);
+        select_destiny.appendChild(optionTodos);
 
         response.data.forEach(function(item) {
           var option = document.createElement("option");
           option.value = item.nombre_motivo;
           option.textContent = item.nombre_motivo;
-          motivoSelect.appendChild(option);
+          select_destiny.appendChild(option);
         });
       } else {
         var option = document.createElement("option");
         option.value = "";
         option.textContent = "Todos";
-        motivoSelect.appendChild(option);
+        select_destiny.appendChild(option);
       }
     })
     .catch(function(error) {
