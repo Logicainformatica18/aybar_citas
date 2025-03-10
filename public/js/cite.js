@@ -240,6 +240,7 @@ function citeDerive() {
     })
     .catch(function(response) {
       //handle error
+      alert('Error. Debe de elejir un motivo y área válido')
       console.log(response);
     });
 }
