@@ -4,6 +4,7 @@
         <div class="">
             <div class="card card-body py-3">
                 <form action=""id="cite_filter" name="cite_filter">
+                    @if (Auth::user()->id_rol==1)
                     <h3 class="text-primary">Citas Totales</b>
                     </h3>
                     <div class="row align-items-center">
@@ -174,6 +175,8 @@
 
                         </div>
                     </div>
+                    @endif
+
                     <h3 class="text-primary">Citas por : <b class="text-danger"> Área {{ Auth::user()->area->descripcion }}</b>
                     </h3>
                     <div class="row align-items-center">
