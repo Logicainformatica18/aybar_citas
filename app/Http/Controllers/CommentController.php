@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Cite;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use Illuminate\Http\Request;
@@ -37,6 +38,11 @@ class CommentController extends Controller
             $comment->hora = $request->hora;
             $comment->habilitado = 0;
             $comment->save();
+
+            $cite=Cite::find($request->id_cita);
+            $cite->estado = $request->estado;
+            $cite->save();
+
 
             return response()->json([
                 'success' => true,

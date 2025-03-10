@@ -114,21 +114,7 @@ Auth::routes();
 
    Route::get('blog/topicPublic', [App\Http\Controllers\TopicPublicController::class, 'index']);
 
-//    Route::get('/', function () {
-//     return view("production.2");
-// });
-// Route::get('/nosotros', function () {
-//     return view("production.3");
-// });
-// Route::get('/proyectos', function () {
-//     return view("production.4");
-// });
-// Route::get('/blog', function () {
-//     return view("production.5");
-// });
-// Route::get('/contacto', function () {
-//     return view("production.6");
-// });
+
 
 
 
