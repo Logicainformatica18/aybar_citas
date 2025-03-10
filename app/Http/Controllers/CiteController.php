@@ -75,14 +75,51 @@ class CiteController extends Controller
 
 
         // Obtener conteos de estado
-        $total_cite = Cite::count();
-        $total_pendiente = Cite::where('estado', 'Pendiente')->count();
-        $total_proceso = Cite::where('estado', 'Proceso')->count();
-        $total_atendido = Cite::where('estado', 'Atendido')->count();
-        $total_derivado = Cite::where('estado', 'Derivado')->count();
-        $total_observado = Cite::where('estado', 'Observado')->count();
-        $total_finalizado = Cite::where('estado', 'Finalizado')->count();
-        $total_cerrado = Cite::where('estado', 'Cerrado')->count();
+       // $total_cite = Cite::where()->count();
+
+         $total_cite = Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })->where('motivos_cita.id_area','=',$id_area)->count();
+
+
+
+
+       $total_pendiente= Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })->where('motivos_cita.id_area','=',$id_area)->where('citas.estado', 'Pendiente')->count();
+
+$total_proceso =Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })->where('motivos_cita.id_area','=',$id_area)->where('citas.estado', 'Proceso')->count();
+
+
+      $total_atendido =Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })->where('motivos_cita.id_area','=',$id_area)->where('citas.estado', 'Atendido')->count();
+
+              $total_derivado=Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })->where('motivos_cita.id_area','=',$id_area)->where('citas.estado', 'Derivado')->count();
+
+        $total_derivado=Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })->where('motivos_cita.id_area','=',$id_area)->where('citas.estado', 'Derivado')->count();
+
+                $total_observado=Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })->where('motivos_cita.id_area','=',$id_area)->where('citas.estado', 'Observado')->count();
+
+
+                $total_finalizado=Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })->where('motivos_cita.id_area','=',$id_area)->where('citas.estado', 'Finalizado')->count();
+
+           $total_cerrado=Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })->where('motivos_cita.id_area','=',$id_area)->where('citas.estado', 'Cerrado')->count();
+
+
+
 
         // Obtener información del usuario autenticado
        // $user = User::where('id_usuario', '=', '1')->first();

@@ -5,7 +5,7 @@
             <div class="card card-body py-3">
                 <form action=""id="cite_filter" name="cite_filter">
 
-                    <h2 class="text-primary">Listado de Citas</h2>
+                <h3 class="text-primary">Citas -<b class="text-danger"> Área {{Auth::user()->area->descripcion}}</b> </h3>
                     <div class="row align-items-center">
                         <div class="col-12">
                             <div class="card">
@@ -829,7 +829,7 @@
                         </div>
                     </div>
                     </form>
-                   
+
                 </div>
 
 
@@ -854,7 +854,7 @@
                 <form id="cite_derive" name="cite_derive">
                     <input type="hidden" name="id_cite_derive">
 @csrf
-                
+
                 <h4 class="modal-title text-white" id="success-header-modalLabel">
                     Derivar Cita
                 </h4>
@@ -865,16 +865,16 @@
                                         <h1 class="text-black">Cita :  <b id="id_cita_derive"></b></h1>
 
                 <span>
-                *Elija un área para poder ver sus motivos asignados 
+                *Elija un área para poder ver sus motivos asignados
                 </span>
                     <!-- <input type="hidden" name="id" id="id"> -->
-                  Area 
+                  Area
                     <select name="area_derive" id="area_derive" class="form-control"
                                                 onchange="filterMotivoArea(this,'motivo_derive');">
                                         <option value="" >Elija un área</option>
                                                 @foreach ($areas_derive as $a)
                                                     <option value="{{ $a->id_area }}"  >
-                                                      
+
                                                         {{ $a->descripcion }}
                                                     </option>
                                                 @endforeach
@@ -884,19 +884,19 @@
                                             <select name="motivo_derive"  id="motivo_derive" class="form-control">>Todos</option>
                                                 @foreach ($motivos_derive as $m)
                                                     <option value="{{ $m->nombre_motivo }}">
-                                                      
+
                                                         {{ $m->nombre_motivo }}
                                                     </option>
                                                 @endforeach
                                             </select>
-                    
+
                     Contraseña : <input type="password" name="password" id="password" class="form-control">
                     <span>
-                     
+
                         *Para poder derivar es necesario colocar la clave al administrador
                     </span>
                     <p></p>
-                  
+
             </div>
             <div class="modal-footer">
                 <input type="button" value="Derivar" class="btn btn-primary"
