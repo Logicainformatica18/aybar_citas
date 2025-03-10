@@ -195,7 +195,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $total_cite }}</h4>
-                                                            <a href="{{ url('citas/Todos') }}" class="btn btn-warning"
+                                                            <a href="{{ url('citas/Todos?area='.Auth::user()->id_area) }}" class="btn btn-warning"
                                                                 style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
                                                     </div>
@@ -213,7 +213,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $total_pendiente }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Pendiente') }}"
+                                                            <a target="_blank" href="{{ url('citas/Pendiente?area='.Auth::user()->id_area) }}"
                                                                 class="btn btn-success"
                                                                 style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
@@ -232,7 +232,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $total_proceso }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Proceso') }}"
+                                                            <a target="_blank" href="{{ url('citas/Proceso?area='.Auth::user()->id_area) }}"
                                                                 class="btn text-white"
                                                                 style="border: solid 1px white;width:100%;background-color:#6f42c1">Ver</a>
                                                         </div>
@@ -251,7 +251,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $total_atendido }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Atendido') }}"
+                                                            <a target="_blank" href="{{ url('citas/Atendido?area='.Auth::user()->id_area) }}"
                                                                 class="btn bg-info text-white"
                                                                 style="border: solid 1px white;width:100%;background-color:#1cbcaf">Ver</a>
                                                         </div>
@@ -270,7 +270,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $total_derivado }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Derivado') }}"
+                                                            <a target="_blank" href="{{ url('citas/Derivado?area='.Auth::user()->id_area) }}"
                                                                 class="btn btn-secondary"
                                                                 style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
@@ -289,7 +289,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $total_observado }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Observado') }}"
+                                                            <a target="_blank" href="{{ url('citas/Observado?area='.Auth::user()->id_area) }}"
                                                                 class="btn btn-danger"
                                                                 style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
@@ -308,7 +308,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $total_finalizado }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Finalizado') }}"
+                                                            <a target="_blank" href="{{ url('citas/Finalizado?area='.Auth::user()->id_area) }}"
                                                                 class="btn text-black"
                                                                 style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
@@ -327,7 +327,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1">
                                                                 {{ $total_cerrado }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Cerrado') }}"
+                                                            <a target="_blank" href="{{ url('citas/Cerrado?area='.Auth::user()->id_area) }}"
                                                                 class="btn btn-dark"
                                                                 style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
@@ -344,7 +344,7 @@
 
                         </div>
                     </div>
-                    <h3 class="text-primary">Citas hoy por : <b class="text-danger"> Área {{ Auth::user()->area->descripcion }}</b>
+                    <h3 class="text-primary">Citas trabajadas hoy por : <b class="text-danger"> Área {{ Auth::user()->area->descripcion }}</b>
                     </h3>
                     <div class="row align-items-center">
                         <div class="col-12">
@@ -365,7 +365,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $today_count->total }}</h4>
-                                                            <a href="{{ url('citas/Todos') }}" class="btn btn-warning"
+                                                            <a href="{{ url('citas/Todos?area='.Auth::user()->id_area.'&atendido=hoy') }}" class="btn btn-warning"
                                                                 style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
                                                     </div>
@@ -383,7 +383,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $today_count->total_pendiente }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Pendiente') }}"
+                                                            <a target="_blank" href="{{ url('citas/Pendiente?area='.Auth::user()->id_area.'&atendido=hoy') }}"
                                                                 class="btn btn-success"
                                                                 style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
@@ -402,7 +402,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $today_count->total_proceso }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Proceso') }}"
+                                                            <a target="_blank" href="{{ url('citas/Proceso?area='.Auth::user()->id_area.'&atendido=hoy') }}"
                                                                 class="btn text-white"
                                                                 style="border: solid 1px white;width:100%;background-color:#6f42c1">Ver</a>
                                                         </div>
@@ -421,7 +421,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $today_count->total_atendido }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Atendido') }}"
+                                                            <a target="_blank" href="{{ url('citas/Atendido?area='.Auth::user()->id_area.'&atendido=hoy') }}"
                                                                 class="btn bg-info text-white"
                                                                 style="border: solid 1px white;width:100%;background-color:#1cbcaf">Ver</a>
                                                         </div>
@@ -440,7 +440,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $today_count->total_derivado }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Derivado') }}"
+                                                            <a target="_blank" href="{{ url('citas/Derivado?area='.Auth::user()->id_area.'&atendido=hoy') }}"
                                                                 class="btn btn-secondary"
                                                                 style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
@@ -459,7 +459,7 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $today_count->total_observado }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Observado') }}"
+                                                            <a target="_blank" href="{{ url('citas/Observado?area='.Auth::user()->id_area.'&atendido=hoy') }}"
                                                                 class="btn btn-danger"
                                                                 style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
@@ -478,13 +478,12 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1 text-black">
                                                                 {{ $today_count->total_finalizado }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Finalizado') }}"
+                                                            <a target="_blank" href="{{ url('citas/Finalizado?area='.Auth::user()->id_area.'&atendido=hoy') }}"
                                                                 class="btn text-black"
                                                                 style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="col">
                                                     <div class="card bg-dark text-white">
                                                         <div class="card-body text-center px-9 pb-4">
@@ -497,15 +496,12 @@
                                                             <h4
                                                                 class="mb-3 d-flex align-items-center justify-content-center gap-1">
                                                                 {{ $today_count->total_cerrado }}</h4>
-                                                            <a target="_blank" href="{{ url('citas/Cerrado') }}"
+                                                            <a target="_blank" href="{{ url('citas/Cerrado?area='.Auth::user()->id_area.'&atendido=hoy') }}"
                                                                 class="btn btn-dark"
                                                                 style="border: solid 1px white;width:100%">Ver</a>
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -514,7 +510,6 @@
 
                         </div>
                     </div>
-
                     <span>* Elegir <b>Filtrar por Fecha</b> para aplicar el cambio</span>
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">

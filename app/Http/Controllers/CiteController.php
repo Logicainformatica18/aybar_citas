@@ -39,7 +39,7 @@ class CiteController extends Controller
         $date_end_gen = $request->query('date_end_gen', '');
         $date_cite = $request->query('date_cite', '');
         $area = $request->query('area', '');
-
+        $atendido = $request->query('atendido', '');
         // Si el estado es "Todos", usar "%"
         if ($estado == 'Todos') {
             $estado = '%';
@@ -183,8 +183,15 @@ class CiteController extends Controller
             // Si el usuario no está en ningún grupo especial, se filtra por su área
             $query->where('motivos_cita.id_area', $id_area);
         }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $fecha_actual = Carbon::now('America/Lima')->toDateString();
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (!empty($tipo)) {
+            $query->where('tipo', 'like', "%$tipo%");
+        }
         // Aplicar filtros si existen en sesión
         if ($area == 'null') {
             $query->whereNull('areas.id_area');
@@ -250,6 +257,17 @@ class CiteController extends Controller
             $query->where('fecha_repro', 'like', 'Según el Trámite');
         }
 
+        if ($atendido=="hoy") {
+
+            $fecha_inicio = Carbon::now('America/Lima')->startOfDay()->toDateTimeString();
+            $fecha_fin = Carbon::now('America/Lima')->endOfDay()->toDateTimeString();
+
+
+
+                $query->whereBetween('updated_at', [$fecha_inicio, $fecha_fin]);
+
+
+        }
         // Obtener citas con paginación
         $cite = $query->paginate(7)->appends($request->query());
 
