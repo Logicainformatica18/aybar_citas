@@ -129,7 +129,12 @@
                                             <span class="hide-menu">Dashboard</span>
                                         </a>
                                     </li>
-
+                                    <li class="sidebar-item bg-dark" style="border-radius:10px">
+                                        <a class="sidebar-link" href="{{url('dashboard-citas/Todo')}}" aria-expanded="false">
+                                            <iconify-icon icon="solar:pie-chart-3-line-duotone"></iconify-icon>
+                                            <span class="hide-menu text-white">Dashboard V2</span>
+                                        </a>
+                                    </li>
 
 
                                     <li class="sidebar-item">

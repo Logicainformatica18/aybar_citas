@@ -13,7 +13,7 @@ class Cite extends Model
 
 
     // Desactivar el manejo automático de timestamps
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'id_cita',

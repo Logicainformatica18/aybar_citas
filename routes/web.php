@@ -68,9 +68,10 @@ Route::get('/exportar-citas/{estado}', function ($estado, Request $request) {
 
 Route::post('/buscar-clientes', [App\Http\Controllers\CiteController::class, 'show']);
 Route::post('citeUpdate', [App\Http\Controllers\CiteController::class, 'update']);
-
 Route::post('/commentNotify', [App\Http\Controllers\CommentController::class, 'notify']);
 Route::post('/commentStore', [App\Http\Controllers\CommentController::class, 'store']);
+Route::get('/dashboard-citas/{estado}', [App\Http\Controllers\CiteController::class, 'dashboard']);
+
 
 
 Route::get('prueba/prueba', function () {
