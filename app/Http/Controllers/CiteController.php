@@ -57,7 +57,7 @@ class CiteController extends Controller
         ->orderBy("nombre_motivo", "asc")
         ->get();
 
-     
+
 
         $areas = DB::table('areas')
         ->select('id_area', 'descripcion')
@@ -66,13 +66,13 @@ class CiteController extends Controller
         })
         ->orderBy("descripcion", "asc")
         ->get();
-      
+
         $tipos = DB::table('citas')->select('tipo')->distinct()->orderBy("tipo", "asc")->get();
-        
+
         $areas_derive = DB::table('areas')->select('id_area', 'descripcion')->orderBy("descripcion", "asc")->get();
-       
+
         $motivos_derive = DB::table('motivos_cita')->select('nombre_motivo')->orderBy("nombre_motivo")->get();
-        
+
 
         // Obtener conteos de estado
         $total_cite = Cite::count();
@@ -323,7 +323,7 @@ class CiteController extends Controller
 
 
 
- 
+
 
 
         // Obtener conteos de estado
@@ -539,13 +539,13 @@ class CiteController extends Controller
     }
 
     public function derive(Request $request){
-        if($request->password=="Ayb4#rx25"){
+        if($request->password=="Aybar2025$"){
             $cite = Cite::find($request->id_cite_derive);
 
             if (!$cite) {
                 return response()->json(['error' => 'Cite not found'], 404);
             }
-            
+
             $cite->motivo = $request->motivo_derive;
             $cite->save();
             return  'Motivo Actualizado correctamente';
@@ -554,8 +554,8 @@ class CiteController extends Controller
             return "Error de contraseña";
         }
 
-       
-        
+
+
     }
 
     public function editDerive(Request $request){
