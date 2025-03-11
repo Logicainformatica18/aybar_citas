@@ -187,7 +187,6 @@ class CiteController extends Controller
 
         $fecha_actual = Carbon::now('America/Lima')->toDateString();
 
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (!empty($tipo)) {
             $query->where('tipo', 'like', "%$tipo%");
@@ -257,16 +256,11 @@ class CiteController extends Controller
             $query->where('fecha_repro', 'like', 'Según el Trámite');
         }
 
-        if ($atendido=="hoy") {
-
+        if ($atendido == 'hoy') {
             $fecha_inicio = Carbon::now('America/Lima')->startOfDay()->toDateTimeString();
             $fecha_fin = Carbon::now('America/Lima')->endOfDay()->toDateTimeString();
 
-
-
-                $query->whereBetween('updated_at', [$fecha_inicio, $fecha_fin]);
-
-
+            $query->whereBetween('updated_at', [$fecha_inicio, $fecha_fin]);
         }
         // Obtener citas con paginación
         $cite = $query->paginate(7)->appends($request->query());
@@ -329,8 +323,6 @@ class CiteController extends Controller
             ->select('citas.*', 'areas.*')
             ->where('citas.estado', 'like', $estado)
             ->orderBy('codigo', 'asc');
-
-
 
         $fecha_actual = Carbon::now('America/Lima')->toDateString();
         // Aplicar filtros si existen en sesión
@@ -527,8 +519,6 @@ class CiteController extends Controller
 
     public function today_count()
     {
-
-
         $inicioDia = Carbon::now('America/Lima')->startOfDay()->toDateTimeString(); // Inicio del día (00:00:00)
         $finDia = Carbon::now('America/Lima')->endOfDay()->toDateTimeString(); // Fin del día (23:59:59)
 
@@ -554,7 +544,6 @@ class CiteController extends Controller
         $cite->total_cerrado = $estadoCounts->get('Cerrado', 0);
 
         return $cite;
-
     }
     /**
      * Display the specified resource.
@@ -620,8 +609,6 @@ class CiteController extends Controller
             } else {
                 return response()->json(['error' => 'No se pudo actualizar la cita'], 400);
             }
-
-
         } else {
             return response()->json(['error' => 'No se enviaron valores para actualizar'], 400);
         }
@@ -636,7 +623,6 @@ class CiteController extends Controller
     }
     public function dashboard($estado, Request $request)
     {
-
         $user = Auth::user();
         $id_usuario = $user->id;
         $id_rol = $user->id_rol;
@@ -765,8 +751,6 @@ class CiteController extends Controller
             ->orderBy('codigo', 'asc');
 
         if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
-
-
         } elseif ($id_rol == 5 && !empty($id_area)) {
             // Obtener las áreas habilitadas del usuario
             $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
@@ -860,10 +844,32 @@ class CiteController extends Controller
         $cite = $query->paginate(7)->appends($request->query());
 
         //obtener cantidades de citas de todas las areas
-        $all_cite_count= $this->count();
+        $all_cite_count = $this->count();
         $today_count = $this->today_count();
 
+        // Contar citas por area
+        $cite_type_count = Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })
+            ->select('citas.tipo', \DB::raw('COUNT(*) as total'))
+            ->where('motivos_cita.id_area', '=', $id_area)
+            ->groupBy('citas.tipo')->orderByDesc('total')->get();
+        // Contar citas por motivo
+        $cite_motivo_count = Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })
+            ->select('citas.motivo', \DB::raw('COUNT(*) as total'))
+            ->where('motivos_cita.id_area', '=', $id_area)
+            ->groupBy('citas.motivo')->orderByDesc('total')->get();
 
+        // Contar citas por generado
+        $cite_generado_count = Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })
+            ->select('citas.generado', \DB::raw('COUNT(*) as total'))
+            ->where('motivos_cita.id_area', '=', $id_area)
+            ->groupBy('citas.generado')->orderByDesc('total')->get();
+       
 
         // Retornar la vista con los datos
         return view('Cite.cite_dashboard', compact(
@@ -882,7 +888,10 @@ class CiteController extends Controller
             'total_finalizado',
             'total_cerrado',
             'all_cite_count',
-            'today_count'
+            'today_count',
+            'cite_type_count',
+            'cite_motivo_count',
+            'cite_generado_count'
         ));
     }
 }
