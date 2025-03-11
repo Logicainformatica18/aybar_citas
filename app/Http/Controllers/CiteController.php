@@ -867,7 +867,6 @@ class CiteController extends Controller
 
         // Retornar la vista con los datos
         return view('Cite.cite_dashboard', compact(
-            'today_count',
             'motivos',
             'motivos_derive',
             'tipos',
@@ -882,7 +881,8 @@ class CiteController extends Controller
             'total_observado',
             'total_finalizado',
             'total_cerrado',
-            'all_cite_count'
+            'all_cite_count',
+            'today_count'
         ));
     }
 }

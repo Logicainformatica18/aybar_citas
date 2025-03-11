@@ -347,6 +347,156 @@
 
                         </div>
                     </div>
+
+
+                    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            var options = {
+                                series: [{
+                                    name: "Cantidad de Citas",
+                                    data: [
+                                        {{ $total_cite }},
+                                        {{ $total_pendiente }},
+                                        {{ $total_proceso }},
+                                        {{ $total_atendido }},
+                                        {{ $total_derivado }},
+                                        {{ $total_observado }},
+                                        {{ $total_finalizado }},
+                                        {{ $total_cerrado }}
+                                    ],
+                                }],
+                                chart: {
+                                    type: "bar",
+                                    height: 350,
+                                    toolbar: { show: false }
+                                },
+                                colors: [
+                                    "rgba(0, 17, 255, 0.7)", // Total (Azul)
+                                    "#198754", // Pendiente (Verde éxito)
+                                    "#6f42c1", // Proceso (Morado)
+                                    "#1cbcaf", // Atendido (Turquesa)
+                                    "#6c757d", // Derivado (Gris)
+                                    "#dc3545", // Observado (Rojo)
+                                    "#e7e7e7", // Finalizado (Gris claro)
+                                    "#212529"  // Cerrado (Negro)
+                                ],
+                                plotOptions: {
+                                    bar: {
+                                        distributed: true, // Colores diferentes por barra
+                                        dataLabels: {
+                                            position: "top"
+                                        }
+                                    }
+                                },
+                                dataLabels: {
+                                    enabled: true,
+                                    style: {
+                                        colors: ["#000"]
+                                    }
+                                },
+                                xaxis: {
+                                    categories: [
+                                        "Total",
+                                        "Pendiente",
+                                        "Proceso",
+                                        "Atendido",
+                                        "Derivado",
+                                        "Observado",
+                                        "Finalizado",
+                                        "Cerrado"
+                                    ],
+                                    labels: { style: { colors: "black" } }
+                                },
+                                yaxis: {
+                                    labels: { style: { colors: "#a1aab2" } }
+                                },
+                                tooltip: { theme: "dark" },
+                                legend: {
+                                    show: true,
+                                    position: "bottom",
+                                    markers: {
+                                        fillColors: [
+                                            "rgba(0, 17, 255, 0.7)",
+                                            "#198754",
+                                            "#6f42c1",
+                                            "#1cbcaf",
+                                            "#6c757d",
+                                            "#dc3545",
+                                            "#e7e7e7",
+                                            "#212529"
+                                        ]
+                                    },
+                                    labels: {
+                                        colors: "#a1aab2",
+                                        useSeriesColors: true
+                                    }
+                                }
+                            };
+
+                            var chart = new ApexCharts(document.querySelector("#barChart"), options);
+                            chart.render();
+                        });
+                    </script>
+
+                    <div id="barChart"></div>
+
+{{-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// --}}
+<div class="mt-4" id="citasChart"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var options = {
+            series: [
+                {{ $total_cite }},
+                                        {{ $total_pendiente }},
+                                        {{ $total_proceso }},
+                                        {{ $total_atendido }},
+                                        {{ $total_derivado }},
+                                        {{ $total_observado }},
+                                        {{ $total_finalizado }},
+                                        {{ $total_cerrado }}
+            ],
+            chart: {
+                type: 'donut',
+                height: 350
+            },
+            labels: ["Total", "Pendiente", "Proceso", "Atendido", "Derivado", "Observado", "Finalizado", "Cerrado"],
+            colors: [
+                "rgba(0, 17, 255, 0.4)",  // Total
+                "rgba(40, 167, 69, 0.8)", // Pendiente (verde)
+                "#6f42c1",                // Proceso (morado)
+                "#1cbcaf",                // Atendido (celeste)
+                "gray",                   // Derivado
+                "rgba(220, 53, 69, 0.8)", // Observado (rojo)
+                "#e7e7e7",                // Finalizado (gris claro)
+                "black"                   // Cerrado (negro)
+            ],
+            legend: {
+                position: 'right'
+            },
+            dataLabels: {
+                enabled: true,
+                formatter: function (val, opts) {
+                    let total = opts.w.config.series.reduce((a, b) => a + b, 0);
+                    let percentage = total > 0 ? ((val / total) * 100).toFixed(2) + "%" : "0%";
+                    return opts.w.config.labels[opts.seriesIndex] + ": " + opts.w.config.series[opts.seriesIndex] + " (" + percentage + ")";
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#citasChart"), options);
+        chart.render();
+    });
+</script>
+
+
+
+
+
                     <h3 class="text-primary">Citas trabajadas hoy por : <b class="text-danger"> Área {{ Auth::user()->area->descripcion }}</b>
                     </h3>
                     <div class="row align-items-center">
@@ -840,23 +990,8 @@
         </div>
     </div>
 
-    <div class="button-group">
 
 
-        <!-- /.modal -->
-        <!-- danger header modal -->
-
-        <!-- /.modal -->
-
-        <!-- /.modal -->
-
-        <!-- success Header Modal -->
-
-        <!-- /.modal -->
-
-
-        <!-- /.modal -->
-    </div>
 
     <!-- /.modal----------------------------------------------------------------------------------------------- -->
 
