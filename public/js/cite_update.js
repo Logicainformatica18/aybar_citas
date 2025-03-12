@@ -91,6 +91,18 @@ function citeEdit(id) {
       var fecha_creada = document.getElementById("fecha_creada");
       fecha_creada.innerHTML = response.data["fechag"] || "Sin Dato";
 
+      var email = document.getElementById("email");
+      email.innerHTML = response.data.customer["Email"] || "Sin Dato";
+
+      var provincia = document.getElementById("provincia");
+      provincia.innerHTML = response.data.customer["Provincia"] || "Sin Dato";
+
+      var departamento = document.getElementById("departamento");
+      departamento.innerHTML = response.data.customer["Departamento"] || "Sin Dato";
+
+      var distrito = document.getElementById("distrito");
+      distrito.innerHTML = response.data.customer["Distrito"] || "Sin Dato";
+
 
       var archivo = document.getElementById("archivo");
       if (!response.data["archivo"]) {
@@ -234,7 +246,7 @@ function citeDerive() {
     }
   })
     .then(function(response) {
-  
+
       alert(response.data);
       window.location.reload();
     })

@@ -564,7 +564,7 @@
                     <div class="card bg-white"style="border: solid 1px #054988">
                         <div class="container  row">
                             <h4 class="mb-4 mt-4 mb-md-0 card-title">Datos de cliente</h4>
-                            <div class="col-12 col-sm-4 mt-2">
+                            <div class="col-12 col-sm-3 mt-2">
 
                                 <label for=""
                                     class="control-label border-bottom border-primary custom-cursor-default-hover">Razón
@@ -574,7 +574,7 @@
                                     <span id="razon_social"></span>
                                 </li>
                             </div>
-                            <div class="col-12 col-sm-4">
+                            <div class="col-12 col-sm-2">
                                 <label for=""
                                     class="control-label border-bottom border-primary custom-cursor-default-hover">Teléfono</label>
                                 <li class="d-flex align-items-center gap-2 mb-4">
@@ -582,7 +582,7 @@
                                     <span id="telefono"></span>
                                 </li>
                             </div>
-                            <div class="col-12 col-sm-4">
+                            <div class="col-12 col-sm-2">
                                 <label for=""
                                     class="control-label border-bottom border-primary custom-cursor-default-hover">DNI/CE</label>
                                 <li class="d-flex align-items-center gap-2 mb-4">
@@ -590,7 +590,7 @@
                                     <span id="dni"></span>
                                 </li>
                             </div>
-                            <div class="col-12 col-sm-4">
+                            <div class="col-12 col-sm-2">
                                 <label for=""
                                     class="control-label border-bottom border-primary custom-cursor-default-hover">Lote</label>
                                 <li class="d-flex align-items-center gap-2">
@@ -598,7 +598,7 @@
                                     <span id="lote"></span>
                                 </li>
                             </div>
-                            <div class="col-12 col-sm-4">
+                            <div class="col-12 col-sm-2">
                                 <label for=""
                                     class="control-label border-bottom border-primary custom-cursor-default-hover">Manzana</label>
                                 <li class="d-flex align-items-center gap-2 mb-4">
@@ -609,14 +609,49 @@
                             <div class="col-12 col-sm-4 mt-2">
 
                                 <label for=""
+                                    class="control-label border-bottom border-primary custom-cursor-default-hover">Email</label>
+                                <li class="d-flex align-items-center gap-2 mb-4">
+                                    <span class="p-1 rounded-circle text-bg-primary"></span>
+                                    <span id="email"></span>
+                                </li>
+                            </div>
+
+                            <div class="col-12 col-sm-2 mt-2">
+
+                                <label for=""
+                                    class="control-label border-bottom border-primary custom-cursor-default-hover">Departamento</label>
+                                <li class="d-flex align-items-center gap-2 mb-4">
+                                    <span class="p-1 rounded-circle text-bg-primary"></span>
+                                    <span id="departamento"></span>
+                                </li>
+                            </div>
+                            <div class="col-12 col-sm-2 mt-2">
+
+                                <label for=""
+                                    class="control-label border-bottom border-primary custom-cursor-default-hover">Provincia</label>
+                                <li class="d-flex align-items-center gap-2 mb-4">
+                                    <span class="p-1 rounded-circle text-bg-primary"></span>
+                                    <span id="provincia"></span>
+                                </li>
+                            </div>
+                            <div class="col-12 col-sm-2 mt-3">
+
+                                <label for=""
+                                    class="control-label border-bottom border-primary custom-cursor-default-hover">Distrito</label>
+                                <li class="d-flex align-items-center gap-2 mb-4">
+                                    <span class="p-1 rounded-circle text-bg-primary"></span>
+                                    <span id="distrito"></span>
+                                </li>
+                            </div>
+                            <div class="col-12 col-sm-2 mt-2">
+
+                                <label for=""
                                     class="control-label border-bottom border-primary custom-cursor-default-hover">Encargado</label>
                                 <li class="d-flex align-items-center gap-2 mb-4">
                                     <span class="p-1 rounded-circle text-bg-primary"></span>
                                     <span id="encargado"></span>
                                 </li>
                             </div>
-
-
                         </div>
                     </div>
                     <div class="card bg-white"style="border: solid 1px #054988">
