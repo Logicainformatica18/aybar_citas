@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 use App\Exports\CiteExport;
+use App\Exports\CiteGenerate;
 use Maatwebsite\Excel\Facades\Excel;
 
 /*
@@ -64,6 +65,9 @@ Route::post('/citeDerive', [App\Http\Controllers\CiteController::class, 'derive'
 
 Route::get('/exportar-citas/{estado}', function ($estado, Request $request) {
     return Excel::download(new CiteExport($request, $estado), 'citas.xlsx');
+});
+Route::get('/exportar-citas-generate/{estado}', function ($estado, Request $request) {
+    return Excel::download(new CiteGenerate($request, $estado), 'citas_generadas.xlsx');
 });
 
 Route::post('/buscar-clientes', [App\Http\Controllers\CiteController::class, 'show']);

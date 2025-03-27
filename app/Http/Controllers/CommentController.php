@@ -39,19 +39,21 @@ class CommentController extends Controller
             $comment->habilitado = 0;
             $comment->save();
 
-            $cite=Cite::find($request->id_cita);
+            $cite = Cite::find($request->id_cita);
             $cite->estado = $request->estado;
             $cite->save();
 
-
             return response()->json([
                 'success' => true,
-                'message' => 'Comentario guardado exitosamente.',
-                'data' => $comment
+                'message' => 'Comentario guardado exitosamente.'
             ], 201);
         } catch (\Exception $e) {
-            // Registrar el error en los logs de Laravel
-            \Log::error('Error al guardar el comentario: ' . $e->getMessage());
+            // Registrar el error en los logs con más detalle
+            \Log::error('Error al guardar el comentario', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->all()
+            ]);
 
             return response()->json([
                 'success' => false,
@@ -59,6 +61,7 @@ class CommentController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+
 
     }
     /**

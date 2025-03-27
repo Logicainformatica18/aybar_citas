@@ -869,7 +869,7 @@ class CiteController extends Controller
             ->select('citas.generado', \DB::raw('COUNT(*) as total'))
             ->where('motivos_cita.id_area', '=', $id_area)
             ->groupBy('citas.generado')->orderByDesc('total')->get();
-       
+
 
         // Retornar la vista con los datos
         return view('Cite.cite_dashboard', compact(

@@ -461,6 +461,13 @@
                                 Exportar Filtrado - Excel
                             </button>
 
+                            @if (Auth::user()->id_area=="8")
+                            <button type="button" class="btn mb-0  btn-secondary" style="width:300px"
+                            onclick="exportarExcelConFiltrosGenerate()">
+                            Exportar Excel (DUX)
+                            </button>
+                            @endif
+
                             <script>
                                 function exportarExcelConFiltros() {
                                     let urlParams = new URLSearchParams(window.location.search);
@@ -471,6 +478,22 @@
 
                                     // Construir la URL de exportación con los filtros actuales
                                     let exportUrl = `/exportar-citas/${estado}?` + urlParams.toString();
+
+                                    // Redirigir a la URL para descargar el archivo
+                                    window.location.href = exportUrl;
+                                }
+                            </script>
+
+                            <script>
+                                function exportarExcelConFiltrosGenerate() {
+                                    let urlParams = new URLSearchParams(window.location.search);
+
+                                    // Obtener el estado desde la URL (último segmento después de "/")
+                                    let pathSegments = window.location.pathname.split('/');
+                                    let estado = pathSegments[pathSegments.length - 1]; // Último valor en la URL
+
+                                    // Construir la URL de exportación con los filtros actuales
+                                    let exportUrl = `/exportar-citas-generate/${estado}?` + urlParams.toString();
 
                                     // Redirigir a la URL para descargar el archivo
                                     window.location.href = exportUrl;
