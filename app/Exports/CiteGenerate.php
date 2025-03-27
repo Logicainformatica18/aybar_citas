@@ -65,7 +65,9 @@ class CiteGenerate implements FromCollection, WithHeadings
                 'citas.motivo',
                 'citas.estado',
                 'citas.fechag as fecha_generada',
-                'citas.fecha_repro as fecha_reprogramada'
+                'citas.fecha_repro as fecha_reprogramada',
+                'citas.generado'
+
             )
             ->where('citas.estado', 'like', $this->estado)
             ->orderBy('codigo', 'asc');
@@ -217,7 +219,9 @@ class CiteGenerate implements FromCollection, WithHeadings
             'Motivo',              // citas.motivo
             'Estado',              // citas.estado
             'Fecha Generada',      // citas.fecha_generada
-            'Fecha Reprogramada'   // citas.fecha_repro
+            'Fecha Reprogramada',   // citas.fecha_repro
+            'Generado por'
+
         ];
     }
 
