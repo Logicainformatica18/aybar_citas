@@ -44,16 +44,26 @@ class CiteController extends Controller
         if ($estado == 'Todos') {
             $estado = '%';
         }
+        //AREA DUX
+        $generadosPermitidos = ['William Arturo Pachas Hernandez', 'Luisa Giannina Flores Davila', 'Kiera Camila Pedraza Huanuco', 'Wilfredo Antonio Palacios Lescano', 'Jose Daniel Castro Palomino', 'Jorge Rolando Llatas Liñan', 'Jesus Angel Gomez Sucuitana', 'Rafael Stefano Cedron Ortega', 'Gleisys Oriana Jaimes Luna'];
+        if (Auth::user()->id_area == 8) {
 
-        // Obtener motivos y tipos únicos
+            // estos son motivos que dux ha registrado eligiendo claro otras areas
+            $motivos = DB::table('motivos_cita')->select('motivos_cita.nombre_motivo')->join('citas', 'citas.motivo', '=', 'motivos_cita.nombre_motivo')->whereIn('citas.generado', $generadosPermitidos)->distinct()->orderBy('motivos_cita.nombre_motivo', 'asc')->get();
+        } else {
+            // Obtener motivos y tipos únicos
+            $motivos = DB::table('motivos_cita')
+                ->select('nombre_motivo')
+                ->when($id_area != 6, function ($query) use ($id_area) {
+                    return $query->where('id_area', 'like', $id_area);
+                })
+                ->orderBy('nombre_motivo', 'asc')
+                ->get();
+        }
 
-        $motivos = DB::table('motivos_cita')
-            ->select('nombre_motivo')
-            ->when($id_area != 6, function ($query) use ($id_area) {
-                return $query->where('id_area', 'like', $id_area);
-            })
-            ->orderBy('nombre_motivo', 'asc')
-            ->get();
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 
         $areas = DB::table('areas')
             ->select('id_area', 'descripcion')
@@ -134,55 +144,57 @@ class CiteController extends Controller
             ->where('citas.estado', 'Cerrado')
             ->count();
 
-        // Obtener información del usuario autenticado
-        // $user = User::where('id_usuario', '=', '1')->first();
-        // Auth::login($user);
-
-        // Consulta base con LEFT JOIN y LIKE en motivos_cita
-        $query = Cite::leftJoin('motivos_cita', function ($join) {
-            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-        })
-            ->leftJoin('areas', function ($join) {
-                $join->on('motivos_cita.id_area', '=', 'areas.id_area');
+            // SI ES DUX O ID_AREA 8 ENTONCES MOSTRARÁ TODOS LOS GENERADOS POR ELLOS
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (Auth::user()->id_area == 8) {
+            // Consulta base con LEFT JOIN y LIKE en motivos_cita
+            $query = Cite::leftJoin('motivos_cita', function ($join) {
+                $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
             })
-            ->select('citas.*', 'areas.*')
-            ->where('citas.estado', 'like', $estado)
-            ->orderBy('codigo', 'asc');
-
-        if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
-            // Si el rol es 1 o 5 y no tiene área, mostramos todas las citas
-
-            // $query = Cite::leftJoin('motivos_cita', function ($join) {
-            //     $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-            // })
-            //     ->leftJoin('areas', function ($join) {
-            //         $join->on('motivos_cita.id_area', '=', 'areas.id_area');
-            //     })
-            //     ->select('citas.*', 'areas.*')
-            //     ->where('citas.estado', 'like', $estado)
-            //     ->orderBy('codigo', 'asc');
-        } elseif ($id_rol == 5 && !empty($id_area)) {
-            // Obtener las áreas habilitadas del usuario
-            $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
-
-            if (!empty($areas_)) {
-                $query->whereIn('motivos_cita.id_area', $areas_);
-            } else {
-                $query->where('motivos_cita.id_area', $id_area);
-            }
-        } elseif ($id_rol == 4 || in_array($id_area, [1, 2, 3])) {
-            // Obtener las áreas habilitadas del usuario
-            $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
-
-            if (!empty($areas_)) {
-                $query->whereIn('motivos_cita.id_area', $areas_);
-            } else {
-                $query->where('motivos_cita.id_area', $id_area);
-            }
+                ->leftJoin('areas', function ($join) {
+                    $join->on('motivos_cita.id_area', '=', 'areas.id_area');
+                })
+                ->select('citas.*', 'areas.*')
+                ->where('citas.estado', 'like', $estado)
+                ->whereIn('citas.generado',$generadosPermitidos)
+                ->orderBy('codigo', 'asc');
         } else {
-            // Si el usuario no está en ningún grupo especial, se filtra por su área
-            $query->where('motivos_cita.id_area', $id_area);
+            // Consulta base con LEFT JOIN y LIKE en motivos_cita
+            $query = Cite::leftJoin('motivos_cita', function ($join) {
+                $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+            })
+                ->leftJoin('areas', function ($join) {
+                    $join->on('motivos_cita.id_area', '=', 'areas.id_area');
+                })
+                ->select('citas.*', 'areas.*')
+                ->where('citas.estado', 'like', $estado)
+                ->orderBy('codigo', 'asc');
+
+            if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
+            } elseif ($id_rol == 5 && !empty($id_area)) {
+                // Obtener las áreas habilitadas del usuario
+                $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
+
+                if (!empty($areas_)) {
+                    $query->whereIn('motivos_cita.id_area', $areas_);
+                } else {
+                    $query->where('motivos_cita.id_area', $id_area);
+                }
+            } elseif ($id_rol == 4 || in_array($id_area, [1, 2, 3])) {
+                // Obtener las áreas habilitadas del usuario
+                $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
+
+                if (!empty($areas_)) {
+                    $query->whereIn('motivos_cita.id_area', $areas_);
+                } else {
+                    $query->where('motivos_cita.id_area', $id_area);
+                }
+            } else {
+                // Si el usuario no está en ningún grupo especial, se filtra por su área
+                $query->where('motivos_cita.id_area', $id_area);
+            }
         }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $fecha_actual = Carbon::now('America/Lima')->toDateString();
@@ -195,7 +207,8 @@ class CiteController extends Controller
         if ($area == 'null') {
             $query->whereNull('areas.id_area');
         } else {
-            if (!empty($area)) {
+
+            if (!empty($area !=8)) {
                 $query->where('areas.id_area', 'like', $area);
             }
         }
@@ -853,14 +866,18 @@ class CiteController extends Controller
         })
             ->select('citas.tipo', \DB::raw('COUNT(*) as total'))
             ->where('motivos_cita.id_area', '=', $id_area)
-            ->groupBy('citas.tipo')->orderByDesc('total')->get();
+            ->groupBy('citas.tipo')
+            ->orderByDesc('total')
+            ->get();
         // Contar citas por motivo
         $cite_motivo_count = Cite::leftJoin('motivos_cita', function ($join) {
             $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
         })
             ->select('citas.motivo', \DB::raw('COUNT(*) as total'))
             ->where('motivos_cita.id_area', '=', $id_area)
-            ->groupBy('citas.motivo')->orderByDesc('total')->get();
+            ->groupBy('citas.motivo')
+            ->orderByDesc('total')
+            ->get();
 
         // Contar citas por generado
         $cite_generado_count = Cite::leftJoin('motivos_cita', function ($join) {
@@ -868,30 +885,13 @@ class CiteController extends Controller
         })
             ->select('citas.generado', \DB::raw('COUNT(*) as total'))
             ->where('motivos_cita.id_area', '=', $id_area)
-            ->groupBy('citas.generado')->orderByDesc('total')->get();
-
+            ->groupBy('citas.generado')
+            ->orderByDesc('total')
+            ->get();
 
         // Retornar la vista con los datos
-        return view('Cite.cite_dashboard', compact(
-            'motivos',
-            'motivos_derive',
-            'tipos',
-            'areas',
-            'areas_derive',
-            'cite',
-            'total_cite',
-            'total_pendiente',
-            'total_proceso',
-            'total_atendido',
-            'total_derivado',
-            'total_observado',
-            'total_finalizado',
-            'total_cerrado',
-            'all_cite_count',
-            'today_count',
-            'cite_type_count',
-            'cite_motivo_count',
-            'cite_generado_count'
-        ));
+        return view('Cite.cite_dashboard', compact('motivos', 'motivos_derive', 'tipos', 'areas', 'areas_derive', 'cite', 'total_cite', 'total_pendiente', 'total_proceso', 'total_atendido', 'total_derivado', 'total_observado', 'total_finalizado', 'total_cerrado', 'all_cite_count', 'today_count', 'cite_type_count', 'cite_motivo_count', 'cite_generado_count'));
     }
 }
+
+
