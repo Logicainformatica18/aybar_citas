@@ -72,42 +72,34 @@ class CiteGenerate implements FromCollection, WithHeadings
             ->where('citas.estado', 'like', $this->estado)
             ->orderBy('codigo', 'asc');
 
-        // 📌 Aplicar los mismos filtros de usuario y área
-        if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
-            // Rol 1 o 5 sin área pueden ver todas las citas
-        } elseif ($id_rol == 5 && !empty($id_area)) {
-            $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
+        // // 📌 Aplicar los mismos filtros de usuario y área
+        // if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
+        //     // Rol 1 o 5 sin área pueden ver todas las citas
+        // } elseif ($id_rol == 5 && !empty($id_area)) {
+        //     $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
 
-            if (!empty($areas_)) {
-                $query->whereIn('motivos_cita.id_area', $areas_);
-            } else {
-                $query->where('motivos_cita.id_area', $id_area);
-            }
-        } elseif ($id_rol == 4 || in_array($id_area, [1, 2, 3])) {
-            $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
+        //     if (!empty($areas_)) {
+        //         $query->whereIn('motivos_cita.id_area', $areas_);
+        //     } else {
+        //         $query->where('motivos_cita.id_area', $id_area);
+        //     }
+        // } elseif ($id_rol == 4 || in_array($id_area, [1, 2, 3])) {
+        //     $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
 
-            if (!empty($areas_)) {
-                $query->whereIn('motivos_cita.id_area', $areas_);
-            } else {
-                $query->where('motivos_cita.id_area', $id_area);
-            }
-        } else {
-            $query->where('motivos_cita.id_area', $id_area);
-        }
-
-
+        //     if (!empty($areas_)) {
+        //         $query->whereIn('motivos_cita.id_area', $areas_);
+        //     } else {
+        //         $query->where('motivos_cita.id_area', $id_area);
+        //     }
+        // } else {
+        //     $query->where('motivos_cita.id_area', $id_area);
+        // }
+        $generadosPermitidos = ['William Arturo Pachas Hernandez', 'Luisa Giannina Flores Davila', 'Kiera Camila Pedraza Huanuco', 'Wilfredo Antonio Palacios Lescano', 'Jose Daniel Castro Palomino', 'Jorge Rolando Llatas Liñan', 'Jesus Angel Gomez Sucuitana', 'Rafael Stefano Cedron Ortega', 'Gleisys Oriana Jaimes Luna'];
+        $query->whereIn('citas.generado',$generadosPermitidos);
 
             $fecha_actual = Carbon::now( 'America/Lima')->toDateString();
         // Aplicar filtros si existen en sesión
-        if ($area=="null") {
-            $query->whereNull("areas.id_area");
 
-        }
-        else{
-            if (!empty($area)) {
-                $query->where("areas.id_area", "like", $area);
-            }
-        }
 
         if (!empty($motivo)) {
             $query->where("motivo", "like", "%$motivo%");
