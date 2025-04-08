@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
        use Illuminate\Support\Facades\Log;
+       use Illuminate\Support\Carbon;
 class CommentController extends Controller
 {
     /**
@@ -30,12 +31,19 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         try {
+            date_default_timezone_set('America/Lima'); // Asegura que Carbon use la hora de Lima
+
             $comment = new Comment();
             $comment->comentario = $request->comentario;
             $comment->id_cita = $request->id_cita;
             $comment->estado = $request->estado;
-            $comment->fecha = $request->fecha;
-            $comment->hora = $request->hora;
+
+            // Si no viene fecha, se usa la actual en formato "YYYY-MM-DD"
+            $comment->fecha = $request->fecha ?? Carbon::now('America/Lima')->toDateString();
+
+            // Si no viene hora, se usa la hora actual en formato "HH:MM:SS"
+            $comment->hora = $request->hora ?? Carbon::now('America/Lima')->format('H:i:s');
+
             $comment->habilitado = 0;
             $comment->save();
 
