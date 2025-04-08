@@ -214,7 +214,7 @@
                                         <div class="col-4">
                                             <label for="motivo" class="form-label fw-bold">Motivo</label>
                                             <select name="motivo" id="motivo" class="form-control">
-                                                {{-- <option value="" {{ request('motivo') == '' ? 'selected' : '' }}>Todos</option> --}}
+                                                <option value="%" {{ request('nombre_motivo') == '' ? 'selected' : '' }}>Todos</option>
                                                 @foreach ($motivos as $m)
                                                     <option value="{{ $m->nombre_motivo }}"
                                                         {{ request('nombre_motivo') == $m->nombre_motivo ? 'selected' : '' }}>

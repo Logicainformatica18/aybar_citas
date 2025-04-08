@@ -47,7 +47,6 @@ class CiteController extends Controller
         //AREA DUX
         $generadosPermitidos = ['William Arturo Pachas Hernandez', 'Luisa Giannina Flores Davila', 'Kiera Camila Pedraza Huanuco', 'Wilfredo Antonio Palacios Lescano', 'Jose Daniel Castro Palomino', 'Jorge Rolando Llatas Liñan', 'Jesus Angel Gomez Sucuitana', 'Rafael Stefano Cedron Ortega', 'Gleisys Oriana Jaimes Luna'];
         if (Auth::user()->id_area == 8) {
-
             // estos son motivos que dux ha registrado eligiendo claro otras areas
             $motivos = DB::table('motivos_cita')->select('motivos_cita.nombre_motivo')->join('citas', 'citas.motivo', '=', 'motivos_cita.nombre_motivo')->whereIn('citas.generado', $generadosPermitidos)->distinct()->orderBy('motivos_cita.nombre_motivo', 'asc')->get();
         } else {
@@ -144,7 +143,7 @@ class CiteController extends Controller
             ->where('citas.estado', 'Cerrado')
             ->count();
 
-            // SI ES DUX O ID_AREA 8 ENTONCES MOSTRARÁ TODOS LOS GENERADOS POR ELLOS
+        // SI ES DUX O ID_AREA 8 ENTONCES MOSTRARÁ TODOS LOS GENERADOS POR ELLOS
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (Auth::user()->id_area == 8) {
             // Consulta base con LEFT JOIN y LIKE en motivos_cita
@@ -156,10 +155,13 @@ class CiteController extends Controller
                 })
                 ->select('citas.*', 'areas.*')
                 ->where('citas.estado', 'like', $estado)
-                ->whereIn('citas.generado',$generadosPermitidos)
-                ->orderBy('codigo', 'asc');
+                ->whereIn('citas.generado', $generadosPermitidos);
+
         } else {
-            // Consulta base con LEFT JOIN y LIKE en motivos_cita
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+            // // Consulta base con LEFT JOIN y LIKE en motivos_cita
             $query = Cite::leftJoin('motivos_cita', function ($join) {
                 $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
             })
@@ -167,10 +169,10 @@ class CiteController extends Controller
                     $join->on('motivos_cita.id_area', '=', 'areas.id_area');
                 })
                 ->select('citas.*', 'areas.*')
-                ->where('citas.estado', 'like', $estado)
-                ->orderBy('codigo', 'asc');
+                ->where('citas.estado', 'like', $estado);
 
             if ($id_usuario == 19 || $id_usuario == 38 || $id_rol == 1 || ($id_rol == 5 && empty($id_area))) {
+
             } elseif ($id_rol == 5 && !empty($id_area)) {
                 // Obtener las áreas habilitadas del usuario
                 $areas_ = User::where('id_usuario', $id_usuario)->where('habilitado', 0)->pluck('id_area')->toArray();
@@ -204,14 +206,12 @@ class CiteController extends Controller
             $query->where('tipo', 'like', "%$tipo%");
         }
         // Aplicar filtros si existen en sesión
-        if ($area == 'null') {
-            $query->whereNull('areas.id_area');
-        } else {
+        // if ($id_area != 8) {
+        //     $query->where('areas.id_area', 'like', $id_area);
+        // } else {
+        //     $query->where('areas.id_area', 'like', $id_area);
+        // }
 
-            if (!empty($area !=8)) {
-                $query->where('areas.id_area', 'like', $area);
-            }
-        }
 
         if (!empty($motivo)) {
             $query->where('motivo', 'like', "%$motivo%");
@@ -275,6 +275,7 @@ class CiteController extends Controller
 
             $query->whereBetween('updated_at', [$fecha_inicio, $fecha_fin]);
         }
+        $query->orderBy('codigo', 'asc');
         // Obtener citas con paginación
         $cite = $query->paginate(7)->appends($request->query());
 
@@ -893,5 +894,3 @@ class CiteController extends Controller
         return view('Cite.cite_dashboard', compact('motivos', 'motivos_derive', 'tipos', 'areas', 'areas_derive', 'cite', 'total_cite', 'total_pendiente', 'total_proceso', 'total_atendido', 'total_derivado', 'total_observado', 'total_finalizado', 'total_cerrado', 'all_cite_count', 'today_count', 'cite_type_count', 'cite_motivo_count', 'cite_generado_count'));
     }
 }
-
-
