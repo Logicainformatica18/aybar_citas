@@ -178,19 +178,19 @@ class CiteGenerate implements FromCollection, WithHeadings
             $query->where('fecha_repro', "like",'Según el Trámite');
         }
 
-        $generadosPermitidos = [
-            'William Arturo Pachas Hernandez',
-            'Luisa Giannina Flores Davila',
-            'Kiera Camila Pedraza Huanuco',
-            'Wilfredo Antonio Palacios Lescano',
-            'Jose Daniel Castro Palomino',
-            'Jorge Rolando Llatas Liñan',
-            'Jesus Angel Gomez Sucuitana',
-            'Rafael Stefano Cedron Ortega',
-            'Gleisys Oriana Jaimes Luna'
-        ];
+        // $generadosPermitidos = [
+        //     'William Arturo Pachas Hernandez',
+        //     'Luisa Giannina Flores Davila',
+        //     'Kiera Camila Pedraza Huanuco',
+        //     'Wilfredo Antonio Palacios Lescano',
+        //     'Jose Daniel Castro Palomino',
+        //     'Jorge Rolando Llatas Liñan',
+        //     'Jesus Angel Gomez Sucuitana',
+        //     'Rafael Stefano Cedron Ortega',
+        //     'Gleisys Oriana Jaimes Luna'
+        // ];
 
-        $query->whereIn('citas.generado', $generadosPermitidos);
+        // $query->whereIn('citas.generado', $generadosPermitidos);
 
 
 

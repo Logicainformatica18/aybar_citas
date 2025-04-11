@@ -242,19 +242,28 @@ class CiteController extends Controller
 
     function countAppointmentsByStatus($area_id, $status = null, $generate = null)
     {
-        $query = Cite::leftJoin('motivos_cita', function ($join) {
-            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-        })->where('motivos_cita.id_area', $area_id);
-
-        if (!is_null($status)) {
-            $query->where('citas.estado', $status);
-        }
-
         if ($area_id == 8 ) {
-          //  $query->whereIn('citas.generado', $generate);
-          $query->whereIn('citas.generado', ['Luisa Giannina Flores Davila']);
+            $query = Cite::leftJoin('motivos_cita', function ($join) {
+                $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+            })->whereIn('citas.generado', $generate);
+            if (!is_null($status)) {
+                $query->where('citas.estado', $status);
+            }
 
-        }
+
+          }
+          else{
+            $query = Cite::leftJoin('motivos_cita', function ($join) {
+                $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+            })->where('motivos_cita.id_area', $area_id);
+
+            if (!is_null($status)) {
+                $query->where('citas.estado', $status);
+            }
+          }
+
+
+
 
         return $query->count();
     }
