@@ -56,6 +56,7 @@ class CiteExport implements FromCollection, WithHeadings
             ->select(
                 'citas.codigo',
                 'clientes.razon_social as cliente_nombre',
+                'clientes.telefono as telefono',
                 'clientes.dni as cliente_dni',
                 'citas.proyecto',
                 'citas.manzana',
@@ -195,6 +196,7 @@ class CiteExport implements FromCollection, WithHeadings
         return [
             'Código',              // citas.codigo
             'Cliente',             // clientes.nombre AS cliente_nombre
+            'Telefono',             // clientes.nombre AS cliente_nombre
             'DNI',                 // clientes.dni AS cliente_dni
             'Proyecto',            // proyectos.nombre AS proyecto_nombre
             'Manzana',             // citas.manzana
