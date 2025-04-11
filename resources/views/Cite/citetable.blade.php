@@ -12,6 +12,7 @@
                 <th>Código</th>
                 <th>Estado</th>
                 <th >Cliente </th>
+                <th>Teléfono </th>
                 <th>DNI</th>
                 <th>Proyecto</th>
                 <th>Manzana</th>
@@ -102,6 +103,7 @@
                         </span>
                     </td>
                     <td  style="width:100%">{{ $cites->customer->Razon_Social }}</td>
+                    <td  style="width:100%">{{ $cites->customer->Telefono }}</td>
                     <td>{{ $cites->customer->DNI }}</td>
                     <td>{{ $cites->proyecto }}</td>
                     <td>{{ $cites->manzana }}</td>
