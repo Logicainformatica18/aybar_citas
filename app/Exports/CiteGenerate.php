@@ -95,7 +95,7 @@ class CiteGenerate implements FromCollection, WithHeadings
         // } else {
         //     $query->where('motivos_cita.id_area', $id_area);
         // }
-        $generadosPermitidos = ['William Arturo Pachas Hernandez', 'Luisa Giannina Flores Davila', 'Kiera Camila Pedraza Huanuco', 'Wilfredo Antonio Palacios Lescano', 'Jose Daniel Castro Palomino', 'Jorge Rolando Llatas Liñan', 'Jesus Angel Gomez Sucuitana', 'Rafael Stefano Cedron Ortega', 'Gleisys Oriana Jaimes Luna'];
+        $generadosPermitidos = User::where('id_area', 8)->get()->map(fn($user) => $user->nombre . ' ' . $user->apellido)->toArray();
         $query->whereIn('citas.generado',$generadosPermitidos);
 
             $fecha_actual = Carbon::now( 'America/Lima')->toDateString();

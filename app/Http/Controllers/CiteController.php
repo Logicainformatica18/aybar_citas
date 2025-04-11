@@ -22,6 +22,7 @@ class CiteController extends Controller
      */
     public function index($estado, Request $request)
     {
+
         $user = Auth::user();
         $id_usuario = $user->id;
         $id_rol = $user->id_rol;
@@ -45,7 +46,8 @@ class CiteController extends Controller
             $estado = '%';
         }
         //AREA DUX
-        $generadosPermitidos = ['William Arturo Pachas Hernandez', 'Luisa Giannina Flores Davila', 'Kiera Camila Pedraza Huanuco', 'Wilfredo Antonio Palacios Lescano', 'Jose Daniel Castro Palomino', 'Jorge Rolando Llatas Liñan', 'Jesus Angel Gomez Sucuitana', 'Rafael Stefano Cedron Ortega', 'Gleisys Oriana Jaimes Luna'];
+        $generadosPermitidos = User::where('id_area', 8)->get()->map(fn($user) => $user->nombre . ' ' . $user->apellido)->toArray();
+
         if (Auth::user()->id_area == 8) {
             // estos son motivos que dux ha registrado eligiendo claro otras areas
             $motivos = DB::table('motivos_cita')->select('motivos_cita.nombre_motivo')->join('citas', 'citas.motivo', '=', 'motivos_cita.nombre_motivo')->whereIn('citas.generado', $generadosPermitidos)->distinct()->orderBy('motivos_cita.nombre_motivo', 'asc')->get();
@@ -81,67 +83,21 @@ class CiteController extends Controller
         // Obtener conteos de estado
         // $total_cite = Cite::where()->count();
 
-        $total_cite = Cite::leftJoin('motivos_cita', function ($join) {
-            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-        })
-            ->where('motivos_cita.id_area', '=', $id_area)
-            ->count();
+        $total_cite       = $this->countAppointmentsByStatus($id_area,null,$generadosPermitidos);
+        $total_pendiente  = $this->countAppointmentsByStatus($id_area, 'Pendiente',$generadosPermitidos);
+        $total_proceso    = $this->countAppointmentsByStatus($id_area, 'Proceso',$generadosPermitidos);
+        $total_atendido   = $this->countAppointmentsByStatus($id_area, 'Atendido',$generadosPermitidos);
+        $total_derivado   = $this->countAppointmentsByStatus($id_area, 'Derivado',$generadosPermitidos);
+        $total_observado  = $this->countAppointmentsByStatus($id_area, 'Observado',$generadosPermitidos);
+        $total_finalizado = $this->countAppointmentsByStatus($id_area, 'Finalizado',$generadosPermitidos);
+        $total_cerrado    = $this->countAppointmentsByStatus($id_area, 'Cerrado',$generadosPermitidos);
 
-        $total_pendiente = Cite::leftJoin('motivos_cita', function ($join) {
-            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-        })
-            ->where('motivos_cita.id_area', '=', $id_area)
-            ->where('citas.estado', 'Pendiente')
-            ->count();
 
-        $total_proceso = Cite::leftJoin('motivos_cita', function ($join) {
-            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-        })
-            ->where('motivos_cita.id_area', '=', $id_area)
-            ->where('citas.estado', 'Proceso')
-            ->count();
 
-        $total_atendido = Cite::leftJoin('motivos_cita', function ($join) {
-            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-        })
-            ->where('motivos_cita.id_area', '=', $id_area)
-            ->where('citas.estado', 'Atendido')
-            ->count();
 
-        $total_derivado = Cite::leftJoin('motivos_cita', function ($join) {
-            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-        })
-            ->where('motivos_cita.id_area', '=', $id_area)
-            ->where('citas.estado', 'Derivado')
-            ->count();
 
-        $total_derivado = Cite::leftJoin('motivos_cita', function ($join) {
-            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-        })
-            ->where('motivos_cita.id_area', '=', $id_area)
-            ->where('citas.estado', 'Derivado')
-            ->count();
 
-        $total_observado = Cite::leftJoin('motivos_cita', function ($join) {
-            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-        })
-            ->where('motivos_cita.id_area', '=', $id_area)
-            ->where('citas.estado', 'Observado')
-            ->count();
 
-        $total_finalizado = Cite::leftJoin('motivos_cita', function ($join) {
-            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-        })
-            ->where('motivos_cita.id_area', '=', $id_area)
-            ->where('citas.estado', 'Finalizado')
-            ->count();
-
-        $total_cerrado = Cite::leftJoin('motivos_cita', function ($join) {
-            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
-        })
-            ->where('motivos_cita.id_area', '=', $id_area)
-            ->where('citas.estado', 'Cerrado')
-            ->count();
 
         // SI ES DUX O ID_AREA 8 ENTONCES MOSTRARÁ TODOS LOS GENERADOS POR ELLOS
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -280,8 +236,29 @@ class CiteController extends Controller
         $cite = $query->paginate(7)->appends($request->query());
 
         // Retornar la vista con los datos
-        return view('Cite.cite', compact('motivos', 'motivos_derive', 'tipos', 'areas', 'areas_derive', 'cite', 'total_cite', 'total_pendiente', 'total_proceso', 'total_atendido', 'total_derivado', 'total_observado', 'total_finalizado', 'total_cerrado'));
+        return view('Cite.cite', compact('generadosPermitidos','motivos', 'motivos_derive', 'tipos', 'areas', 'areas_derive', 'cite', 'total_cite', 'total_pendiente', 'total_proceso', 'total_atendido', 'total_derivado', 'total_observado', 'total_finalizado', 'total_cerrado'));
     }
+
+
+    function countAppointmentsByStatus($area_id, $status = null, $generate = null)
+    {
+        $query = Cite::leftJoin('motivos_cita', function ($join) {
+            $join->on('citas.motivo', '=', 'motivos_cita.nombre_motivo');
+        })->where('motivos_cita.id_area', $area_id);
+
+        if (!is_null($status)) {
+            $query->where('citas.estado', $status);
+        }
+
+        if ($area_id == 8 ) {
+          //  $query->whereIn('citas.generado', $generate);
+          $query->whereIn('citas.generado', ['Luisa Giannina Flores Davila']);
+
+        }
+
+        return $query->count();
+    }
+
 
     public function all($estado, Request $request)
     {

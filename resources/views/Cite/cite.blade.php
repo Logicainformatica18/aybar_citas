@@ -5,7 +5,9 @@
             <div class="card card-body py-3">
                 <form action=""id="cite_filter" name="cite_filter">
 
-                <h3 class="text-primary">Citas -<b class="text-danger"> Área {{Auth::user()->area->descripcion}}</b> </h3>
+                <h3 class="text-primary">Citas -<b class="text-danger">
+
+                    Área {{Auth::user()->area->descripcion}}</b> </h3>
                     <div class="row align-items-center">
                         <div class="col-12">
                             <div class="card">
